@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm,} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import Alert from "../alerts/Alert";

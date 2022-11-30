@@ -15,10 +15,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         const { user, password } = data;
-        if (user !== "viktor" && password !== "12341234") {
-          return  toast.error('Wrong Username or password');
-        }
-
+      
         data.id = 1;
         userState.setUserLogin(encrypt(JSON.stringify(data)));
         navigate('/dashboard');
