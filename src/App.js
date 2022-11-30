@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AddAccount from './components/Accounts/AddAccount';
+import UserContext from './context/UserContext';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import Accounts from './views/Accounts';
+
+import Login from './views/Login';
+import Profile from './views/Profile';
+import Register from './views/Register';
 
 function App() {
+
+  const [userLogin, setUserLogin] = useLocalStorage('userLogin', '')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <UserContext.Provider value={{ userLogin, setUserLogin }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Login/>} />
+            <Route path='/register' element={<Register/>} />
+            <Route path='/dashboard' element={<div>dashboard</div>} />
+            <Route path='/profile' element={<Profile/>} />
+            <Route path='/accounts/*' element={<Accounts/>}>
+                <Route path='AddAccount/:id' element={<AddAccount/>}/>
+            </Route>
+            <Route path='/expenses-income' element={<div>expenses or income view</div>} />
+            <Route path='/transfers' element={<div>local account Transfers view</div>} />
+            <Route path='/history' element={<div>history view</div>} />
+            <Route path='*' element={<div>404 NOT FOUND</div>} />
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
     </div>
   );
 }
