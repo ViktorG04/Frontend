@@ -1,53 +1,59 @@
 import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { encrypt } from "../utils/encrypt-decrypt";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import UserContext from "../context/UserContext";
-import Alert from "../components/alerts/Alert";
-import MaxMinLength from "../components/alerts/MaxMinLength";
+import withControlledForm from "../hooks/withControlledForm";
+import InputTextContainer from "../components/formComponents/InputTextContainer";
+import Button from "../components/formComponents/Button";
+import {  userRegister, passwordRegister } from "../config/configFields";
 
-const Login = () => {
-    const { register, handleSubmit, formState: { errors }} = useForm();
 
-    const userState = useContext(UserContext);
-    const navigate = useNavigate();
+const Login = ({hookFormProps}) => {
+    
+  const {register, handleSubmit, errors, handleClick, navigate} = hookFormProps;
 
-    const onSubmit = (data) => {
-        const { user, password } = data;
-      
-        data.id = 1;
-        userState.setUserLogin(encrypt(JSON.stringify(data)));
-        navigate('/dashboard');
-    };
+  const userState = useContext(UserContext);
 
-    const handleClick = () =>{ navigate('/register')};
+  //communication with api
+  const onHandleSubmit = (data) => {
+    const { user, password } = data;
+    if (user !== "user" && password !== "12341234") {
+      return toast.error("Wrong Username or password");
+    }
+    data.id = 1;
+    console.log(data)
+    toast.success('Welcome')
+    userState.setUserLogin(encrypt(JSON.stringify(data)));
+    navigate("/dashboard");
+  };
 
-    return (
-        <div className="container-login">
-            <div><Toaster/></div>
-            <h2>LOGIN</h2>
-            <p>logo</p>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label>User</label>
-                    <input type="text" {...register("user", { required: true})} autoFocus/>
-                    {errors.user?.type === "required" && <Alert />}
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" {...register("password", { required: true, minLength:8, maxLength:12 })} autoComplete="on"/>
-                    {errors.password?.type === "required" && <Alert />}
-                    {errors.password?.type === "minLength" && <MaxMinLength length='Min' number={8}/>}
-                    {errors.password?.type === "maxLength" && <MaxMinLength length='Max' number={12}/>}
-                </div>
-                <div>
-                    <button type="submit">Enter</button>
-                    <button type="reset" onClick={handleClick}>Register</button>
-                </div>
-            </form>
+  return (
+    <div className="container-login">
+      <div>
+        <Toaster />
+      </div>
+      <h2>LOGIN</h2>
+      <p>logo</p>
+      <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <InputTextContainer
+          label="User"
+          type="text"
+          register={userRegister(register)}
+          error={errors.user?.message}
+        />
+        <InputTextContainer
+          label="Password"
+          type="password"
+          register={passwordRegister(register)}
+          error={errors.password?.message}
+        />
+        <div>
+            <Button type='submit' name='Enter'/>
+            <Button type='reset' name='Register' onClick={handleClick}/>
         </div>
-    );
+      </form>
+    </div>
+  );
 };
 
-export default Login;
+export const LoginFormWithControlled = withControlledForm(Login, "/register");

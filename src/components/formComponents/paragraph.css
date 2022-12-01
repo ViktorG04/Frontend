@@ -1,0 +1,11 @@
+.paragraph-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: "Open Sans", sans-serif;
+    margin-left: 5px;
+}
+
+strong{
+    margin: 0 5px;
+}
