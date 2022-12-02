@@ -7,6 +7,7 @@ const Account = ({ objet }) => {
       <Paragraph description="Bank name" text={objet.bankName} />
       <Paragraph description="Account Number" text={objet.numberAccount} />
       <Paragraph description="Expiration date" text={objet.dateExpiration} />
+      <Paragraph description="Divisa" text={objet.divisa} />
       <Paragraph description="Credit Account Limit" text={objet.credit} />
       <Paragraph description="Expenses" text={objet.expensive} />
       <Paragraph description="Incomes" text={objet.income} />

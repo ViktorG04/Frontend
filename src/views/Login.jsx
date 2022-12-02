@@ -8,9 +8,9 @@ import Button from "../components/formComponents/Button";
 import {  userRegister, passwordRegister } from "../config/configFields";
 
 
-const Login = ({hookFormProps}) => {
+const Login = ({formProps}) => {
     
-  const {register, handleSubmit, errors, handleClick, navigate} = hookFormProps;
+  const {register, handleSubmit, errors, handleClick, navigate} = formProps;
 
   const userState = useContext(UserContext);
 

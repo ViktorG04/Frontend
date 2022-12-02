@@ -5,9 +5,9 @@ import InputTextContainer from "../components/formComponents/InputTextContainer"
 import Button from "../components/formComponents/Button";
 import { nameRegister, emailRegister, passwordRegister, confirmPasswordRegister } from "../config/configFields";
 
-const Register = ({hookFormProps}) => {
+const Register = ({formProps}) => {
 
-  const {register, handleSubmit, errors, handleClick } = hookFormProps;
+  const {register, handleSubmit, errors, handleClick } = formProps;
 
   const onHandleSubmit = (data) => {
 

@@ -1,8 +1,7 @@
-
 const required = { value: true, message: "Field is required" }
 
 export const userRegister = (register) => {
-  return register("user", required)
+  return register("user", {required})
 };
 
 export const passwordRegister = (register) => {
@@ -101,4 +100,8 @@ export const accountCredit = (register) => {
 
 export const accountDate = (register) => {
   return register("dateExpiration", { required })
+};
+
+export const accountSource = (register) => {
+  return register("idSource", { required })
 };

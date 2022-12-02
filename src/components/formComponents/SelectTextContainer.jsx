@@ -1,7 +1,6 @@
 import React from "react";
 
 const SelectTextContainer = ({label, list, register}) => {
-  console.log(list)
   return (
     <div>
       <label>{label}</label>

@@ -7,6 +7,7 @@ import { LoginFormWithControlled } from './views/Login';
 import { RegisterFormWithControlled } from './views/Register';
 import Profile from './views/Profile';
 import { AddAccountFormWithControlled } from './components/accounts/AddAccount';
+import AccountTransfer from './components/accounts/AccountTransfer';
 
 
 function App() {
@@ -26,8 +27,8 @@ function App() {
               <Route path='AddAccount/:id' element={<AddAccountFormWithControlled/>} />
               <Route path='edit/:id' element={<div>edit account</div>} />
             </Route>
-            <Route path='/expenses-income' element={<div>expenses or income view</div>} />
-            <Route path='/transfers' element={<div>local account Transfers view</div>} />
+            <Route path='/transfers' element={<AccountTransfer/>} />
+            <Route path='/expenses-income' element={<span>expenses or income</span>} />
             <Route path='/history' element={<div>history view</div>} />
             <Route path='*' element={<div>404 NOT FOUND</div>} />
           </Routes>

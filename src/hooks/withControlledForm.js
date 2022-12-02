@@ -11,15 +11,15 @@ const withControlledForm = (Component, root) =>{
             navigate(`${root}`);
           };
 
-         const hookFormProps = {
+         const formProps = {
             register,
             handleSubmit,
             errors,
             handleClick,
-            navigate
+            navigate,
          } 
          
-        return <Component hookFormProps={hookFormProps}/>
+        return <Component formProps={formProps}/>
     };
     return WrappedComponent;
 };

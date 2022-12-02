@@ -28,11 +28,10 @@ const typeMoney = [
   },
 ];
 
-const AddAccount = ({ hookFormProps }) => {
-  const { register, handleSubmit, errors, handleClick, navigate } = hookFormProps;
-
+const AddAccount = ({ formProps }) => {
+  const { register, handleSubmit, errors, handleClick, navigate } = formProps;
+  
   const { id } = useParams();
-
   const onHandleSubmit = (data) => {
     data.idUser = id;
     console.log(data);
