@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import InputTextContainer from "../formComponents/InputTextContainer";
 import {
@@ -9,24 +8,11 @@ import {
   accountDate,
   accountName,
   accountNumber,
-} from "../../config/configFields";
+} from "./functionality/addAccountRegister";
 import Button from "../formComponents/Button";
 import withControlledForm from "../../hooks/withControlledForm";
+import { typeMoney } from "../../data";
 
-const typeMoney = [
-  {
-    id: 1,
-    type: "dollar",
-  },
-  {
-    id: 2,
-    type: "euro",
-  },
-  {
-    id: 3,
-    type: "quetzal",
-  },
-];
 
 const AddAccount = ({ formProps }) => {
   const { register, handleSubmit, errors, handleClick, navigate } = formProps;

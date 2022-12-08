@@ -4,7 +4,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import UserContext from './context/UserContext';
 import Accounts from './views/Accounts';
 import { LoginFormWithControlled } from './views/Login';
-import { RegisterFormWithControlled } from './views/Register';
+import Register from './views/Register';
 import Profile from './views/Profile';
 import { AddAccountFormWithControlled } from './components/accounts/AddAccount';
 import AccountTransfer from './components/accounts/AccountTransfer';
@@ -20,9 +20,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index element={<LoginFormWithControlled />} />
-            <Route path='/register' element={<RegisterFormWithControlled />} />
+            <Route path='/register' element={<Register />} />
             <Route path='/dashboard' element={<div>dashboard</div>} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile' element={<Profile/>} />
             <Route path='/accounts/*' element={<Accounts />}>
               <Route path='AddAccount/:id' element={<AddAccountFormWithControlled/>} />
               <Route path='edit/:id' element={<div>edit account</div>} />

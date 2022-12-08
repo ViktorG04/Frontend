@@ -5,8 +5,10 @@ import UserContext from "../context/UserContext";
 import withControlledForm from "../hooks/withControlledForm";
 import InputTextContainer from "../components/formComponents/InputTextContainer";
 import Button from "../components/formComponents/Button";
-import {  userRegister, passwordRegister } from "../config/configFields";
+import {  emailRegister, passwordRegister } from "../components/user/functionality/userRegister";
 
+//test data
+import {userContext} from "../data"
 
 const Login = ({formProps}) => {
     
@@ -16,14 +18,13 @@ const Login = ({formProps}) => {
 
   //communication with api
   const onHandleSubmit = (data) => {
-    const { user, password } = data;
-    if (user !== "user" && password !== "12341234") {
+    const { email, password } = data;
+    if (email !== "user@user.com" && password !== "12341234") {
       return toast.error("Wrong Username or password");
     }
-    data.id = 1;
-    console.log(data)
+   
     toast.success('Welcome')
-    userState.setUserLogin(encrypt(JSON.stringify(data)));
+    userState.setUserLogin(encrypt(JSON.stringify(userContext)));
     navigate("/dashboard");
   };
 
@@ -36,10 +37,10 @@ const Login = ({formProps}) => {
       <p>logo</p>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <InputTextContainer
-          label="User"
+          label="Email"
           type="text"
-          register={userRegister(register)}
-          error={errors.user?.message}
+          register={emailRegister(register)}
+          error={errors.email?.message}
         />
         <InputTextContainer
           label="Password"

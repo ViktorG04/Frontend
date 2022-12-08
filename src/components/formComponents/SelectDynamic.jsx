@@ -3,7 +3,7 @@ import Notification from "../alerts/Notification";
 
 const SelectDynamic = ({ props }) => {
 
-  const {label, Controller, control, accounts, errors} = props;
+  const {label, name, Controller, control, accounts, errors} = props;
 
   const list = accounts.map((item) => {
     return { value: item.idAccount, label: item.numberAccount };
@@ -13,7 +13,7 @@ const SelectDynamic = ({ props }) => {
     <div>
       <label>{label}</label>
       <Controller
-          name="select"
+          name={name}
           control={control}
           render={({ field }) => (
             <Select
@@ -22,7 +22,7 @@ const SelectDynamic = ({ props }) => {
               options={list}
             />
           )}
-          rules={("select",{required: {value: true, message: "Field is required"}})}
+          rules={(name,{required: {value: true, message: "Field is required"}})}
         />
       {errors.select?.message && <Notification error={errors.select.message}/> }
     </div>
