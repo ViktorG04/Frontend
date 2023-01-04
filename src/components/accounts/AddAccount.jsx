@@ -1,6 +1,6 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import InputTextContainer from "../formComponents/InputTextContainer";
 import {
@@ -9,28 +9,40 @@ import {
   accountName,
   accountNumber,
 } from "./functionality/addAccountRegister";
-import Button from "../formComponents/Button";
-import withControlledForm from "../../hooks/withControlledForm";
-import { typeMoney } from "../../data";
+import Button from "../formComponents/button/Button";
+import withControlledForm from "../../hoc/withControlledForm";
+import Loading from "../alerts/Loading";
 
-
+import { createAccount } from "../../features/account/actions";
+import { getTyMoney } from "../../services/money";
 const AddAccount = ({ formProps }) => {
-  const { register, handleSubmit, errors, handleClick, navigate } = formProps;
-  
-  const { id } = useParams();
+  const { register, handleSubmit, errors, navigate } = formProps;
+  const [typeMoney, setTypeMoney] = useState([]);
+
+  const fetchData = useCallback(async () => {
+    const data = await getTyMoney();
+    setTypeMoney(data);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const dispatch = useDispatch();
+
   const onHandleSubmit = (data) => {
-    data.idUser = id;
+    data.idUser = 1;
     console.log(data);
-    navigate("/accounts");
+    dispatch(createAccount(data));
+
     toast.success("created Account");
+    navigate("/dashboard/accounts");
   };
 
   return (
     <div>
-      <div>
-        <Toaster />
-      </div>
-      <h2>Add a bank account</h2>
+      {/*    <Loading status={setAccount?.loading} /> */}
+      <h2>Add Account</h2>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <InputTextContainer
           label="Name of the Bank"
@@ -38,14 +50,14 @@ const AddAccount = ({ formProps }) => {
           register={accountName(register)}
           error={errors.bankName?.message}
         />
-         <SelectTextContainer
+        <SelectTextContainer
           label="kind of Money"
-          list={typeMoney}
+          listSelect={typeMoney}
           register={register("idTypeMoney")}
-        /> 
+        />
         <InputTextContainer
           label="Account number"
-          type="text"
+          type="number"
           register={accountNumber(register)}
           error={errors.numberAccount?.message}
         />
@@ -57,12 +69,11 @@ const AddAccount = ({ formProps }) => {
         />
         <InputTextContainer
           label="Account credit"
-          type="text"
+          type="number"
           register={accountCredit(register)}
           error={errors.credit?.message}
         />
         <div>
-          <Button type="reset" onClick={handleClick} name="Cancel" />
           <Button type="submit" name="Create" />
         </div>
       </form>
@@ -70,7 +81,4 @@ const AddAccount = ({ formProps }) => {
   );
 };
 
-export const AddAccountFormWithControlled = withControlledForm(
-  AddAccount,
-  "/accounts"
-);
+export const AddAccountFormWithControlled = withControlledForm(AddAccount, "/accounts");

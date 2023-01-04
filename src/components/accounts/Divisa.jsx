@@ -1,12 +1,13 @@
-import React from 'react'
-import Paragraph from "../formComponents/Paragraph";
+import React from "react";
+import Paragraph from ".././paragraph/Paragraph";
 
-const Divisa = ({data}) => {
+const Divisa = ({ exchange }) => {
+  const { origin, destiny, change } = exchange;
   return (
     <div>
-      <Paragraph description="Origin" text={data.divisaOrigin}/>
-      <Paragraph description="Destiny" text={data.divisaDestiny}/>
-      <Paragraph description="Change" text={data.change}/>
+      <Paragraph description="Origin" text={origin} />
+      <Paragraph description="Destiny" text={destiny} />
+      <Paragraph description="Change" text={change} />
     </div>
   );
 };

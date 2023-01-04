@@ -1,21 +1,24 @@
-import withControlledFormUser from "../../hooks/withControlledFormUser";
+import withControlledFormUser from "../../hoc/withControlledFormUser";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import Button from "../formComponents/Button";
-import {
-  nameRegister,
-  emailRegister,
-  passwordRegister,
-  confirmPasswordRegister,
-} from "./functionality/userRegister";
+import Button from "../formComponents/button/Button";
+import { nameRegister, emailRegister } from "./functionality/userRegister";
+import PasswordForm from "./PasswordForm";
+
+import "./css/userForm.css";
+import GridButton from "../formComponents/button/GridButton";
 
 const UserForm = ({ formProps }) => {
   const { register, handleSubmit, getValues, errors, handleClick, config } = formProps;
-  const { buttonSubmitName, formName, inputNameDisable, onHandleSubmit, Toaster } = config;
+  const {
+    buttonSubmitName,
+    formName,
+    inputNameDisable,
+    inputEmailDisable,
+    onHandleSubmit,
+    disable,
+  } = config;
   return (
-    <div>
-      <div>
-        <Toaster />
-      </div>
+    <div className="container-form-user">
       <h2>{formName}</h2>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <InputTextContainer
@@ -30,26 +33,21 @@ const UserForm = ({ formProps }) => {
           type="text"
           register={emailRegister(register)}
           error={errors.email?.message}
+          disable={inputEmailDisable}
         />
-        <InputTextContainer
-          label="Password"
-          type="password"
-          register={passwordRegister(register)}
-          error={errors.password?.message}
-        />
-        <InputTextContainer
-          label="Confirm Password"
-          type="password"
-          register={confirmPasswordRegister(register, getValues)}
-          error={errors.confirmPassword?.message}
-        />
-        <div>
+        {disable ? (
+          <PasswordForm register={register} errors={errors} getValues={getValues} />
+        ) : (
+          "button"
+        )}
+
+        <GridButton>
           <Button type="reset" onClick={handleClick} name="Cancel" />
           <Button type="submit" name={buttonSubmitName} />
-        </div>
+        </GridButton>
       </form>
     </div>
   );
 };
 
-export const UserFormWithControlled = withControlledFormUser(UserForm)
+export const UserFormWithControlled = withControlledFormUser(UserForm);

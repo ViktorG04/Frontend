@@ -1,35 +1,40 @@
+import toast from "react-hot-toast";
 import { UserFormWithControlled } from "../components/user/UserForm";
-import toast, { Toaster } from "react-hot-toast";
+import { registered } from "../services/register";
+
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
-  name: '',
-  password: '',
-  email: '',
-}
+  name: "",
+  password: "",
+  email: "",
+};
 
 const Register = () => {
+  const navigate = useNavigate();
 
   const onHandleSubmit = async (data) => {
-    const { password, confirmPassword, ...safeData } = data;
-    safeData.password = password;
-    
-    toast.success('saved data');
+    const { confirmPassword, ...safeData } = data;
+
+    try {
+      const request = await registered(safeData);
+      toast.success(request.msg);
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
- const configRegisterProfile = {
-    buttonSubmitName: 'Register',
-    formName: 'Registration Form',
+  const configRegisterProfile = {
+    buttonSubmitName: "Register",
+    formName: "Registration Form",
     inputNameDisable: false,
     route: "/",
-    Toaster,
-    onHandleSubmit
-  }
+    onHandleSubmit,
+    disable: true,
+  };
 
-  return (
-    <>
-       <UserFormWithControlled defaultValues={initialValues} config={configRegisterProfile}/>
-    </>
-  );
+  return <UserFormWithControlled defaultValues={initialValues} config={configRegisterProfile} />;
 };
 
 export default Register;

@@ -16,6 +16,7 @@ const withControlledFormUser = (Component, root) =>{
             handleSubmit,
             errors,
             handleClick,
+            navigate
          } 
          
         return <Component formProps={formProps}/>

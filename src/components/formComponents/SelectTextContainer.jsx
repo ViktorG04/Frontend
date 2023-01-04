@@ -1,13 +1,13 @@
 import React from "react";
-
-const SelectTextContainer = ({label, list, register}) => {
+import "./css/form.css";
+const SelectTextContainer = ({ label, listSelect, register }) => {
   return (
-    <div>
-      <label>{label}</label>
+    <div className="select-container">
+      <label>{label}:</label>
       <select {...register}>
-        {list.map((item) => (
-          <option value={item.id} key={item.id}>
-            {item.type}
+        {listSelect.map((option) => (
+          <option value={option.id} key={option.id}>
+            {option.type}
           </option>
         ))}
       </select>

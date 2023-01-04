@@ -1,0 +1,31 @@
+.container-gridButton {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button-component {
+  display: block;
+  background: #437223;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 40%;
+  padding: 10px;
+  border-radius: 15px;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.3s ease all;
+  margin-bottom: 10px;
+}
+
+.button-component[type="submit"]:hover {
+  background: #620b69;
+}
+
+.button-component[type="reset"] {
+  background: #b8250b;
+}
+
+.button-component[type="reset"]:hover {
+  background: #0051ff;
+}

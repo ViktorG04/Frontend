@@ -1,13 +1,9 @@
-import React from 'react'
-
 const style = {
-    color: 'red',
-}
+  color: "red",
+};
 
-const Notification = ({error}) => {
-  return (
-    <span style={style}>{error}</span>
-  )
-}
+const Notification = ({ message }) => {
+  return <span style={style}>{message}</span>;
+};
 
 export default Notification;

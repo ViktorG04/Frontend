@@ -1,0 +1,11 @@
+.container-accountList {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-body {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}

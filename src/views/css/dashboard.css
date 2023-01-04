@@ -1,0 +1,32 @@
+.sidebar {
+  background: rgb(5, 68, 104);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 225px;
+  height: 100%;
+  padding: 20px 0;
+  transition: all 0.5s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-container {
+  width: calc(100% - 225px);
+  margin-left: 225px;
+  transition: all 0.5s ease;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.active .sidebar {
+  left: -225px;
+}
+body.active .section {
+  margin-left: 0;
+  width: 100%;
+}
