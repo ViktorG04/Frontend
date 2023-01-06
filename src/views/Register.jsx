@@ -1,40 +1,36 @@
-import toast from "react-hot-toast";
-import { UserFormWithControlled } from "../components/user/UserForm";
-import { registered } from "../services/register";
+import { useForm } from "react-hook-form";
+import useFormRegister from "../hooks/useFormRegister";
+import NameEmailForm from "../components/user/NameEmailForm";
+import PasswordForm from "../components/user/PasswordForm";
+import "./css/registerProfile.css";
+import GridButtonForm from "../components/formComponents/button/GridButtonForm";
 
-import { useNavigate } from "react-router-dom";
-
-const initialValues = {
+const defaultValues = {
   name: "",
   password: "",
   email: "",
 };
 
 const Register = () => {
-  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({ defaultValues });
 
-  const onHandleSubmit = async (data) => {
-    const { confirmPassword, ...safeData } = data;
+  const { onHandleSubmit, handleClick } = useFormRegister();
 
-    try {
-      const request = await registered(safeData);
-      toast.success(request.msg);
-      navigate("/");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const configRegisterProfile = {
-    buttonSubmitName: "Register",
-    formName: "Registration Form",
-    inputNameDisable: false,
-    route: "/",
-    onHandleSubmit,
-    disable: true,
-  };
-
-  return <UserFormWithControlled defaultValues={initialValues} config={configRegisterProfile} />;
+  return (
+    <div className="container">
+      <h2>Registration Form</h2>
+      <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <NameEmailForm register={register} errors={errors} disable={false} />
+        <PasswordForm register={register} errors={errors} getValues={getValues} />
+        <GridButtonForm onClick={handleClick} nameButtonSubmit="Register" />
+      </form>
+    </div>
+  );
 };
 
 export default Register;

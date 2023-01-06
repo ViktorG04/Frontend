@@ -8,6 +8,10 @@ export const getCategories = async () => {
     const response = await axios.get(`${url}/categories`);
     return response.data;
   } catch (error) {
+    if (!error.response) {
+      throw new Error("Status 503 - Service Unavailable ");
+    }
+
     const { data, request } = error.response;
     const errorMessage = `Status: ${request.status} - ${data.msg}`;
     throw new Error(errorMessage);
@@ -19,6 +23,10 @@ export const getTypeTransfer = async () => {
     const response = await axios.get(`${url}/transfers`);
     return response.data;
   } catch (error) {
+    if (!error.response) {
+      throw new Error("Status 503 - Service Unavailable ");
+    }
+
     const { data, request } = error.response;
     const errorMessage = `Status: ${request.status} - ${data.msg}`;
     throw new Error(errorMessage);

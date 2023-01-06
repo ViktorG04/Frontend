@@ -1,14 +1,11 @@
 import InputTextContainer from "../formComponents/InputTextContainer";
-import {
-  passwordRegister,
-  confirmPasswordRegister,
-} from "./functionality/userRegister";
+import { passwordRegister, confirmPasswordRegister } from "./functionality/userRegister";
 
 const PasswordForm = ({ register, errors, getValues }) => {
   return (
     <>
       <InputTextContainer
-        label="Password"
+        label="New Password"
         type="password"
         register={passwordRegister(register)}
         error={errors.password?.message}

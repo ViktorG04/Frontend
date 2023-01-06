@@ -1,19 +1,18 @@
 import { useForm } from "react-hook-form";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import GridButton from "../formComponents/button/GridButton";
-import Button from "../formComponents/button/Button";
+import GridButtonForm from "../formComponents/button/GridButtonForm";
+import useFormAccount from "../../hooks/useFormAccount";
 import {
   accountCredit,
   accountDate,
   accountName,
   accountNumber,
 } from "./functionality/addAccountRegister";
-
-import useFormAccount from "../../hooks/useFormAccount";
 import "./css/formAccount.css";
 
 const defaultValues = {
+  dateExpiration: "",
   bankName: "",
   numberAccount: "",
   credit: "",
@@ -27,11 +26,12 @@ const FormAccount = ({ onClose }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const { typeMoney, onHandleSubmit, onHandleClick } = useFormAccount(
-    onClose,
-    reset,
-    defaultValues
-  );
+  const { typeMoney, onHandleSubmit } = useFormAccount(onClose);
+
+  const onHandleClick = () => {
+    reset(defaultValues);
+    onClose();
+  };
 
   return (
     <div className="container-form">
@@ -43,16 +43,16 @@ const FormAccount = ({ onClose }) => {
           register={accountName(register)}
           error={errors.bankName?.message}
         />
-        <SelectTextContainer
-          label="kind of Money"
-          listSelect={typeMoney}
-          register={register("idTypeMoney")}
-        />
         <InputTextContainer
           label="Account number"
           type="number"
           register={accountNumber(register)}
           error={errors.numberAccount?.message}
+        />
+        <SelectTextContainer
+          label="kind of Money"
+          listSelect={typeMoney}
+          register={register("idTypeMoney")}
         />
         <InputTextContainer
           label="Expiration date"
@@ -62,14 +62,11 @@ const FormAccount = ({ onClose }) => {
         />
         <InputTextContainer
           label="Account credit"
-          type="number"
+          type="text"
           register={accountCredit(register)}
           error={errors.credit?.message}
         />
-        <GridButton>
-          <Button name="Cancel" type="reset" onClick={onHandleClick} />
-          <Button name="Create" type="submit" />
-        </GridButton>
+        <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Create" />
       </form>
     </div>
   );

@@ -47,11 +47,11 @@ const links = [
 
 function Navbar() {
   return (
-    <ul className="navbar">
+    <>
       {links.map((link, index) => (
         <NavLinkConfig key={`link-${index}`} link={link} />
       ))}
-    </ul>
+    </>
   );
 }
 

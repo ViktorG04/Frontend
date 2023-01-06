@@ -1,22 +1,19 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import Button from "../formComponents/button/Button";
 import { amountRegister, transferDate } from "./transferRegister";
 import { useForm, Controller } from "react-hook-form";
 import SelectDynamic from "../formComponents/SelectDynamic";
 import Paragraph from "../paragraph/Paragraph";
-import { accounts, divisas } from "../../data";
 import { objectOfSelect, transfers, valueDivisa } from "../accounts/functionality/transfers";
-
-import dateFormat from "../../utils/dateTime";
 import AccountDetails from "../accounts/AccountDetails";
 
 import "./css/transfer.css";
-import GridButton from "../formComponents/button/GridButton";
+import GridButtonForm from "../formComponents/button/GridButtonForm";
 
 const initialValues = {
-  date: dateFormat(),
+  date: "",
   amount: 0.0,
   AccountOrigin: false,
   AccountDestination: false,
@@ -31,6 +28,8 @@ const AccountTransfer = () => {
     formState: { errors },
     control,
   } = useForm({ defaultValues: initialValues });
+
+  const { accounts } = useSelector((state) => state.accounts);
 
   const [transferMoney, setTransferMoney] = useState({
     conversion: "",
@@ -66,16 +65,6 @@ const AccountTransfer = () => {
     const originData = await objectOfSelect(accounts, AccountOrigin.value);
 
     const destinationData = await objectOfSelect(accounts, AccountDestination.value);
-
-    const valueChange = await valueDivisa(divisas, originData.divisa, destinationData.divisa);
-    setTransferMoney({ exchange: valueChange });
-
-    try {
-      const amountTransfer = await transfers(amount, originData.available, valueChange);
-      setTransferMoney({ conversion: amountTransfer });
-    } catch (error) {
-      toast.error(error.message);
-    }
 
     const processData = {
       date: data.date,
@@ -149,10 +138,7 @@ const AccountTransfer = () => {
           <Paragraph description="Conversion Value" text={transferMoney.exchange} />
           <Paragraph description="Amount to Transfer with divisa" text={transferMoney.conversion} />
 
-          <GridButton>
-            <Button type="reset" onClick={handleClick} name="Cancel" />
-            <Button type="submit" name="Process" />
-          </GridButton>
+          <GridButtonForm onClick={handleClick} nameButtonSubmit="Process" />
         </form>
       </div>
     </div>

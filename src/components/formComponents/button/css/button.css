@@ -1,6 +1,7 @@
 .container-gridButton {
   display: flex;
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .button-component {
@@ -21,11 +22,14 @@
 .button-component[type="submit"]:hover {
   background: #620b69;
 }
+.button-component[type="button"]:hover {
+  background: #620b69;
+}
 
 .button-component[type="reset"] {
   background: #b8250b;
 }
 
 .button-component[type="reset"]:hover {
-  background: #0051ff;
+  background: #0743c5;
 }

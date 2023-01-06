@@ -3,9 +3,9 @@ import config from "../config/config";
 
 const url = config.api;
 
-export const getExchanges = async (TransferInfo) => {
+export const getAllAccounts = async () => {
   try {
-    const response = await axios.get(`${url}/exchange`, TransferInfo);
+    const response = await axios.get(`${url}/accounts`);
     return response.data;
   } catch (error) {
     if (!error.response) {

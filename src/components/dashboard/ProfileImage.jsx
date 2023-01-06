@@ -1,4 +1,4 @@
-import "./css/profile.css";
+import "./css/navbar.css";
 
 const ProfileImage = ({ userName }) => {
   return (

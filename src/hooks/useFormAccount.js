@@ -5,7 +5,7 @@ import { getTyMoney } from "../services/money";
 
 import toast from "react-hot-toast";
 
-const useFormAccount = (onClose, reset, defaultValues) => {
+const useFormAccount = (onClose) => {
   const dispatch = useDispatch();
 
   const [typeMoney, setTypeMoney] = useState([]);
@@ -30,12 +30,7 @@ const useFormAccount = (onClose, reset, defaultValues) => {
     }, 2000);
   };
 
-  const onHandleClick = () => {
-    reset(defaultValues);
-    onClose();
-  };
-
-  return { typeMoney, onHandleSubmit, onHandleClick };
+  return { typeMoney, onHandleSubmit };
 };
 
 export default useFormAccount;

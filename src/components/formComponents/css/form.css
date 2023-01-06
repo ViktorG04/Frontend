@@ -17,6 +17,12 @@
   justify-content: space-evenly;
 }
 
+.container-InputLabel > .container-body > input[type="date"] {
+  width: 50%;
+  margin-left: 25px;
+  font-size: 16px;
+}
+
 /* -------------------------SELECT------------------------------- */
 .select-container {
   display: flex;

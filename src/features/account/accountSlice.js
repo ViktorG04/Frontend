@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAccountsByeIdUser, createAccount } from "./actions";
 
-const initialState = { loading: false, request: false, errors: undefined, accounts: [] };
+const initialState = {
+  loading: false,
+  request: false,
+  errors: undefined,
+  accounts: [],
+  notification: null,
+};
 
 export const accountSlice = createSlice({
   name: "account",
@@ -19,7 +25,7 @@ export const accountSlice = createSlice({
       if (action.payload) {
         accounts = action.payload;
       }
-      return { loading: false, request: true, accounts };
+      return { loading: false, request: true, accounts, notification: false };
     });
 
     builder.addCase(getAccountsByeIdUser.rejected, (state, action) => {
@@ -33,20 +39,19 @@ export const accountSlice = createSlice({
       ...state,
     }));
 
-    builder.addCase(createAccount.fulfilled, (state, action) => ({
-      loading: false,
-      request: true,
-    }));
+    builder.addCase(createAccount.fulfilled, (state, action) => {
+      const { loading, request, ...stateData } = state;
+      return { loading: false, request: true, ...stateData };
+    });
 
     builder.addCase(createAccount.rejected, (state, action) => {
       const { data, status } = action.payload;
-      const error = `Status: ${status} - ${data.msg}`;
 
-      return { errors: error, ...state };
+      const message = data?.msg ? `Status: ${status} - ${data.msg}` : data.errors;
+
+      return { errors: message, ...state };
     });
   },
 });
-
-export const { addAccount, updateAccount, getAccounts } = accountSlice.actions;
 
 export default accountSlice.reducer;

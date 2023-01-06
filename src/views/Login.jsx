@@ -1,34 +1,29 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
-import withControlledForm from "../hoc/withControlledForm";
+import { useForm } from "react-hook-form";
+import useFormLogin from "../hooks/useFormLogin";
 import InputTextContainer from "../components/formComponents/InputTextContainer";
-import Button from "../components/formComponents/button/Button";
+import GridButtonForm from "../components/formComponents/button/GridButtonForm";
 import { emailRegister, passwordRegister } from "../components/user/functionality/userRegister";
-import { SignUp } from "../features/user/actions";
+
 import "./css/login.css";
 
-const Login = ({ formProps }) => {
-  const { register, handleSubmit, errors, navigate } = formProps;
-  const { isLogged, error } = useSelector((state) => state.auth);
+const defaultValues = {
+  email: "",
+  password: "",
+};
 
-  const dispatch = useDispatch();
+const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ defaultValues });
 
-  const onHandleSubmit = (data) => {
-    const action = SignUp(data);
-    dispatch(action);
+  const { onHandleSubmit } = useFormLogin();
+
+  const onHandleClick = () => {
+    reset(defaultValues);
   };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-
-    if (isLogged) {
-      toast.success("Welcome");
-      navigate("/dashboard");
-    }
-  }, [isLogged, error]);
 
   return (
     <div className="container-login">
@@ -46,8 +41,7 @@ const Login = ({ formProps }) => {
           register={passwordRegister(register)}
           error={errors.password?.message}
         />
-
-        <Button type="submit" name="Log In" />
+        <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Log In" />
       </form>
       <a href="#">Lost your Password?</a>
       <br />
@@ -56,4 +50,4 @@ const Login = ({ formProps }) => {
   );
 };
 
-export const LoginFormWithControlled = withControlledForm(Login, "/register");
+export default Login;

@@ -8,6 +8,10 @@ export const getTyMoney = async () => {
     const response = await axios.get(`${url}/money`);
     return response.data;
   } catch (error) {
+    if (!error.response) {
+      throw new Error("Status 503 - Service Unavailable ");
+    }
+
     const { data, request } = error.response;
     const errorMessage = `Status: ${request.status} - ${data.msg}`;
     throw new Error(errorMessage);
@@ -19,6 +23,9 @@ export const getCurrency = async () => {
     const response = await axios.get(`${url}/currency`);
     return response.data;
   } catch (error) {
+    if (!error.response) {
+      throw new Error("Status 503 - Service Unavailable ");
+    }
     const { data, request } = error.response;
     const errorMessage = `Status: ${request.status} - ${data.msg}`;
     throw new Error(errorMessage);

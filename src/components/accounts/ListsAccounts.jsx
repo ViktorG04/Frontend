@@ -11,12 +11,13 @@ import { toast } from "react-hot-toast";
 const ListsAccounts = () => {
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, userToken } = useSelector((state) => state.auth);
+  const { idUser } = user;
   const { loading, request, errors, accounts } = useSelector((state) => state.accounts);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getAccountsByeIdUser(1));
+    dispatch(getAccountsByeIdUser({ idUser, userToken }));
 
     if (errors) {
       toast.error(errors);

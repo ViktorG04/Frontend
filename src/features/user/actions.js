@@ -9,6 +9,13 @@ export const SignUp = createAsyncThunk("auth/signUp", async (userInfo, { rejectW
     const response = await axios.post(`${URL}/auth`, userInfo);
     return response.data;
   } catch (error) {
+    if (!error.response) {
+      const errorRequest = {
+        data: { msg: "Service Unavailable" },
+        status: "503",
+      };
+      return rejectWithValue(errorRequest);
+    }
     const { data, request } = error.response;
     const errors = {
       data,
@@ -18,17 +25,27 @@ export const SignUp = createAsyncThunk("auth/signUp", async (userInfo, { rejectW
   }
 });
 
-export const updateUser = createAsyncThunk("user/updated", async (userInfo) => {
-  const { id, password } = userInfo;
-  let options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify(password),
-  };
-  console.log(options);
-  const response = await fetch(`${URL}/user/${id}`, options);
-  const data = await response.json();
-  return data;
-});
+export const updateUser = createAsyncThunk(
+  "user/updated",
+  async (userInfo, { rejectWithValue }) => {
+    const { id, newPassword, token } = userInfo;
+    try {
+      const response = await axios.put(`${URL}/user/${id}`, { newPassword });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        const errorRequest = {
+          data: { msg: "Service Unavailable" },
+          status: "503",
+        };
+        return rejectWithValue(errorRequest);
+      }
+      const { data, request } = error.response;
+      const errors = {
+        data,
+        status: request.status,
+      };
+      return rejectWithValue(errors);
+    }
+  }
+);

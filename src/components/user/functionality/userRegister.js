@@ -1,4 +1,4 @@
-const required = { value: true, message: "Field is required" }
+const required = { value: true, message: "Field is required" };
 
 export const passwordRegister = (register) => {
   return register("password", {
@@ -11,12 +11,12 @@ export const passwordRegister = (register) => {
       value: 12,
       message: "Max length is 12!",
     },
-  })
+  });
 };
 
 export const confirmPasswordRegister = (register, getValues) => {
   return register("confirmPassword", {
-    validate: value => value === getValues("password") || "The passwords are not the same",
+    validate: (value) => value === getValues("password") || "The passwords are not the same",
     required,
     minLength: {
       value: 8,
@@ -25,8 +25,8 @@ export const confirmPasswordRegister = (register, getValues) => {
     maxLength: {
       value: 12,
       message: "Max length is 12!",
-    }
-  })
+    },
+  });
 };
 
 export const nameRegister = (register) => {
@@ -40,7 +40,7 @@ export const nameRegister = (register) => {
       value: 30,
       message: "Max length is 30!",
     },
-  })
+  });
 };
 
 export const emailRegister = (register) => {
@@ -48,7 +48,23 @@ export const emailRegister = (register) => {
     required,
     pattern: {
       value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-      message: "email can only contain letters, numbers, periods, hyphens, underscores, and at sing",
+      message:
+        "email can only contain letters, numbers, periods, hyphens, underscores, and at sing",
     },
-  })
+  });
+};
+
+export const passwordValidate = (register, currentPassword) => {
+  return register("currentPassword", {
+    validate: (value) => value === currentPassword || "current password is different",
+    required,
+    minLength: {
+      value: 8,
+      message: "Min Length is 8!",
+    },
+    maxLength: {
+      value: 12,
+      message: "Max length is 12!",
+    },
+  });
 };

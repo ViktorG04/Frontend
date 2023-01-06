@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ListsExchange from "../components/accounts/ListsExchange";
 import ListsAccounts from "../components/accounts/ListsAccounts";
 import "./css/accounts.css";

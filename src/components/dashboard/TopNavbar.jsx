@@ -1,4 +1,4 @@
-import "./css/topNavbar.css";
+import "./css/navbar.css";
 function TopNavbar() {
   return (
     <div className="top_navbar">

@@ -1,16 +1,8 @@
-.container-form-user {
-  width: 500px;
-  background: #4791d0;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box;
+.container-form-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.container-buttons > {
-  background: yellow;
+  flex-wrap: wrap;
+  background-color: #4791d0;
+  border-radius: 1rem;
 }

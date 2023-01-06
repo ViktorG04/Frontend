@@ -1,25 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
-import dateFormat from "../../utils/dateTime";
 import { useForm, Controller } from "react-hook-form";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import GridButton from "../formComponents/button/GridButton";
-import Button from "../formComponents/button/Button";
+import GridButtonForm from "../formComponents/button/GridButtonForm";
 import {
   dateRegister,
   amountRegister,
   descriptionRegister,
-} from "./funcionality/expenseIncomesRegister";
+} from "./functionality/expenseIncomesRegister";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
-import { accounts } from "../../data";
 import TextareaContainer from "../formComponents/TextareaContainer";
 import { toast } from "react-hot-toast";
 import SelectAccount from "../accounts/SelectAccount";
 import { getCategories, getTypeTransfer } from "../../services/services";
+import { getAllAccounts } from "../../services/accounts";
 
 import "./css/config.css";
 
 const initialValues = {
-  date: dateFormat(),
+  date: "",
   amount: 0.0,
   description: "",
 };
@@ -34,11 +32,15 @@ const ExpenseIncome = () => {
     reset,
   } = useForm({ defaultValues: initialValues });
 
-  const [select, setSelect] = useState({ transfers: [], categories: [] });
+  const [select, setSelect] = useState({ transfers: [], categories: [], accounts: [] });
 
   const fetchDataSelect = useCallback(async () => {
-    const [transfers, categories] = await Promise.all([getTypeTransfer(), getCategories()]);
-    setSelect({ transfers, categories });
+    const [transfers, categories, accounts] = await Promise.all([
+      getTypeTransfer(),
+      getCategories(),
+      getAllAccounts(),
+    ]);
+    setSelect({ transfers, categories, accounts });
   }, []);
 
   useEffect(() => {
@@ -50,7 +52,6 @@ const ExpenseIncome = () => {
     name: "AccountOrigin",
     Controller,
     control,
-    accounts,
     errors,
   };
 
@@ -99,12 +100,11 @@ const ExpenseIncome = () => {
             ""
           )}
 
-          <SelectAccount
+          {/*   <SelectAccount
             AccountOrigin={watch("AccountOrigin", false)}
-            accounts={accounts}
             reset={reset}
             propsSelectOriginAccount={propsSelectOriginAccount}
-          />
+          /> */}
           <InputTextContainer
             label="Amount to Transfer"
             type="text"
@@ -117,10 +117,7 @@ const ExpenseIncome = () => {
             error={errors.description?.message}
           />
 
-          <GridButton>
-            <Button type="reset" onClick={handleClick} name="Cancel" />
-            <Button type="submit" name="Process" />
-          </GridButton>
+          <GridButtonForm onClick={handleClick} nameButtonSubmit="Process" />
         </form>
       </div>
     </div>
