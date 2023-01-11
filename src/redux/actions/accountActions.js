@@ -1,15 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import config from "../../config/config";
-
-const url = config.api;
+import { API_URL } from "../../config/config";
 
 export const getAccountsByeIdUser = createAsyncThunk(
   "account/allAccounts",
   async (getValues, { rejectWithValue }) => {
     const { id, token } = getValues;
     try {
-      const response = await axios.get(`${url}/accounts/${id}`);
+      const response = await axios.get(`${API_URL}/accounts/${id}`);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -33,11 +31,9 @@ export const getAccountsByeIdUser = createAsyncThunk(
 
 export const createAccount = createAsyncThunk(
   "account/create",
-  async (accountInfo, { dispatch, rejectWithValue }) => {
-    const idUser = accountInfo.idUser;
+  async (accountInfo, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${url}/accounts`, accountInfo);
-      dispatch(getAccountsByeIdUser(idUser));
+      const response = await axios.post(`${API_URL}/accounts`, accountInfo);
       return response.data;
     } catch (error) {
       if (!error.response) {

@@ -45,14 +45,8 @@ const links = [
   },
 ];
 
-function Navbar() {
-  return (
-    <>
-      {links.map((link, index) => (
-        <NavLinkConfig key={`link-${index}`} link={link} />
-      ))}
-    </>
-  );
-}
+const Navbar = () => {
+  return links.map((link, index) => <NavLinkConfig key={`link-${index}`} link={link} />);
+};
 
 export default Navbar;

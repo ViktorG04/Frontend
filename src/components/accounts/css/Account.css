@@ -1,0 +1,15 @@
+.account-container {
+  display: flex;
+  flex-direction: column;
+  background-color: violet;
+}
+
+.account-container > .section {
+  display: flex;
+  flex-direction: row;
+  background-color: tomato;
+}
+
+* {
+  border: 2px solid red;
+}

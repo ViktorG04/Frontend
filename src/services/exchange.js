@@ -1,11 +1,9 @@
 import axios from "axios";
-import config from "../config/config";
-
-const url = config.api;
+import { API_URL } from "../config/config";
 
 export const getExchanges = async (TransferInfo) => {
   try {
-    const response = await axios.get(`${url}/exchange`, TransferInfo);
+    const response = await axios.get(`${API_URL}/exchange`, TransferInfo);
     return response.data;
   } catch (error) {
     if (!error.response) {

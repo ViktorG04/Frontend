@@ -1,13 +1,14 @@
 import SelectDynamic from "../formComponents/SelectDynamic";
 import AccountDetails from "./AccountDetails";
 
-const SelectAccount = ({ AccountOrigin, accounts, reset, propsSelectOriginAccount }) => {
+const SelectAccount = ({ AccountOrigin, reset, label, name, accounts }) => {
   const handleClickDifferentAccount = () => {
     reset({ AccountOrigin: false });
   };
 
+  console.log(AccountOrigin);
   if (!AccountOrigin) {
-    return <SelectDynamic props={propsSelectOriginAccount} />;
+    return <SelectDynamic label={label} name={name} accounts={accounts} />;
   }
 
   const accountFound = accounts.find((account) => account.idAccount === AccountOrigin.value);

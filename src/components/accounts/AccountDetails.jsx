@@ -13,11 +13,7 @@ const AccountDetails = ({
       <button onClick={handleClick}>Choose different Account</button>
       <Paragraph description="Name" text={nameAccount} />
       <Paragraph description="Number" text={numberAccount} />
-      {amountAvailable ? (
-        <Paragraph description="Available" text={amountAvailable} />
-      ) : (
-        ""
-      )}
+      {amountAvailable ? <Paragraph description="Available" text={amountAvailable} /> : null}
     </div>
   );
 };

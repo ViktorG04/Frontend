@@ -1,5 +1,13 @@
 .container-accounts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  background-color: yellowgreen;
+  display: grid;
+  margin: 0%;
+}
+
+.container-accounts > .div1 {
+  grid-column: span 5;
+}
+
+.container-accounts > .div2 {
+  grid-column: 6/8;
 }

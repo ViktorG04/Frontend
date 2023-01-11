@@ -5,8 +5,12 @@ import "./css/accounts.css";
 const Accounts = () => {
   return (
     <div className="container-accounts">
-      <ListsAccounts />
-      <ListsExchange />
+      <div className="div1">
+        <ListsAccounts />
+      </div>
+      <div className="div2">
+        <ListsExchange />
+      </div>
     </div>
   );
 };

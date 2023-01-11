@@ -6,18 +6,22 @@ import TopNavbar from "../components/dashboard/TopNavbar";
 import "./css/dashboard.css";
 function Dashboard() {
   return (
-    <>
-      <div className="sidebar">
-        <ProfileImage userName={"Name User Login"} />
-        <Navbar />
-      </div>
-      <div className="navbar-container">
+    <div className="dashboard-container">
+      <div className="header">
         <TopNavbar />
       </div>
+      <div className="sidebar">
+        <ProfileImage />
+        <Navbar />
+      </div>
+
       <div className="section">
         <Outlet />
       </div>
-    </>
+      <div className="footer">
+        <p>footer</p>
+      </div>
+    </div>
   );
 }
 

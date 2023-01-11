@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { SignUp } from "../features/user/actions";
+import { signUp } from "../redux";
 
 const useFormLogin = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const useFormLogin = () => {
   const { isLogged, error } = useSelector((state) => state.auth);
 
   const onHandleSubmit = (data) => {
-    const action = SignUp(data);
+    const action = signUp(data);
     dispatch(action);
   };
 

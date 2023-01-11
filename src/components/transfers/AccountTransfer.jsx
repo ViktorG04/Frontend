@@ -12,7 +12,7 @@ import AccountDetails from "../accounts/AccountDetails";
 import "./css/transfer.css";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 
-const initialValues = {
+const defaultValues = {
   date: "",
   amount: 0.0,
   AccountOrigin: false,
@@ -27,7 +27,7 @@ const AccountTransfer = () => {
     reset,
     formState: { errors },
     control,
-  } = useForm({ defaultValues: initialValues });
+  } = useForm({ defaultValues });
 
   const { accounts } = useSelector((state) => state.accounts);
 

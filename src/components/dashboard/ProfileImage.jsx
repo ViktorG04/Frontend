@@ -1,13 +1,16 @@
+import { useSelector } from "react-redux";
+import { PROFILE_IMAGE } from "../../config/config";
 import "./css/navbar.css";
 
-const ProfileImage = ({ userName }) => {
+const ProfileImage = () => {
+  const {
+    user: { name },
+  } = useSelector((state) => state.auth);
+
   return (
     <div className="profile">
-      <img
-        src="https://thumbs.dreamstime.com/z/man-profile-cartoon-smiling-vector-illustration-graphic-design-135443492.jpg"
-        alt="profile_picture"
-      />
-      <h3>{userName}</h3>
+      <img src={PROFILE_IMAGE} alt="profile_picture" />
+      <h3>{name}</h3>
     </div>
   );
 };

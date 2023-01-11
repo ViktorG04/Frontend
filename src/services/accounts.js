@@ -1,11 +1,10 @@
 import axios from "axios";
-import config from "../config/config";
 
-const url = config.api;
+import { API_URL } from "../config/config";
 
 export const getAllAccounts = async () => {
   try {
-    const response = await axios.get(`${url}/accounts`);
+    const response = await axios.get(`${API_URL}/accounts`);
     return response.data;
   } catch (error) {
     if (!error.response) {

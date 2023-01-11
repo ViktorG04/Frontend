@@ -7,7 +7,7 @@ const InputTextContainer = ({ label, type, register, error, disable = false }) =
         <label>{label}:</label>
         <input type={`${type}`} {...register} disabled={disable} />
       </div>
-      <>{error && <Notification message={error} />}</>
+      {error && <Notification message={error} />}
     </div>
   );
 };

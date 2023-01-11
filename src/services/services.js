@@ -1,11 +1,9 @@
 import axios from "axios";
-import config from "../config/config";
-
-const url = config.api;
+import { API_URL } from "../config/config";
 
 export const getCategories = async () => {
   try {
-    const response = await axios.get(`${url}/categories`);
+    const response = await axios.get(`${API_URL}/categories`);
     return response.data;
   } catch (error) {
     if (!error.response) {
@@ -20,7 +18,7 @@ export const getCategories = async () => {
 
 export const getTypeTransfer = async () => {
   try {
-    const response = await axios.get(`${url}/transfers`);
+    const response = await axios.get(`${API_URL}/transfers`);
     return response.data;
   } catch (error) {
     if (!error.response) {

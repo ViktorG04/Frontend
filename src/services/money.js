@@ -1,11 +1,9 @@
 import axios from "axios";
-import config from "../config/config";
-
-const url = config.api;
+import { API_URL } from "../config/config";
 
 export const getTyMoney = async () => {
   try {
-    const response = await axios.get(`${url}/money`);
+    const response = await axios.get(`${API_URL}/money`);
     return response.data;
   } catch (error) {
     if (!error.response) {
@@ -20,7 +18,7 @@ export const getTyMoney = async () => {
 
 export const getCurrency = async () => {
   try {
-    const response = await axios.get(`${url}/currency`);
+    const response = await axios.get(`${API_URL}/currency`);
     return response.data;
   } catch (error) {
     if (!error.response) {

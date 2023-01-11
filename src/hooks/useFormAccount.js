@@ -1,14 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { createAccount } from "../features/account/actions";
+import { useState, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { createAccount } from "../redux";
 import { getTyMoney } from "../services/money";
 
 import toast from "react-hot-toast";
 
 const useFormAccount = (onClose) => {
-  const dispatch = useDispatch();
-
   const [typeMoney, setTypeMoney] = useState([]);
+
+  const {
+    user: { idUser },
+  } = useSelector((state) => state.auth);
+  const { errors, notification } = useSelector((state) => state.accounts);
+
+  const dispatch = useDispatch();
 
   const fetchData = useCallback(async () => {
     const money = await getTyMoney();
@@ -19,15 +24,23 @@ const useFormAccount = (onClose) => {
     fetchData();
   }, [fetchData]);
 
-  const onHandleSubmit = (data) => {
-    data.idUser = 1;
-    const result = createAccount(data);
-    dispatch(result);
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+    }
+  }, [errors]);
 
-    toast.success("created Account");
-    setTimeout(() => {
+  useEffect(() => {
+    if (notification) {
+      toast.success(notification);
       onClose();
-    }, 2000);
+    }
+  }, [notification]);
+
+  const onHandleSubmit = (data) => {
+    let accountInfo = { idUser, ...data };
+    const result = createAccount(accountInfo);
+    dispatch(result);
   };
 
   return { typeMoney, onHandleSubmit };

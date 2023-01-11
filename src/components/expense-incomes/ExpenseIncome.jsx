@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import InputTextContainer from "../formComponents/InputTextContainer";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import {
@@ -12,11 +13,10 @@ import TextareaContainer from "../formComponents/TextareaContainer";
 import { toast } from "react-hot-toast";
 import SelectAccount from "../accounts/SelectAccount";
 import { getCategories, getTypeTransfer } from "../../services/services";
-import { getAllAccounts } from "../../services/accounts";
 
 import "./css/config.css";
 
-const initialValues = {
+const defaultValues = {
   date: "",
   amount: 0.0,
   description: "",
@@ -27,33 +27,22 @@ const ExpenseIncome = () => {
     register,
     handleSubmit,
     formState: { errors },
-    control,
     watch,
     reset,
-  } = useForm({ defaultValues: initialValues });
+  } = useForm({ defaultValues });
 
-  const [select, setSelect] = useState({ transfers: [], categories: [], accounts: [] });
+  const { accounts } = useSelector((state) => state.accounts);
+
+  const [select, setSelect] = useState({ transfers: [], categories: [] });
 
   const fetchDataSelect = useCallback(async () => {
-    const [transfers, categories, accounts] = await Promise.all([
-      getTypeTransfer(),
-      getCategories(),
-      getAllAccounts(),
-    ]);
-    setSelect({ transfers, categories, accounts });
+    const [transfers, categories] = await Promise.all([getTypeTransfer(), getCategories()]);
+    setSelect({ transfers, categories });
   }, []);
 
   useEffect(() => {
     fetchDataSelect();
   }, [fetchDataSelect]);
-
-  const propsSelectOriginAccount = {
-    label: "Select Source Account",
-    name: "AccountOrigin",
-    Controller,
-    control,
-    errors,
-  };
 
   const onHandleSubmit = (data) => {
     const { AccountOrigin, amount, transfer, ...safeData } = data;
@@ -87,24 +76,22 @@ const ExpenseIncome = () => {
               listSelect={select.transfers}
               register={register("idTransfer")}
             />
-          ) : (
-            ""
-          )}
+          ) : null}
           {select.categories ? (
             <SelectTextContainer
               label="Category"
               listSelect={select.categories}
               register={register("idCategory")}
             />
-          ) : (
-            ""
-          )}
+          ) : null}
 
-          {/*   <SelectAccount
+          <SelectAccount
             AccountOrigin={watch("AccountOrigin", false)}
             reset={reset}
-            propsSelectOriginAccount={propsSelectOriginAccount}
-          /> */}
+            label="Select Source Account"
+            name="AccountOrigin"
+            accounts={accounts}
+          />
           <InputTextContainer
             label="Amount to Transfer"
             type="text"

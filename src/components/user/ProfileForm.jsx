@@ -5,6 +5,7 @@ import InputTextContainer from "../formComponents/InputTextContainer";
 import { passwordValidate } from "./functionality/userRegister";
 import "./css/userForm.css";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
+import useFormProfile from "../../hooks/useFormProfile";
 
 const defaultValues = {
   currentPassword: "",
@@ -12,7 +13,7 @@ const defaultValues = {
   confirmPassword: "",
 };
 
-const ProfileForm = ({ onHandleSubmit, setOpen, password }) => {
+const ProfileForm = ({ setOpen }) => {
   const {
     register,
     handleSubmit,
@@ -21,10 +22,7 @@ const ProfileForm = ({ onHandleSubmit, setOpen, password }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const handleClick = () => {
-    setOpen(false);
-    reset(defaultValues);
-  };
+  const { password, onHandleSubmit, handleClick } = useFormProfile(setOpen, reset, defaultValues);
 
   return (
     <div className="container-form-profile">

@@ -1,5 +1,5 @@
 import React from "react";
-import Paragraph from ".././paragraph/Paragraph";
+import Paragraph from "../paragraph/Paragraph";
 
 const Divisa = ({ exchange }) => {
   const { origin, destiny, change } = exchange;
