@@ -5,7 +5,7 @@ import { API_URL } from "../../config/config";
 export const getAccountsByeIdUser = createAsyncThunk(
   "account/allAccounts",
   async (getValues, { rejectWithValue }) => {
-    const { id, token } = getValues;
+    const { idUser: id, token } = getValues;
     try {
       const response = await axios.get(`${API_URL}/accounts/${id}`);
       return response.data;
@@ -45,7 +45,9 @@ export const createAccount = createAsyncThunk(
         return rejectWithValue(errorRequest);
       }
 
+      console.log(error);
       const { data, request } = error.response;
+      console.error(data);
       const errors = {
         data,
         status: request.status,

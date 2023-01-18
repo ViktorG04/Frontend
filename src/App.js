@@ -1,13 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Accounts from "./views/Accounts";
+import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import Accounts from "./views/Accounts";
 import Profile from "./views/Profile";
-import AccountTransfer from "./components/transfers/AccountTransfer";
-import { Toaster } from "react-hot-toast";
+import Account from "./views/Account";
 import ExpenseIncome from "./components/expense-incomes/ExpenseIncome";
-import Dashboard from "./views/Dashboard";
+import Reports from "./views/Reports";
+import FormTransfers from "./components/transfers/FormTransfers";
 
 function App() {
   return (
@@ -17,12 +19,13 @@ function App() {
         <Routes>
           <Route index element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard/*" element={<Dashboard />}>
-            <Route path="accounts" element={<Accounts />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="transfers" element={<AccountTransfer />} />
-            <Route path="expenses-income" element={<ExpenseIncome />} />
-            <Route path="history" element={<div>history view</div>} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Accounts />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/account/:idAccount" element={<Account />} />
+            <Route path="/transfers" element={<FormTransfers />} />
+            <Route path="/report/:idAccount" element={<ExpenseIncome />} />
+            <Route path="/history" element={<Reports />} />
           </Route>
           <Route path="*" element={<div>404 NOT FOUND</div>} />
         </Routes>

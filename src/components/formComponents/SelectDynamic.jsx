@@ -1,29 +1,45 @@
-import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import Notification from "../alerts/Notification";
+import { Controller } from "react-hook-form";
 import "./css/form.css";
-const SelectDynamic = ({ label, name, accounts }) => {
-  const {
-    control,
-    formState: { errors },
-  } = useForm();
 
-  const list = accounts.map((item) => {
-    return { value: item.idAccount, label: item.numberAccount };
+const customStyles = {
+  option: (provided, _) => ({
+    ...provided,
+  }),
+  control: () => ({
+    width: 200,
+    height: 30,
+    border: "1px solid #000",
+    display: "flex",
+    borderRadius: 1,
+    color: "black",
+    background: "#fff",
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    textAlign: "right",
+  }),
+};
+
+const SelectDynamic = ({ label, name, control, rules, accounts, error }) => {
+  const list = accounts.map((account) => {
+    return { value: account.idAccount, label: account.numberAccount };
   });
 
   return (
-    <div className="Select">
-      <label>{label}</label>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }) => (
-          <Select className="react-select" defaultValue={null} {...field} options={list} />
-        )}
-        rules={(name, { required: { value: true, message: "Field is required" } })}
-      />
-      {errors.select?.message && <Notification error={errors.select.message} />}
+    <div className="container-dynamicSelect">
+      <div className="container-body">
+        <label>{label}:</label>
+        <Controller
+          name={name}
+          control={control}
+          defaultValue=""
+          rules={rules}
+          render={({ field }) => <Select styles={customStyles} options={list} {...field} />}
+        />
+      </div>
+      {error && <Notification message={error} />}
     </div>
   );
 };

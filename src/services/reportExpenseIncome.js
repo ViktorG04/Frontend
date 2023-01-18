@@ -1,10 +1,10 @@
 import axios from "axios";
-
 import { API_URL } from "../config/config";
 
-export const getAllAccounts = async () => {
+export const reportExpenseIncome = async (reportInfo) => {
+  const { token, ...sendData } = reportInfo;
   try {
-    const response = await axios.get(`${API_URL}/accounts`);
+    const response = await axios.post(`${API_URL}/expenseIncome`, sendData);
     return response.data;
   } catch (error) {
     if (!error.response) {
@@ -14,14 +14,5 @@ export const getAllAccounts = async () => {
     const { data, request } = error.response;
     const errorMessage = `Status: ${request.status} - ${data.msg}`;
     throw new Error(errorMessage);
-  }
-};
-
-export const getInfoAccountById = async (idAccount = "") => {
-  try {
-    const response = await axios.get(`${API_URL}/accounts/info/${idAccount}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
   }
 };

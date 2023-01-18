@@ -12,7 +12,14 @@ const initialState = {
 export const accountSlice = createSlice({
   name: "account",
   initialState,
-  reducers: {},
+  reducers: {
+    singOutAccount: () => {
+      return initialState;
+    },
+    clearNotification: (state) => {
+      return { ...state, notification: null };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAccountsByeIdUser.pending, (state) => ({
@@ -55,4 +62,5 @@ export const accountSlice = createSlice({
   },
 });
 
+export const { singOutAccount, clearNotification } = accountSlice.actions;
 export default accountSlice.reducer;

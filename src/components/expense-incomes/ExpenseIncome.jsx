@@ -1,114 +1,76 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import GridButtonForm from "../formComponents/button/GridButtonForm";
-import {
-  dateRegister,
-  amountRegister,
-  descriptionRegister,
-} from "./functionality/expenseIncomesRegister";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import TextareaContainer from "../formComponents/TextareaContainer";
-import { toast } from "react-hot-toast";
-import SelectAccount from "../accounts/SelectAccount";
-import { getCategories, getTypeTransfer } from "../../services/services";
+import GridButtonForm from "../formComponents/button/GridButtonForm";
+import { dateRegister, amountRegister, descriptionRegister } from "./expenseIncomesRegister";
+import useFormReport from "../../hooks/useFormReport";
 
 import "./css/config.css";
 
 const defaultValues = {
   date: "",
-  amount: 0.0,
+  amount: "",
   description: "",
+  idTypeTransfer: "1",
+  idCategory: "1",
 };
 
-const ExpenseIncome = () => {
+const ExpensiveIncome = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     reset,
   } = useForm({ defaultValues });
 
-  const { accounts } = useSelector((state) => state.accounts);
-
-  const [select, setSelect] = useState({ transfers: [], categories: [] });
-
-  const fetchDataSelect = useCallback(async () => {
-    const [transfers, categories] = await Promise.all([getTypeTransfer(), getCategories()]);
-    setSelect({ transfers, categories });
-  }, []);
-
-  useEffect(() => {
-    fetchDataSelect();
-  }, [fetchDataSelect]);
-
-  const onHandleSubmit = (data) => {
-    const { AccountOrigin, amount, transfer, ...safeData } = data;
-
-    //const { idAccount, available } = infoAccountOrigin;
-
-    /* if (amount > available && transfer === "1") {
-      return toast.error("Insufficient credit to add an expensive");
-    }
-
-    const report = { idAccount, amount, transfer, ...safeData };
-    console.log(report); */
-  };
-
-  const handleClick = () => {};
+  const { select, numberAccount, onHandleSubmit, onHandleClick } = useFormReport(
+    reset,
+    defaultValues
+  );
 
   return (
     <div className="container-expensiveIncome">
-      <div className="container-body">
-        <h1>Report Expense/Income</h1>
-        <form onSubmit={handleSubmit(onHandleSubmit)}>
-          <InputTextContainer
-            label="Date"
-            type="date"
-            register={dateRegister(register)}
-            error={errors.date?.message}
+      <h1>Report Expense/Income</h1>
+      <h3>Number Account: {numberAccount}</h3>
+      <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <InputTextContainer
+          label="Date"
+          type="date"
+          register={dateRegister(register)}
+          error={errors.date?.message}
+        />
+        {select.transfers ? (
+          <SelectTextContainer
+            label="Type of Transfer"
+            listSelect={select.transfers}
+            register={register("idTypeTransfer")}
           />
-          {select.transfers ? (
-            <SelectTextContainer
-              label="Type of Transfer"
-              listSelect={select.transfers}
-              register={register("idTransfer")}
-            />
-          ) : null}
-          {select.categories ? (
-            <SelectTextContainer
-              label="Category"
-              listSelect={select.categories}
-              register={register("idCategory")}
-            />
-          ) : null}
+        ) : null}
+        {select.categories ? (
+          <SelectTextContainer
+            label="Category"
+            listSelect={select.categories}
+            register={register("idCategory")}
+          />
+        ) : null}
 
-          <SelectAccount
-            AccountOrigin={watch("AccountOrigin", false)}
-            reset={reset}
-            label="Select Source Account"
-            name="AccountOrigin"
-            accounts={accounts}
-          />
-          <InputTextContainer
-            label="Amount to Transfer"
-            type="text"
-            register={amountRegister(register)}
-            error={errors.amount?.message}
-          />
-          <TextareaContainer
-            label="Description"
-            register={descriptionRegister(register)}
-            error={errors.description?.message}
-          />
-
-          <GridButtonForm onClick={handleClick} nameButtonSubmit="Process" />
-        </form>
-      </div>
+        <InputTextContainer
+          label="Amount to Transfer"
+          type="number"
+          register={amountRegister(register)}
+          error={errors.amount?.message}
+        />
+        <TextareaContainer
+          label="Description"
+          register={descriptionRegister(register)}
+          error={errors.description?.message}
+        />
+        <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Process" />
+      </form>
     </div>
   );
 };
 
-export default ExpenseIncome;
+export default ExpensiveIncome;

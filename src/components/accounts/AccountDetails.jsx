@@ -1,12 +1,6 @@
 import Paragraph from "../paragraph/Paragraph";
 
-const AccountDetails = ({
-  transferType,
-  nameAccount,
-  numberAccount,
-  amountAvailable = false,
-  handleClick,
-}) => {
+const AccountDetails = ({ selectData, watch }) => {
   return (
     <div>
       <h3>{transferType}</h3>

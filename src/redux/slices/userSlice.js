@@ -34,6 +34,7 @@ export const userSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         const { data, status } = action.payload;
+        console.log(data);
         const message = data?.msg ? `Status: ${status} - ${data.msg}` : data.errors;
         return { ...state, loading: false, error: message };
       });

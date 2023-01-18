@@ -4,9 +4,12 @@ import { toast } from "react-hot-toast";
 import { updateUser } from "../redux";
 
 const useFormProfile = (setOpen, reset, defaultValues) => {
-  const { user, token, error, notification } = useSelector((state) => state.auth);
-
-  const { idUser: id, password } = user;
+  const {
+    user: { idUser: id, password },
+    token,
+    error,
+    notification,
+  } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -16,7 +19,7 @@ const useFormProfile = (setOpen, reset, defaultValues) => {
       reset(defaultValues);
       setOpen(false);
     }
-  }, [notification]);
+  }, [notification, reset, defaultValues, setOpen]);
 
   useEffect(() => {
     if (error) {

@@ -6,8 +6,8 @@ const SelectTextContainer = ({ label, listSelect, register }) => {
       <label>{label}:</label>
       <select {...register}>
         {listSelect.map((option) => (
-          <option value={option.id} key={option.id}>
-            {option.type}
+          <option value={option.id} key={`select-${option.id}`}>
+            {option.name}
           </option>
         ))}
       </select>

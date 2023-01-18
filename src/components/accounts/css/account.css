@@ -1,0 +1,12 @@
+.container-account {
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid #10558d;
+  margin: 5px 20px;
+}
+
+.container-account > .section {
+  display: flex;
+  padding: 0 50px;
+  background: yellow;
+}

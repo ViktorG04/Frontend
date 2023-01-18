@@ -1,0 +1,10 @@
+.container-listExchange {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.container-listExchange > h1,
+h2 {
+  text-align: center;
+}

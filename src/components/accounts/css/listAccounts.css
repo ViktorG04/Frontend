@@ -1,3 +1,21 @@
 .container-accountList {
-  background-color: aqua;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-accountList > h1 {
+  text-align: center;
+}
+
+.container-accountList > .balance-container {
+  border: 2px solid #10558d;
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-accountList > .balance-container > p {
+  margin-right: 10px;
 }

@@ -1,13 +1,12 @@
 .container-accounts {
-  background-color: yellowgreen;
   display: grid;
   margin: 0%;
 }
 
-.container-accounts > .div1 {
+.container-accounts > .list {
   grid-column: span 5;
 }
 
-.container-accounts > .div2 {
+.container-accounts > .exchange {
   grid-column: 6/8;
 }

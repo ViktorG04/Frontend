@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -25,7 +25,7 @@ const useFormLogin = () => {
       toast.success("Welcome");
       navigate("/dashboard");
     }
-  }, [isLogged, error]);
+  }, [isLogged, error, navigate]);
 
   return { onHandleSubmit };
 };
