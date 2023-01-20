@@ -10,6 +10,11 @@ export const amountRegister = (register) => {
   });
 };
 
+export const dateRegister = (register) => {
+  return register("date", { required });
+};
+
+
 export const accountOriginRegister = () => {
   return (
     "accountOrigin",

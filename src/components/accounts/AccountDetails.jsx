@@ -1,13 +1,11 @@
-import Paragraph from "../paragraph/Paragraph";
-
-const AccountDetails = ({ selectData, watch }) => {
+const AccountDetails = ({ accountSelected, reset, restart = null }) => {
+  const { bankName, numberAccount, available } = accountSelected;
   return (
     <div>
-      <h3>{transferType}</h3>
-      <button onClick={handleClick}>Choose different Account</button>
-      <Paragraph description="Name" text={nameAccount} />
-      <Paragraph description="Number" text={numberAccount} />
-      {amountAvailable ? <Paragraph description="Available" text={amountAvailable} /> : null}
+      <p>{bankName}</p>
+      <p>{numberAccount}</p>
+      <p>{available}</p>
+      <button onClick={() => reset(restart)}>Select another account</button>
     </div>
   );
 };

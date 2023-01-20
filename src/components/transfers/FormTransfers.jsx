@@ -1,25 +1,31 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import { amountRegister, accountOriginRegister, accountDestinyRegister } from "./transferRegister";
-import { useForm, Controller } from "react-hook-form";
+import {
+  dateRegister,
+  amountRegister,
+  accountOriginRegister,
+  accountDestinyRegister,
+} from "./transferRegister";
+import { useForm } from "react-hook-form";
 import SelectDynamic from "../formComponents/SelectDynamic";
-import Paragraph from "../paragraph/Paragraph";
 
 import "./css/transfer.css";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import dateFormat from "../../utils/dateFormat";
-
-import Select from "react-select";
-import GridButton from "../formComponents/button/GridButton";
+import AccountDetails from "../accounts/AccountDetails";
+import Modal from "../modal/Modal";
+import Process from "./Process";
+import { getExchanges } from "../../services/exchange";
+import { findAccount } from "./findAccount";
 
 const defaultValues = {
   date: dateFormat(),
   amount: null,
   accountOrigin: false,
-  accountDestiny: false,
+  accountDestiny: { value: "", label: "" },
 };
 
 const FormTransfers = () => {
@@ -33,39 +39,66 @@ const FormTransfers = () => {
   } = useForm({ defaultValues });
 
   const { accounts } = useSelector((state) => state.accounts);
+  const { token } = useSelector((state) => state.auth);
 
-  const [transferMoney, setTransferMoney] = useState({
-    conversion: "",
-    exchange: "",
-  });
+  const accounts2 = [...accounts];
+
+  const [open, setOpen] = useState(false);
+  const [conversion, setConversion] = useState({});
+  const [accountSelected, setAccountSelected] = useState({});
 
   const navigate = useNavigate();
 
+  const accountOrigin = watch("accountOrigin", false);
+
+  useEffect(() => {
+    if (accountOrigin) {
+      const data = findAccount(accounts, accountOrigin);
+      setAccountSelected(data);
+    }
+  }, [accountOrigin, accounts]);
+
   const onHandleSubmit = async (data) => {
-    console.log(data);
+    let { accountOrigin, accountDestiny, amount } = data;
+
+    let { available } = accountSelected;
+
+    available = parseFloat(available);
+    amount = parseFloat(amount);
+
+    if (amount > available) {
+      return toast.error(
+        `insufficient credit to transfer, available: ${available}`
+      );
+    }
+
+    const idAccountOrigin = accountOrigin.value;
+    const idAccountDestiny = accountDestiny.value;
+
+    try {
+      const response = await getExchanges({
+        idAccountOrigin,
+        idAccountDestiny,
+        amount,
+        token,
+      });
+
+      setConversion({ ...response, ...data });
+      setOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onHandleClick = () => {
     reset(defaultValues);
+    setConversion({});
     navigate("/dashboard");
   };
 
-  const accountOrigin = watch("accountOrigin", false);
-  const accountDestiny = watch("accountDestination", false);
-
-  const dataAccount = (select, restart) => {
-    const { bankName, numberAccount, available } = accounts.find(
-      (account) => account.idAccount === select.value
-    );
-
-    return (
-      <div>
-        <p>{bankName}</p>
-        <p>{numberAccount}</p>
-        <p>{available}</p>
-        <button onClick={() => reset(restart)}>Select another account</button>
-      </div>
-    );
+  const onHandleClosed = () => {
+    setOpen(false);
+    setConversion({});
   };
 
   return (
@@ -73,10 +106,18 @@ const FormTransfers = () => {
       <div className="container-body">
         <h1>TRANSFER MONEY</h1>
         <form onSubmit={handleSubmit(onHandleSubmit)}>
-          <InputTextContainer label="Date" type="date" register={register("date")} disable />
-
+          <InputTextContainer
+            label="Date"
+            type="date"
+            register={dateRegister(register)}
+            disable
+          />
           {accountOrigin ? (
-            dataAccount(accountOrigin, { accountOrigin: false })
+            <AccountDetails
+              accountSelected={accountSelected}
+              reset={reset}
+              restart={{ accountOrigin: false }}
+            />
           ) : (
             <SelectDynamic
               label="Account Origin"
@@ -87,23 +128,17 @@ const FormTransfers = () => {
               error={errors.accountOrigin?.message}
             />
           )}
-
           <button>Personal Accounts</button>
           <button>Externals Accounts</button>
 
-          {accountDestiny ? (
-            dataAccount(accountDestiny, { accountDestiny: false })
-          ) : (
-            <SelectDynamic
-              label="Beneficiary Account"
-              name="accountDestiny"
-              control={control}
-              rules={accountDestinyRegister()}
-              accounts={accounts}
-              error={errors.accountDestiny?.message}
-            />
-          )}
-
+          <SelectDynamic
+            label="Account Beneficiary"
+            name="accountDestiny"
+            control={control}
+            rules={accountDestinyRegister()}
+            accounts={accounts2}
+            error={errors.accountDestiny?.message}
+          />
           <InputTextContainer
             label="Amount to Transfer"
             type="number"
@@ -111,12 +146,20 @@ const FormTransfers = () => {
             error={errors.amount?.message}
           />
 
-          <Paragraph description="Conversion Value" text={transferMoney.exchange} />
-          <Paragraph description="Amount to Transfer with divisa" text={transferMoney.conversion} />
-
-          <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Process" />
+          <GridButtonForm
+            onClick={() => onHandleClick()}
+            nameButtonSubmit="Continue"
+          />
         </form>
       </div>
+
+      <Modal isOpen={open}>
+        <Process
+          onClose={() => onHandleClosed()}
+          conversion={conversion}
+          onClick={() => onHandleClick()}
+        />
+      </Modal>
     </div>
   );
 };

@@ -34,7 +34,7 @@ const useFormReport = (reset, defaultValues) => {
 
   const onHandleSubmit = async (data) => {
     let total = parseFloat(data.amount);
-    if (total > available && data.idTypeTransfer == "1") {
+    if (total > available && data.idTypeTransfer === "1") {
       return toast.error("Insufficient credit to add an expensive");
     }
     const sendData = { idAccount, token, ...data };
