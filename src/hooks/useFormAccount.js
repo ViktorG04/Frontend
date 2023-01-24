@@ -11,14 +11,19 @@ const useFormAccount = (onClose) => {
 
   const {
     user: { idUser },
+    token
   } = useSelector((state) => state.auth);
   const { errors, notification } = useSelector((state) => state.accounts);
 
   const dispatch = useDispatch();
 
   const fetchData = useCallback(async () => {
-    const money = await getTyMoney();
-    setTypeMoney(money);
+    try {
+      const money = await getTyMoney();
+      setTypeMoney(money);
+    } catch (error) {
+      toast.error(error)
+    }
   }, []);
 
   useEffect(() => {
@@ -40,8 +45,7 @@ const useFormAccount = (onClose) => {
   }, [notification, onClose, dispatch]);
 
   const onHandleSubmit = (data) => {
-    let accountInfo = { idUser, ...data };
-    dispatch(createAccount(accountInfo));
+    dispatch(createAccount({ idUser, ...data, token }));
   };
 
   return { typeMoney, onHandleSubmit };

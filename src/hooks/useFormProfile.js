@@ -34,8 +34,7 @@ const useFormProfile = (setOpen, reset, defaultValues) => {
       return toast.error("the new password cannot be the same as the current password");
     }
 
-    const result = updateUser({ id, newPassword, token });
-    dispatch(result);
+    dispatch(updateUser({ id, newPassword, token }));
   };
 
   const handleClick = () => {

@@ -1,58 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import apiInstance from "../../services/axiosConfig";
 import { API_URL } from "../../config/config";
 
 export const getAccountsByeIdUser = createAsyncThunk(
   "account/allAccounts",
   async (getValues, { rejectWithValue }) => {
-    const { idUser: id, token } = getValues;
+    const { idUser, token } = getValues;
+    const headers = { 'x-token': token }
     try {
-      const response = await axios.get(`${API_URL}/accounts/${id}`);
+      const response = await apiInstance.get(`${API_URL}/accounts/${idUser}`, headers);
       return response.data;
     } catch (error) {
-      if (!error.response) {
-        const errorRequest = {
-          data: "Service Unavailable",
-          status: "503",
-        };
-        axios.Cancel();
-        return rejectWithValue(errorRequest);
-      }
-
-      const { data, request } = error.response;
-      const errorResponse = {
-        data,
-        status: request.status,
-      };
-      return rejectWithValue(errorResponse);
+      return rejectWithValue(error);
     }
-  }
-);
+  });
 
 export const createAccount = createAsyncThunk(
   "account/create",
   async (accountInfo, { rejectWithValue }) => {
+    const { token, ...data } = accountInfo;
     try {
-      const response = await axios.post(`${API_URL}/accounts`, accountInfo);
+      const response = await apiInstance.post(`${API_URL}/accounts`, data, token);
       return response.data;
     } catch (error) {
-      if (!error.response) {
-        const errorRequest = {
-          data: "Service Unavailable",
-          status: "503",
-        };
-        axios.Cancel();
-        return rejectWithValue(errorRequest);
-      }
-
-      console.log(error);
-      const { data, request } = error.response;
-      console.error(data);
-      const errors = {
-        data,
-        status: request.status,
-      };
-      return rejectWithValue(errors);
+      return rejectWithValue(error);
     }
   }
 );

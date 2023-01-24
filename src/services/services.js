@@ -1,32 +1,24 @@
-import axios from "axios";
 import { API_URL } from "../config/config";
+import apiInstance from "./axiosConfig";
 
 export const getCategories = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/categories`);
-    return response.data;
-  } catch (error) {
-    if (!error.response) {
-      throw new Error("Status 503 - Service Unavailable ");
-    }
-
-    const { data, request } = error.response;
-    const errorMessage = `Status: ${request.status} - ${data.msg}`;
-    throw new Error(errorMessage);
-  }
+  const response = await apiInstance.get(`${API_URL}/categories`);
+  return response.data;
 };
 
 export const getTypeTransfer = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/transfers`);
-    return response.data;
-  } catch (error) {
-    if (!error.response) {
-      throw new Error("Status 503 - Service Unavailable ");
-    }
+  const response = await apiInstance.get(`${API_URL}/transfers`);
+  return response.data;
 
-    const { data, request } = error.response;
-    const errorMessage = `Status: ${request.status} - ${data.msg}`;
-    throw new Error(errorMessage);
-  }
 };
+
+/**
+ * send data to endpoint
+ * @param {object} "token, infoTransfer"
+ * @returns {Promise<axios>} "response endpoint"
+ */
+export const transfers = async (infoTransfer) => {
+  const { token, data } = infoTransfer;
+  const response = await apiInstance.post(`${API_URL}/transfers`, data)
+  return response.data
+}

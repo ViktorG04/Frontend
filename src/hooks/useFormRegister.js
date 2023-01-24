@@ -13,7 +13,7 @@ const useFormRegister = () => {
       toast.success(request.msg);
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error);
     }
   };
 

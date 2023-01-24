@@ -18,14 +18,18 @@ const useFormReport = (reset, defaultValues) => {
   );
 
   const fetchDataSelect = useCallback(async () => {
-    const [transfers, categories] = await Promise.all([getTypeTransfer(), getCategories()]);
-    let selectTransfer = [];
-    if (!expensive) {
-      selectTransfer.push(transfers[0]);
-    } else {
-      selectTransfer = [...transfers];
+    try {
+      const [transfers, categories] = await Promise.all([getTypeTransfer(), getCategories()]);
+      let selectTransfer = [];
+      if (!expensive) {
+        selectTransfer.push(transfers[0]);
+      } else {
+        selectTransfer = [...transfers];
+      }
+      setSelect({ transfers: selectTransfer, categories });
+    } catch (error) {
+      toast.error(error)
     }
-    setSelect({ transfers: selectTransfer, categories });
   }, [expensive]);
 
   useEffect(() => {

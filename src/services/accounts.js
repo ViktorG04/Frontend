@@ -1,27 +1,15 @@
-import axios from "axios";
-
 import { API_URL } from "../config/config";
+import apiInstance from "./axiosConfig";
 
-export const getAllAccounts = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/accounts`);
-    return response.data;
-  } catch (error) {
-    if (!error.response) {
-      throw new Error("Status 503 - Service Unavailable ");
-    }
-
-    const { data, request } = error.response;
-    const errorMessage = `Status: ${request.status} - ${data.msg}`;
-    throw new Error(errorMessage);
-  }
+export const getExternalAccounts = async (idUser, token) => {
+  console.log(idUser, token)
+  const headers = { 'x-token': token }
+  const response = await apiInstance.get(`${API_URL}/accounts/transfer/${idUser}`, headers);
+  return response.data;
 };
 
-export const getInfoAccountById = async (idAccount = "") => {
-  try {
-    const response = await axios.get(`${API_URL}/accounts/info/${idAccount}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
-  }
+export const getInfoAccountById = async ({ idAccount, token }) => {
+  const headers = { 'x-token': token }
+  const response = await apiInstance.get(`${API_URL}/accounts/info/${idAccount}`, headers);
+  return response.data;
 };

@@ -23,6 +23,10 @@ const customStyles = {
 };
 
 const SelectDynamic = ({ label, name, control, rules, accounts, error }) => {
+  if (!accounts.length) {
+    return null;
+  }
+
   const list = accounts.map((account) => {
     return { value: account.idAccount, label: account.numberAccount };
   });
@@ -36,7 +40,9 @@ const SelectDynamic = ({ label, name, control, rules, accounts, error }) => {
           control={control}
           defaultValue=""
           rules={rules}
-          render={({ field }) => <Select styles={customStyles} options={list} {...field} />}
+          render={({ field }) => (
+            <Select styles={customStyles} options={list} {...field} />
+          )}
         />
       </div>
       {error && <Notification message={error} />}

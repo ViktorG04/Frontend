@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { toast } from "react-hot-toast";
 import { getCurrency } from "../../services/money";
 
 const TableDivisa = () => {
   const [currencies, setCurrencies] = useState([]);
 
   const fetchData = useCallback(async () => {
-    const data = await getCurrency();
-    setCurrencies(data);
+    try {
+      const data = await getCurrency();
+      setCurrencies(data);
+    } catch (error) {
+      toast.error(error);
+    }
   }, []);
 
   useEffect(() => {

@@ -33,10 +33,7 @@ export const userSlice = createSlice({
         return { ...state, isLogged: true, loading: false, user, token };
       })
       .addCase(signUp.rejected, (state, action) => {
-        const { data, status } = action.payload;
-        console.log(data);
-        const message = data?.msg ? `Status: ${status} - ${data.msg}` : data.errors;
-        return { ...state, loading: false, error: message };
+        return { ...state, loading: false, error: action.payload };
       });
 
     builder
@@ -54,9 +51,7 @@ export const userSlice = createSlice({
         };
       })
       .addCase(updateUser.rejected, (state, action) => {
-        const { data, status } = action.payload;
-        const message = data?.msg ? `Status: ${status} - ${data.msg}` : data.errors;
-        return { ...state, isLogged: false, loading: false, error: message };
+        return { ...state, isLogged: false, loading: false, error: action.payload };
       });
   },
 });

@@ -34,9 +34,7 @@ export const accountSlice = createSlice({
         return { ...state, loading: false, request: true, accounts };
       })
       .addCase(getAccountsByeIdUser.rejected, (state, action) => {
-        const { data, status } = action.payload;
-        const error = `Status: ${status} - ${data}`;
-        return { ...state, loading: false, errors: error };
+        return { ...state, loading: false, errors: action.payload };
       });
 
     builder
@@ -55,9 +53,7 @@ export const accountSlice = createSlice({
         };
       })
       .addCase(createAccount.rejected, (state, action) => {
-        const { data, status } = action.payload;
-        const message = data?.msg ? `Status: ${status} - ${data.msg}` : data.errors;
-        return { ...state, loading: false, request: false, errors: message };
+        return { ...state, loading: false, request: false, errors: action.payload };
       });
   },
 });

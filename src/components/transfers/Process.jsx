@@ -2,6 +2,8 @@ import React from "react";
 import GridButton from "../formComponents/button/GridButton";
 import Button from "../formComponents/button/Button";
 import Paragraph from "../paragraph/Paragraph";
+import { transfers } from "../../services/services";
+import { toast } from "react-hot-toast";
 const Process = ({ onClose, conversion, onClick }) => {
   const {
     accountDestiny = { value: "", label: "" },
@@ -11,6 +13,7 @@ const Process = ({ onClose, conversion, onClick }) => {
     date,
     exchange,
     transferTo,
+    token,
   } = conversion;
 
   const { value: idAccountDestiny, label: numberAccountDestiny } =
@@ -18,11 +21,20 @@ const Process = ({ onClose, conversion, onClick }) => {
   const { value: idAccountOrigin, label: numberAccountOrigin } = accountOrigin;
 
   const onHandleSubmit = async () => {
-    onClick();
-  };
-
-  const onHandleClick = () => {
-    onClose();
+    let data = {
+      date,
+      idAccountOrigin,
+      idAccountDestiny,
+      amountOrigin: amount,
+      amountDestiny: exchange,
+    };
+    try {
+      const result = await transfers({ data, token });
+      toast.success(result.message);
+      onClick();
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   return (
@@ -37,7 +49,7 @@ const Process = ({ onClose, conversion, onClick }) => {
       <Paragraph description="Value Currency" text={currency} />
       <Paragraph description="Value Exchange" text={exchange} />
       <GridButton>
-        <Button type="reset" name="Cancel" onClick={() => onHandleClick()} />
+        <Button type="reset" name="Cancel" onClick={() => onClose()} />
         <Button type="submit" name="Confirm" onClick={() => onHandleSubmit()} />
       </GridButton>
     </div>

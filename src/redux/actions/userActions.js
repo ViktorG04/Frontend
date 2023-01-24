@@ -1,25 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import apiInstance from "../../services/axiosConfig";
 import { API_URL } from "../../config/config";
 
 export const signUp = createAsyncThunk("auth/signUp", async (userInfo, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${API_URL}/auth`, userInfo);
+    const response = await apiInstance.post(`${API_URL}/auth`, userInfo);
     return response.data;
   } catch (error) {
-    if (!error.response) {
-      const errorRequest = {
-        data: { msg: "Service Unavailable" },
-        status: "503",
-      };
-      return rejectWithValue(errorRequest);
-    }
-    const { data, request } = error.response;
-    const errors = {
-      data,
-      status: request.status,
-    };
-    return rejectWithValue(errors);
+    return rejectWithValue(error);
   }
 });
 
@@ -27,23 +15,12 @@ export const updateUser = createAsyncThunk(
   "user/updated",
   async (userInfo, { rejectWithValue }) => {
     const { id, newPassword, token } = userInfo;
+    const headers = { 'x-token': token }
     try {
-      const response = await axios.put(`${API_URL}/user/${id}`, { newPassword });
+      const response = await apiInstance.put(`${API_URL}/user/${id}`, { newPassword }, headers);
       return response.data;
     } catch (error) {
-      if (!error.response) {
-        const errorRequest = {
-          data: { msg: "Service Unavailable" },
-          status: "503",
-        };
-        return rejectWithValue(errorRequest);
-      }
-      const { data, request } = error.response;
-      const errors = {
-        data,
-        status: request.status,
-      };
-      return rejectWithValue(errors);
+      return rejectWithValue(error);
     }
   }
 );
