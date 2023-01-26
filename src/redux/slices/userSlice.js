@@ -14,9 +14,6 @@ export const userSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    clearNotification: (state) => {
-      return { ...state, notification: null };
-    },
     signOut: () => {
       return initialState;
     },
@@ -30,7 +27,7 @@ export const userSlice = createSlice({
       .addCase(signUp.fulfilled, (state, action) => {
         const { token, ...user } = action.payload;
 
-        return { ...state, isLogged: true, loading: false, user, token };
+        return { ...state, isLogged: true, loading: false, user, token, error: null };
       })
       .addCase(signUp.rejected, (state, action) => {
         return { ...state, loading: false, error: action.payload };
@@ -48,6 +45,7 @@ export const userSlice = createSlice({
           loading: false,
           notification: message,
           user: { ...state.user, password: newPassword },
+          error: null
         };
       })
       .addCase(updateUser.rejected, (state, action) => {
@@ -56,6 +54,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearNotification, signOut } = userSlice.actions;
+export const { signOut } = userSlice.actions;
 
 export default userSlice.reducer;

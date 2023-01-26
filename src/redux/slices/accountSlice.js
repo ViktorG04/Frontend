@@ -15,10 +15,7 @@ export const accountSlice = createSlice({
   reducers: {
     singOutAccount: () => {
       return initialState;
-    },
-    clearNotification: (state) => {
-      return { ...state, notification: null };
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -31,7 +28,7 @@ export const accountSlice = createSlice({
         if (action.payload) {
           accounts = action.payload;
         }
-        return { ...state, loading: false, request: true, accounts };
+        return { ...state, loading: false, request: true, accounts, errors: null };
       })
       .addCase(getAccountsByeIdUser.rejected, (state, action) => {
         return { ...state, loading: false, errors: action.payload };
@@ -50,6 +47,7 @@ export const accountSlice = createSlice({
           request: true,
           accounts: [...state.accounts, account],
           notification: message,
+          errors: null
         };
       })
       .addCase(createAccount.rejected, (state, action) => {
@@ -58,5 +56,5 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { singOutAccount, clearNotification } = accountSlice.actions;
+export const { singOutAccount } = accountSlice.actions;
 export default accountSlice.reducer;

@@ -7,6 +7,7 @@ export const signUp = createAsyncThunk("auth/signUp", async (userInfo, { rejectW
     const response = await apiInstance.post(`${API_URL}/auth`, userInfo);
     return response.data;
   } catch (error) {
+    console.log(error)
     return rejectWithValue(error);
   }
 });
@@ -15,9 +16,13 @@ export const updateUser = createAsyncThunk(
   "user/updated",
   async (userInfo, { rejectWithValue }) => {
     const { id, newPassword, token } = userInfo;
-    const headers = { 'x-token': token }
+    const config = {
+      headers: {
+        'x-token': token
+      }
+    }
     try {
-      const response = await apiInstance.put(`${API_URL}/user/${id}`, { newPassword }, headers);
+      const response = await apiInstance.put(`${API_URL}/user/${id}`, { newPassword }, config);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

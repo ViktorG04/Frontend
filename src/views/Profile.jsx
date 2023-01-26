@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/modal/Modal";
@@ -7,7 +7,6 @@ import NameEmailForm from "../components/user/NameEmailForm";
 import GridButton from "../components/formComponents/button/GridButton";
 import Button from "../components/formComponents/button/Button";
 import ProfileForm from "../components/user/ProfileForm";
-import { clearNotification } from "../redux/slices/userSlice";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -20,12 +19,10 @@ const Profile = () => {
     formState: { errors },
   } = useForm({ defaultValues: { name, email } });
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onHandleClick = () => {
     navigate("/dashboard");
-    dispatch(clearNotification());
   };
 
   return (
@@ -35,7 +32,11 @@ const Profile = () => {
         <NameEmailForm register={register} errors={errors} disable={true} />
         <GridButton>
           <Button type="reset" name="Cancel" onClick={onHandleClick} />
-          <Button type="button" name="Update Password" onClick={() => setOpen(true)} />
+          <Button
+            type="button"
+            name="Update Password"
+            onClick={() => setOpen(true)}
+          />
         </GridButton>
       </div>
       <Modal isOpen={open}>

@@ -10,7 +10,7 @@ const useFormRegister = () => {
 
     try {
       const request = await registered(safeData);
-      toast.success(request.msg);
+      toast.success(request);
       navigate("/");
     } catch (error) {
       toast.error(error);

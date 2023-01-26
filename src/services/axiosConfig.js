@@ -7,13 +7,10 @@ apiInstance.interceptors.response.use(
   (response) => response,
   (err) => {
     if (!err.response) {
-      return Promise.reject({
-        status: 503,
-        timestamp: new Date(),
-        message: "Status 503 - Service Unavailable",
-        error: "Unexpected error"
-      });
+      return Promise.reject("Status 503 - Service Unavailable");
     }
+
+    console.log(err.response)
     const errors = err.response.data;
     if (errors?.message) {
       return Promise.reject(errors.message);

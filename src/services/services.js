@@ -12,13 +12,13 @@ export const getTypeTransfer = async () => {
 
 };
 
-/**
- * send data to endpoint
- * @param {object} "token, infoTransfer"
- * @returns {Promise<axios>} "response endpoint"
- */
 export const transfers = async (infoTransfer) => {
   const { token, data } = infoTransfer;
-  const response = await apiInstance.post(`${API_URL}/transfers`, data)
+  const config = {
+    headers: {
+      'x-token': token
+    }
+  }
+  const response = await apiInstance.post(`${API_URL}/transfers`, data, config)
   return response.data
 }

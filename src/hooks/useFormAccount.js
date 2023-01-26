@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createAccount } from "../redux";
-import { clearNotification } from "../redux/slices/accountSlice";
 import { getTyMoney } from "../services/money";
-
 import toast from "react-hot-toast";
 
 const useFormAccount = (onClose) => {
@@ -40,9 +38,8 @@ const useFormAccount = (onClose) => {
     if (notification) {
       toast.success(notification);
       onClose();
-      dispatch(clearNotification());
     }
-  }, [notification, onClose, dispatch]);
+  }, [notification, onClose]);
 
   const onHandleSubmit = (data) => {
     dispatch(createAccount({ idUser, ...data, token }));
