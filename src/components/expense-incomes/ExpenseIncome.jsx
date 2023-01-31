@@ -4,8 +4,8 @@ import InputTextContainer from "../formComponents/InputTextContainer";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import TextareaContainer from "../formComponents/TextareaContainer";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
-import { dateRegister, amountRegister, descriptionRegister } from "./expenseIncomesRegister";
 import useFormReport from "../../hooks/useFormReport";
+import useRegisterExpenseIncome from "../../hooks/useRegisterExpenseIncome";
 
 import "./css/config.css";
 
@@ -25,10 +25,11 @@ const ExpensiveIncome = () => {
     reset,
   } = useForm({ defaultValues });
 
-  const { select, numberAccount, onHandleSubmit, onHandleClick } = useFormReport(
-    reset,
-    defaultValues
-  );
+  const { dateRegister, descriptionRegister, amountRegister } =
+    useRegisterExpenseIncome({ register });
+
+  const { select, numberAccount, onHandleSubmit, onHandleClick } =
+    useFormReport(reset);
 
   return (
     <div className="container-expensiveIncome">
@@ -38,7 +39,7 @@ const ExpensiveIncome = () => {
         <InputTextContainer
           label="Date"
           type="date"
-          register={dateRegister(register)}
+          register={dateRegister()}
           error={errors.date?.message}
         />
         {select.transfers ? (
@@ -57,17 +58,20 @@ const ExpensiveIncome = () => {
         ) : null}
 
         <InputTextContainer
-          label="Amount to Transfer"
-          type="number"
-          register={amountRegister(register)}
+          label="Amount"
+          type="text"
+          register={amountRegister()}
           error={errors.amount?.message}
         />
         <TextareaContainer
           label="Description"
-          register={descriptionRegister(register)}
+          register={descriptionRegister()}
           error={errors.description?.message}
         />
-        <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Process" />
+        <GridButtonForm
+          onClick={() => onHandleClick()}
+          nameButtonSubmit="Process"
+        />
       </form>
     </div>
   );

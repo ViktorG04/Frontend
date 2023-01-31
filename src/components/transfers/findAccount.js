@@ -1,9 +1,8 @@
 
 export const findAccount = (accounts, selectAccount) => {
 
-  const { idAccount, bankName, numberAccount, available } = accounts.find(
+  const { idAccount, bankName, numberAccount, available, money } = accounts.find(
     (account) => account.idAccount === selectAccount.value
   );
-
-  return { idAccount, bankName, numberAccount, available }
+  return { idAccount, bankName, numberAccount, available, money }
 }

@@ -1,22 +1,11 @@
-import { API_URL } from "../config/config";
-import apiInstance from "./axiosConfig";
+import { methodGET } from "../api/methodAPI"
 
 export const getExternalAccounts = async (idUser, token) => {
-  const config = {
-    headers: {
-      'x-token': token
-    }
-  }
-  const response = await apiInstance.get(`${API_URL}/accounts/transfer/${idUser}`, config);
-  return response.data;
+  const response = await methodGET({ url: `accounts/transfer/${idUser}`, token })
+  return response;
 };
 
 export const getInfoAccountById = async (idAccount, token) => {
-  const config = {
-    headers: {
-      'x-token': token
-    }
-  }
-  const response = await apiInstance.get(`${API_URL}/accounts/info/${idAccount}`, config);
-  return response.data;
+  const response = await methodGET({ url: `accounts/info/${idAccount}`, token })
+  return response;
 };

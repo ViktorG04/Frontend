@@ -3,12 +3,8 @@ import SelectTextContainer from "../formComponents/SelectTextContainer";
 import InputTextContainer from "../formComponents/InputTextContainer";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import useFormAccount from "../../hooks/useFormAccount";
-import {
-  accountCredit,
-  accountDate,
-  accountName,
-  accountNumber,
-} from "./functionality/addAccountRegister";
+import useRegisterAccount from "../../hooks/useRegisterAccount";
+
 import "./css/formAccount.css";
 
 const defaultValues = {
@@ -16,9 +12,10 @@ const defaultValues = {
   bankName: "",
   numberAccount: "",
   credit: "",
+  idTypeMoney: "1",
 };
 
-const FormAccount = ({ onClose }) => {
+const FormAccount = ({ onCloseModel }) => {
   const {
     register,
     handleSubmit,
@@ -26,12 +23,13 @@ const FormAccount = ({ onClose }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const { typeMoney, onHandleSubmit } = useFormAccount(onClose);
+  const { accountName, accountNumber, accountDate, accountCredit } =
+    useRegisterAccount({ register });
 
-  const onHandleClick = () => {
-    reset(defaultValues);
-    onClose();
-  };
+  const { typeMoney, onHandleSubmit, onHandleClick } = useFormAccount(
+    reset,
+    onCloseModel
+  );
 
   return (
     <div className="container-form">
@@ -40,13 +38,13 @@ const FormAccount = ({ onClose }) => {
         <InputTextContainer
           label="Name of the Bank"
           type="text"
-          register={accountName(register)}
+          register={accountName()}
           error={errors.bankName?.message}
         />
         <InputTextContainer
           label="Account number"
           type="number"
-          register={accountNumber(register)}
+          register={accountNumber()}
           error={errors.numberAccount?.message}
         />
         <SelectTextContainer
@@ -57,13 +55,13 @@ const FormAccount = ({ onClose }) => {
         <InputTextContainer
           label="Expiration date"
           type="date"
-          register={accountDate(register)}
+          register={accountDate()}
           error={errors.dateExpiration?.message}
         />
         <InputTextContainer
           label="Account credit"
           type="text"
-          register={accountCredit(register)}
+          register={accountCredit()}
           error={errors.credit?.message}
         />
         <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Create" />

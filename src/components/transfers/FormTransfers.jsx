@@ -2,7 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import InputTextContainer from "../formComponents/InputTextContainer";
+import InputCheckBox from "../formComponents/InputCheckBox";
 import SelectDynamic from "../formComponents/SelectDynamic";
+import TextareaContainer from "../formComponents/TextareaContainer";
 import GridButton from "../formComponents/button/GridButton";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import AccountDetails from "../accounts/AccountDetails";
@@ -12,12 +14,8 @@ import Modal from "../modal/Modal";
 import Process from "./Process";
 import dateFormat from "../../utils/dateFormat.js";
 import useFormTransfer from "../../hooks/useFormTransfer";
-import {
-  dateRegister,
-  amountRegister,
-  accountOriginRegister,
-  accountDestinyRegister,
-} from "./transferRegister";
+import useRegisterTransfer from "../../hooks/useRegisterTransfer";
+import useCheckButton from "../../hooks/useCheckButton";
 import "./css/transfer.css";
 
 const defaultValues = {
@@ -25,6 +23,7 @@ const defaultValues = {
   amount: null,
   accountOrigin: false,
   accountDestiny: false,
+  description: "",
 };
 
 const FormTransfers = () => {
@@ -38,17 +37,25 @@ const FormTransfers = () => {
   } = useForm({ defaultValues });
 
   const {
+    amountRegister,
+    dateRegister,
+    accountOriginRegister,
+    accountDestinyRegister,
+    descriptionRegister,
+  } = useRegisterTransfer({ register });
+
+  const {
     accountOrigin,
     accountSelected,
-    check,
     conversion,
     open,
-    onHandleClickCheckPersonal,
-    onHandleClickCheckAnotherAccounts,
     onHandleSubmit,
     onHandleClosed,
     onHandleClick,
   } = useFormTransfer(watch, reset, defaultValues);
+
+  const { check, onHandleCheckPersonal, onHandleCheckAnother } =
+    useCheckButton();
 
   const { personalAccounts, anotherAccounts } = check;
 
@@ -62,7 +69,7 @@ const FormTransfers = () => {
           <InputTextContainer
             label="Date"
             type="date"
-            register={dateRegister(register)}
+            register={dateRegister()}
             disable
           />
           {accountOrigin ? (
@@ -82,24 +89,18 @@ const FormTransfers = () => {
             />
           )}
           <GridButton>
-            <div>
-              <label>Personal Accounts</label>
-              <input
-                type="checkbox"
-                checked={personalAccounts}
-                disabled={anotherAccounts}
-                onChange={(event) => onHandleClickCheckPersonal(event)}
-              />
-            </div>
-            <div>
-              <label>Externals Accounts</label>
-              <input
-                type="checkbox"
-                checked={anotherAccounts}
-                disabled={personalAccounts}
-                onChange={(event) => onHandleClickCheckAnotherAccounts(event)}
-              />
-            </div>
+            <InputCheckBox
+              label="Personal Accounts"
+              checked={personalAccounts}
+              disabled={anotherAccounts}
+              onHandleClick={(event) => onHandleCheckPersonal(event)}
+            />
+            <InputCheckBox
+              label="Externals Accounts"
+              checked={anotherAccounts}
+              disabled={personalAccounts}
+              onHandleClick={(event) => onHandleCheckAnother(event)}
+            />
           </GridButton>
 
           {personalAccounts ? (
@@ -119,9 +120,14 @@ const FormTransfers = () => {
 
           <InputTextContainer
             label="Amount to Transfer"
-            type="number"
-            register={amountRegister(register)}
+            type="text"
+            register={amountRegister()}
             error={errors.amount?.message}
+          />
+          <TextareaContainer
+            label="Description"
+            register={descriptionRegister()}
+            error={errors.description?.message}
           />
 
           <GridButtonForm
@@ -133,9 +139,9 @@ const FormTransfers = () => {
 
       <Modal isOpen={open}>
         <Process
-          onClose={() => onHandleClosed()}
+          cancelModal={() => onHandleClosed()}
           conversion={conversion}
-          onClick={() => onHandleClick()}
+          onHandleProcess={() => onHandleClick()}
         />
       </Modal>
     </div>

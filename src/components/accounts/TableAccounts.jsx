@@ -10,6 +10,7 @@ const TableAccounts = ({ accounts }) => {
           <th>DESCRIPTION</th>
           <th>PRODUCT</th>
           <th>AVAILABLE</th>
+          <th>EXPENSIVE</th>
           <th>CURRENCY</th>
           <th>DATE EXPIRATION</th>
           <th>WATCH</th>
@@ -19,14 +20,15 @@ const TableAccounts = ({ accounts }) => {
       <tbody>
         {accounts.map((account, index) => (
           <tr key={`account-${index}`}>
-            <td>{index + 1}</td>
+            <td>{parseInt(index) + 1}</td>
             <td>{account.bankName}</td>
             <td>{account.numberAccount}</td>
             <td>{account.available}</td>
+            <td>{account.expensive}</td>
             <td>{account.money}</td>
             <td>{account.date}</td>
             <td>
-              <Link to={`/account/${account.idAccount}`}>View...</Link>
+              <Link to={`/account/${account.idAccount}`}>Details</Link>
             </td>
             <td>
               <Link to={`/report/${account.idAccount}`}> Report</Link>

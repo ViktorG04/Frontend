@@ -3,8 +3,7 @@ import { getAccountsByeIdUser, createAccount } from "../actions/accountActions";
 
 const initialState = {
   loading: false,
-  request: false,
-  errors: undefined,
+  errors: null,
   accounts: [],
   notification: null,
 };
@@ -13,8 +12,11 @@ export const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    singOutAccount: () => {
+    signOutAccount: () => {
       return initialState;
+    },
+    clearNotification: (state) => {
+      return { ...state, notification: null, errors: false }
     }
   },
   extraReducers: (builder) => {
@@ -24,11 +26,8 @@ export const accountSlice = createSlice({
         loading: true,
       }))
       .addCase(getAccountsByeIdUser.fulfilled, (state, action) => {
-        let accounts = [];
-        if (action.payload) {
-          accounts = action.payload;
-        }
-        return { ...state, loading: false, request: true, accounts, errors: null };
+        const accounts = action.payload ? action.payload : [];
+        return { ...state, loading: false, accounts };
       })
       .addCase(getAccountsByeIdUser.rejected, (state, action) => {
         return { ...state, loading: false, errors: action.payload };
@@ -44,17 +43,15 @@ export const accountSlice = createSlice({
         return {
           ...state,
           loading: false,
-          request: true,
           accounts: [...state.accounts, account],
           notification: message,
-          errors: null
         };
       })
       .addCase(createAccount.rejected, (state, action) => {
-        return { ...state, loading: false, request: false, errors: action.payload };
+        return { ...state, loading: false, errors: action.payload };
       });
   },
 });
 
-export const { singOutAccount } = accountSlice.actions;
+export const { signOutAccount, clearNotification } = accountSlice.actions;
 export default accountSlice.reducer;

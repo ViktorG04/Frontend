@@ -2,10 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import PasswordForm from "./PasswordForm";
 import InputTextContainer from "../formComponents/InputTextContainer";
-import { passwordValidate } from "./functionality/userRegister";
-import "./css/userForm.css";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import useFormProfile from "../../hooks/useFormProfile";
+import useRegisterUser from "../../hooks/useRegisterUser";
+import "./css/userForm.css";
 
 const defaultValues = {
   currentPassword: "",
@@ -22,7 +22,13 @@ const ProfileForm = ({ setOpen }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const { password, onHandleSubmit, handleClick } = useFormProfile(setOpen, reset, defaultValues);
+  const { passwordValidate } = useRegisterUser({ register });
+
+  const { password, onHandleSubmit, handleClick } = useFormProfile(
+    setOpen,
+    reset,
+    defaultValues
+  );
 
   return (
     <div className="container-form-profile">
@@ -31,10 +37,14 @@ const ProfileForm = ({ setOpen }) => {
         <InputTextContainer
           label="Current Password"
           type="password"
-          register={passwordValidate(register, password)}
+          register={passwordValidate(password)}
           error={errors.currentPassword?.message}
         />
-        <PasswordForm register={register} errors={errors} getValues={getValues} />
+        <PasswordForm
+          register={register}
+          errors={errors}
+          getValues={getValues}
+        />
         <GridButtonForm onClick={handleClick} nameButtonSubmit="Update" />
       </form>
     </div>

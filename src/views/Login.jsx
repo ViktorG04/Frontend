@@ -2,8 +2,7 @@ import { useForm } from "react-hook-form";
 import useFormLogin from "../hooks/useFormLogin";
 import InputTextContainer from "../components/formComponents/InputTextContainer";
 import GridButtonForm from "../components/formComponents/button/GridButtonForm";
-import { emailRegister, passwordRegister } from "../components/user/functionality/userRegister";
-
+import useRegisterUser from "../hooks/useRegisterUser";
 import "./css/login.css";
 
 const defaultValues = {
@@ -19,6 +18,8 @@ const Login = () => {
     reset,
   } = useForm({ defaultValues });
 
+  const { emailRegister, passwordRegister } = useRegisterUser({ register });
+
   const { onHandleSubmit } = useFormLogin();
 
   const onHandleClick = () => {
@@ -32,13 +33,13 @@ const Login = () => {
         <InputTextContainer
           label="Email"
           type="text"
-          register={emailRegister(register)}
+          register={emailRegister()}
           error={errors.email?.message}
         />
         <InputTextContainer
           label="Password"
           type="password"
-          register={passwordRegister(register)}
+          register={passwordRegister()}
           error={errors.password?.message}
         />
         <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Log In" />

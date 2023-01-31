@@ -1,19 +1,23 @@
 import InputTextContainer from "../formComponents/InputTextContainer";
-import { passwordRegister, confirmPasswordRegister } from "./functionality/userRegister";
+import useRegisterUser from "../../hooks/useRegisterUser";
 
 const PasswordForm = ({ register, errors, getValues }) => {
+  const { passwordRegister, confirmPasswordRegister } = useRegisterUser({
+    register,
+  });
+
   return (
     <>
       <InputTextContainer
         label="New Password"
         type="password"
-        register={passwordRegister(register)}
+        register={passwordRegister()}
         error={errors.password?.message}
       />
       <InputTextContainer
         label="Confirm Password"
         type="password"
-        register={confirmPasswordRegister(register, getValues)}
+        register={confirmPasswordRegister(getValues)}
         error={errors.confirmPassword?.message}
       />
     </>

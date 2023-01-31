@@ -1,23 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { toast } from "react-hot-toast";
-import { getCurrency } from "../../services/money";
+import React from "react";
+import useTableDivisa from "../../hooks/useTableDivisa";
 
 const TableDivisa = () => {
-  const [currencies, setCurrencies] = useState([]);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const data = await getCurrency();
-      setCurrencies(data);
-    } catch (error) {
-      toast.error(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
+  const { currencies } = useTableDivisa();
   return (
     <table className="table">
       <thead>

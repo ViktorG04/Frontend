@@ -10,13 +10,17 @@ apiInstance.interceptors.response.use(
       return Promise.reject("Status 503 - Service Unavailable");
     }
 
-    console.log(err.response)
     const errors = err.response.data;
     if (errors?.message) {
       return Promise.reject(errors.message);
     }
+
+    if (errors.length === 1) {
+      return Promise.reject(errors[0].msg);
+    }
+
     return Promise.reject(errors);
-  }
-)
+  },
+);
 
 export default apiInstance;

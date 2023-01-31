@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { updateUser } from "../redux";
+import { clearNotification } from "../redux/slices/userSlice";
 
 const useFormProfile = (setOpen, reset, defaultValues) => {
   const {
@@ -18,8 +19,9 @@ const useFormProfile = (setOpen, reset, defaultValues) => {
       toast.success(notification);
       reset(defaultValues);
       setOpen(false);
+      dispatch(clearNotification());
     }
-  }, [notification, reset, defaultValues, setOpen]);
+  }, [notification, reset, defaultValues, setOpen, dispatch]);
 
   useEffect(() => {
     if (error) {

@@ -1,7 +1,6 @@
-import apiInstance from "./axiosConfig";
-import { API_URL } from "../config/config";
+import { methodPOST } from "../api/methodAPI"
 
 export const registered = async (profileInfo) => {
-  const response = await apiInstance.post(`${API_URL}/register`, profileInfo);
-  return response.data;
+  const response = await methodPOST({ url: `register`, data: profileInfo });
+  return response;
 };

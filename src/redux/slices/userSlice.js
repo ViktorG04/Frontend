@@ -17,6 +17,9 @@ export const userSlice = createSlice({
     signOut: () => {
       return initialState;
     },
+    clearNotification: (state) => {
+      return { ...state, notification: null }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +57,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { signOut } = userSlice.actions;
+export const { signOut, clearNotification } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../redux/slices/userSlice";
-import { singOutAccount } from "../../redux/slices/accountSlice";
+import { signOutAccount } from "../../redux/slices/accountSlice";
 import "./css/navbar.css";
 
 const LinkConfig = ({ link }) => {
@@ -11,7 +11,7 @@ const LinkConfig = ({ link }) => {
   const dispatch = useDispatch();
   const onHandleClick = () => {
     dispatch(signOut());
-    dispatch(singOutAccount());
+    dispatch(signOutAccount());
   };
 
   if (linkName !== "Sing out") {
