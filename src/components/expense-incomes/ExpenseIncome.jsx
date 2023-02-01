@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { SYMBOL_MONEY } from "../../config/config";
 import InputTextContainer from "../formComponents/InputTextContainer";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import TextareaContainer from "../formComponents/TextareaContainer";
@@ -28,8 +29,10 @@ const ExpensiveIncome = () => {
   const { dateRegister, descriptionRegister, amountRegister } =
     useRegisterExpenseIncome({ register });
 
-  const { select, numberAccount, onHandleSubmit, onHandleClick } =
+  const { select, numberAccount, money, onHandleSubmit, onHandleClick } =
     useFormReport(reset);
+
+  const symbol = SYMBOL_MONEY[money];
 
   return (
     <div className="container-expensiveIncome">
@@ -62,6 +65,7 @@ const ExpensiveIncome = () => {
           type="text"
           register={amountRegister()}
           error={errors.amount?.message}
+          placeholder={`${symbol} 0.00`}
         />
         <TextareaContainer
           label="Description"

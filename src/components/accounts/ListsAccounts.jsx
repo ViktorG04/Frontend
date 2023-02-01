@@ -19,7 +19,7 @@ const ListsAccounts = () => {
         name="Create new Account"
       />
       <Modal isOpen={open}>
-        <FormAccount onCloseModel={() => closeModal()} />
+        <FormAccount isModal={open} onCloseModel={() => closeModal()} />
       </Modal>
       {loading ? <p>Loading...</p> : null}
       <TableAccounts accounts={accounts} />

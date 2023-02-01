@@ -1,34 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getExchanges } from '../services/exchange';
-import { findAccount } from '../components/transfers/findAccount';
 import toast from 'react-hot-toast';
+import useFindAccount from "../hooks/useFindAccount";
 
 const useFormTransfer = (watch, reset) => {
 
   const { token } = useSelector((state) => state.auth);
-  const { accounts } = useSelector((state) => state.accounts);
 
   const [open, setOpen] = useState(false);
   const [conversion, setConversion] = useState({});
-  const [accountSelected, setAccountSelected] = useState({});
 
   const navigate = useNavigate();
 
   const accountOrigin = watch("accountOrigin", false);
+  const accountDestiny = watch("accountDestiny", false);
 
-  useEffect(() => {
-    if (accountOrigin) {
-      const data = findAccount(accounts, accountOrigin);
-      setAccountSelected(data);
-    }
-  }, [accountOrigin, accounts]);
+  const { accountFound } = useFindAccount({ idAccount: accountOrigin.value })
 
   const onHandleSubmit = async (data) => {
     let { accountOrigin, accountDestiny, amount } = data;
 
-    let { available } = accountSelected;
+    let { available } = accountFound;
 
     available = parseFloat(available);
     amount = parseFloat(amount);
@@ -71,7 +65,8 @@ const useFormTransfer = (watch, reset) => {
 
   return {
     accountOrigin,
-    accountSelected,
+    accountDestiny,
+    accountFound,
     conversion,
     open,
     onHandleSubmit,

@@ -17,11 +17,17 @@
   justify-content: space-between;
 }
 
-.container-InputLabel > .container-body > input[type="date"] {
+.container-InputLabel > .container-body > input {
   width: 46%;
   margin-left: 25px;
   font-size: 16px;
   text-align: center;
+}
+
+.container-InputLabel > .container-body > input[type="text"]::placeholder {
+  color: black;
+  font-size: 16px;
+  text-align: left;
 }
 
 /* -------------------------TEXTAREA------------------------------- */
@@ -44,9 +50,9 @@
 }
 .container-textarea .container-body > textarea {
   min-width: 60%;
-  max-width: 60%;
-  max-height: 30px;
-  min-height: 20px;
+  max-width: 60px;
+  max-height: 40px;
+  min-height: 40px;
 }
 
 /* -------------------------SELECT------------------------------- */

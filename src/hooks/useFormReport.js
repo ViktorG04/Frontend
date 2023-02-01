@@ -5,18 +5,16 @@ import { toast } from "react-hot-toast";
 import { getCategories, getTypeTransfer } from "../services/services";
 import { reportExpenseIncome } from "../services/reportExpenseIncome";
 import { EXPENSIVE_SELECTED } from "../config/config";
+import useFindAccount from "./useFindAccount";
 
 const useFormReport = (reset) => {
   const [select, setSelect] = useState({ transfers: [], categories: [] });
   const { token } = useSelector((state) => state.auth);
-  const { accounts } = useSelector((state) => state.accounts);
   const { idAccount } = useParams();
 
   const navigate = useNavigate();
 
-  const { numberAccount, available, expensive } = accounts.find(
-    (account) => account.idAccount === idAccount
-  );
+  const { accountFound: { numberAccount, available, expensive, money } } = useFindAccount({ idAccount })
 
   const fetchDataSelect = useCallback(async () => {
     try {
@@ -60,7 +58,7 @@ const useFormReport = (reset) => {
     navigate("/dashboard");
   };
 
-  return { select, numberAccount, onHandleSubmit, onHandleClick };
+  return { select, numberAccount, money, onHandleSubmit, onHandleClick };
 };
 
 export default useFormReport;

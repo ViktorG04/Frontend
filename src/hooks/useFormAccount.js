@@ -5,7 +5,7 @@ import { getTyMoney } from "../services/money";
 import toast from "react-hot-toast";
 import { clearNotification } from "../redux/slices/accountSlice";
 
-const useFormAccount = (reset, onCloseModal) => {
+const useFormAccount = (reset, onCloseModal, isModal) => {
   const [typeMoney, setTypeMoney] = useState([]);
 
   const {
@@ -26,8 +26,10 @@ const useFormAccount = (reset, onCloseModal) => {
   }, [token]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (isModal) {
+      fetchData();
+    }
+  }, [fetchData, isModal]);
 
   useEffect(() => {
     if (errors) {

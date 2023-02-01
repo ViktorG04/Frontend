@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAccountsByeIdUser, createAccount } from "../actions/accountActions";
+import { getAccountsByeIdUser, createAccount, updateStateAccount } from "../actions/accountActions";
 
 const initialState = {
   loading: false,
@@ -48,6 +48,25 @@ export const accountSlice = createSlice({
         };
       })
       .addCase(createAccount.rejected, (state, action) => {
+        return { ...state, loading: false, errors: action.payload };
+      });
+
+    builder
+      .addCase(updateStateAccount.pending, (state) => ({
+        ...state,
+        loading: true,
+      }))
+      .addCase(updateStateAccount.fulfilled, (state, action) => {
+        const { message, idAccount } = action.payload;
+        const accountFilter = state.accounts.filter((account) => account.idAccount !== idAccount);
+        return {
+          ...state,
+          loading: false,
+          accounts: [...accountFilter],
+          notification: message,
+        }
+      })
+      .addCase(updateStateAccount.rejected, (state, action) => {
         return { ...state, loading: false, errors: action.payload };
       });
   },

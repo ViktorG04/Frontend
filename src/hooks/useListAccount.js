@@ -17,8 +17,10 @@ const useListAccount = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAccountsByeIdUser({ idUser, token }));
-  }, [dispatch, idUser, token]);
+    if (!accounts.length) {
+      dispatch(getAccountsByeIdUser({ idUser, token }));
+    }
+  }, [accounts, dispatch, idUser, token]);
 
   useEffect(() => {
     if (accounts.length) {

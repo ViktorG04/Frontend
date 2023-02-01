@@ -4,7 +4,6 @@ import InputTextContainer from "../formComponents/InputTextContainer";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import useFormAccount from "../../hooks/useFormAccount";
 import useRegisterAccount from "../../hooks/useRegisterAccount";
-
 import "./css/formAccount.css";
 
 const defaultValues = {
@@ -15,7 +14,7 @@ const defaultValues = {
   idTypeMoney: "1",
 };
 
-const FormAccount = ({ onCloseModel }) => {
+const FormAccount = ({ isModal, onCloseModel }) => {
   const {
     register,
     handleSubmit,
@@ -28,7 +27,8 @@ const FormAccount = ({ onCloseModel }) => {
 
   const { typeMoney, onHandleSubmit, onHandleClick } = useFormAccount(
     reset,
-    onCloseModel
+    onCloseModel,
+    isModal
   );
 
   return (

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { methodGET, methodPOST } from "../../api/methodAPI"
+import { methodGET, methodPOST, methodPUT } from "../../api/methodAPI"
 
 export const getAccountsByeIdUser = createAsyncThunk(
   "account/allAccounts",
@@ -22,6 +22,19 @@ export const createAccount = createAsyncThunk(
       return response;
     } catch (error) {
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateStateAccount = createAsyncThunk(
+  "account/delete",
+  async (accountInfo, { rejectWithValue }) => {
+    const { token, idAccount } = accountInfo;
+    try {
+      const response = await methodPUT({ url: `accounts/${idAccount}`, token })
+      return response;
+    } catch (error) {
+      return rejectWithValue(error)
     }
   }
 );

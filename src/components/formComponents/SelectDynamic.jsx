@@ -24,7 +24,7 @@ const customStyles = {
 
 const SelectDynamic = ({ label, name, control, rules, accounts, error }) => {
   if (!accounts.length) {
-    return null;
+    return <Notification message="NOT EXIST ACCOUNTS" />;
   }
 
   const list = accounts.map((account) => {

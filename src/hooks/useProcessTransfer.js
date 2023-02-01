@@ -27,8 +27,8 @@ const useProcessTransfer = (conversion, onClick) => {
       date,
       idAccountOrigin,
       idAccountDestiny,
-      amountOrigin: exchange,
-      amountDestiny: amount,
+      amountOrigin: amount,
+      amountDestiny: exchange,
       taxes: currency,
       description,
     };
