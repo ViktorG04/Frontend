@@ -6,7 +6,7 @@ import SelectTextContainer from "../formComponents/SelectTextContainer";
 import TextareaContainer from "../formComponents/TextareaContainer";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import useFormReport from "../../hooks/useFormReport";
-import useRegisterExpenseIncome from "../../hooks/useRegisterExpenseIncome";
+import useRegisterTransfer from "../../hooks/useRegisterTransfer";
 
 import "./css/config.css";
 
@@ -26,11 +26,9 @@ const ExpensiveIncome = () => {
     reset,
   } = useForm({ defaultValues });
 
-  const { dateRegister, descriptionRegister, amountRegister } =
-    useRegisterExpenseIncome({ register });
+  const { dateRegister, descriptionRegister, amountRegister } = useRegisterTransfer({ register });
 
-  const { select, numberAccount, money, onHandleSubmit, onHandleClick } =
-    useFormReport(reset);
+  const { select, numberAccount, money, onHandleSubmit, onHandleClick } = useFormReport(reset);
 
   const symbol = SYMBOL_MONEY[money];
 
@@ -72,10 +70,7 @@ const ExpensiveIncome = () => {
           register={descriptionRegister()}
           error={errors.description?.message}
         />
-        <GridButtonForm
-          onClick={() => onHandleClick()}
-          nameButtonSubmit="Process"
-        />
+        <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Process" />
       </form>
     </div>
   );

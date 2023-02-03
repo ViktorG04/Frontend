@@ -4,22 +4,19 @@ import FormAccount from "./FormAccount";
 import Modal from "../modal/Modal";
 import TableAccounts from "./TableAccounts";
 import useListAccount from "../../hooks/useListAccount";
+import useModal from "../../hooks/useModal";
 import "./css/listAccounts.css";
 
 const ListsAccounts = () => {
-  const { open, loading, balance, accounts, openModal, closeModal } =
-    useListAccount();
+  const { open, onOpenModal, onCloseModal } = useModal(false);
+  const { loading, balance, accounts } = useListAccount();
 
   return (
     <div className="container-accountList">
       <h1>Personal Accounts</h1>
-      <Button
-        type="button"
-        onClick={() => openModal()}
-        name="Create new Account"
-      />
+      <Button type="button" onClick={() => onOpenModal()} name="Create new Account" />
       <Modal isOpen={open}>
-        <FormAccount isModal={open} onCloseModel={() => closeModal()} />
+        <FormAccount onCloseModal={() => onCloseModal()} open={open} />
       </Modal>
       {loading ? <p>Loading...</p> : null}
       <TableAccounts accounts={accounts} />

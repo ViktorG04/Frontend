@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import { consultAccounts } from "../redux/slices/accountSlice";
 import { signUp } from "../redux";
 
 const useFormLogin = () => {
@@ -24,8 +24,9 @@ const useFormLogin = () => {
     if (isLogged) {
       toast.success("Welcome");
       navigate("/dashboard");
+      dispatch(consultAccounts());
     }
-  }, [isLogged, error, navigate]);
+  }, [isLogged, error, navigate, dispatch]);
 
   return { onHandleSubmit };
 };

@@ -1,23 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import InputTextContainer from "../formComponents/InputTextContainer";
+import { SYMBOL_MONEY } from "../../config/config";
+import SimpleInput from "../formComponents/SimpleInput";
 import InputCheckBox from "../formComponents/InputCheckBox";
 import SelectDynamic from "../formComponents/SelectDynamic";
 import TextareaContainer from "../formComponents/TextareaContainer";
 import GridButton from "../formComponents/button/GridButton";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
-import AccountDetails from "../accounts/AccountDetails";
 import Modal from "../modal/Modal";
 import Process from "./Process";
 import dateFormat from "../../utils/dateFormat.js";
-import useFormTransfer from "../../hooks/useFormTransfer";
 import useRegisterTransfer from "../../hooks/useRegisterTransfer";
 import useCheckButton from "../../hooks/useCheckButton";
-import useGetAccounts from "../../hooks/useGetAccounts";
-import useFilterAccounts from "../../hooks/useFilterAccounts";
+import useFormTransfer from "../../hooks/useFormTransfer";
+import AccountDetails from "../accounts/AccountDetails";
 
 import "./css/transfer.css";
+import useReduxData from "../../hooks/useReduxData";
 
 const defaultValues = {
   date: dateFormat(),
@@ -38,101 +37,113 @@ const FormTransfers = () => {
   } = useForm({ defaultValues });
 
   const {
-    amountRegister,
     dateRegister,
+    amountRegister,
     accountOriginRegister,
     accountDestinyRegister,
     descriptionRegister,
   } = useRegisterTransfer({ register });
 
-  const {
-    accountDestiny,
-    accountOrigin,
-    accountFound,
-    conversion,
-    open,
-    onHandleSubmit,
-    onHandleClosed,
-    onHandleClick,
-  } = useFormTransfer(watch, reset);
-
-  const { check, onHandleCheckPersonal, onHandleCheckAnother } =
-    useCheckButton();
-
-  const { idAccount, money } = accountFound;
-
-  const { accounts } = useSelector((state) => state.accounts);
-
+  const { check, onHandleCheckPersonal, onHandleCheckAnother } = useCheckButton({ reset });
   const { personalAccounts, anotherAccounts } = check;
 
-  const { externalAccounts } = useGetAccounts({ anotherAccounts });
+  const {
+    accountOriginSelected,
+    destinyAccounts,
+    bankDestiny,
+    open,
+    conversion,
+    change,
+    onHandleSubmit,
+    onHandleClick,
+    onHandleClosed,
+    changeTransfer,
+  } = useFormTransfer({ reset, watch, check });
 
-  const { accountOut } = useFilterAccounts({
-    personalAccounts,
-    idAccount,
-    accounts,
-  });
+  const { bankName, available, money } = accountOriginSelected;
+
+  const { accounts } = useReduxData();
 
   return (
     <div className="transfer-container">
       <div className="container-body">
         <h1>TRANSFER MONEY</h1>
         <form onSubmit={handleSubmit(onHandleSubmit)}>
-          <InputTextContainer
-            label="Date"
+          <SimpleInput
             type="date"
             register={dateRegister()}
-            disable
+            error={errors.date?.message}
+            disable={true}
           />
-          <SelectDynamic
-            label="Account Origin"
-            name="accountOrigin"
-            control={control}
-            rules={accountOriginRegister()}
-            accounts={accounts}
-            error={errors.accountOrigin?.message}
-          />
+
+          <div className="container-selectAccount">
+            <SelectDynamic
+              label="Account Origin"
+              name="accountOrigin"
+              control={control}
+              rules={accountOriginRegister()}
+              accounts={accounts}
+              error={errors.accountOrigin?.message}
+            />
+
+            <AccountDetails description="Bank Name" value={bankName} />
+          </div>
 
           <GridButton>
             <InputCheckBox
               label="Personal Accounts"
               checked={personalAccounts}
-              disabled={anotherAccounts}
               onHandleClick={(event) => onHandleCheckPersonal(event)}
             />
             <InputCheckBox
               label="Externals Accounts"
               checked={anotherAccounts}
-              disabled={personalAccounts}
               onHandleClick={(event) => onHandleCheckAnother(event)}
             />
           </GridButton>
 
-          <SelectDynamic
-            label="Account Beneficiary"
-            name="accountDestiny"
-            control={control}
-            rules={accountDestinyRegister()}
-            accounts={personalAccounts ? accountOut : externalAccounts}
-            error={errors.accountDestiny?.message}
-          />
+          <div className="container-selectAccount">
+            <SelectDynamic
+              label="Account Beneficiary"
+              name="accountDestiny"
+              control={control}
+              rules={accountDestinyRegister()}
+              accounts={destinyAccounts}
+              error={errors.accountDestiny?.message}
+            />
+            <AccountDetails description="Bank Name" value={bankDestiny} />
+          </div>
 
-          <InputTextContainer
-            label="Amount to Transfer"
-            type="text"
-            register={amountRegister()}
-            error={errors.amount?.message}
-          />
+          <div>
+            <div>
+              <AccountDetails
+                description="Available"
+                value={available ? `${SYMBOL_MONEY[money]} ${available}` : ""}
+              />
+              <div>
+                <p>
+                  Transfer from<strong>{change.from}</strong> to <strong>{change.to}</strong>
+                </p>
+                <button type="button" onClick={() => changeTransfer()}>
+                  Change
+                </button>
+              </div>
+              <SimpleInput
+                label="Amount"
+                type="text"
+                register={amountRegister()}
+                error={errors.amount?.message}
+              />
+            </div>
+          </div>
+
           <TextareaContainer
             label="Description"
             register={descriptionRegister()}
             error={errors.description?.message}
           />
 
-          <GridButtonForm
-            onClick={() => onHandleClick()}
-            nameButtonSubmit="Continue"
-          />
+          <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Continue" />
         </form>
       </div>
 
@@ -142,13 +153,6 @@ const FormTransfers = () => {
           conversion={conversion}
           onHandleProcess={() => onHandleClick()}
         />
-      </Modal>
-
-      <Modal isOpen={accountOrigin}>
-        <AccountDetails accountSelected={accountFound} reset={reset} />
-      </Modal>
-      <Modal isOpen={accountDestiny}>
-        <AccountDetails accountSelected={accountFound} reset={reset} />
       </Modal>
     </div>
   );

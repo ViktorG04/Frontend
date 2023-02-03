@@ -1,18 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createAccount } from "../redux";
 import { getTyMoney } from "../services/money";
 import toast from "react-hot-toast";
 import { clearNotification } from "../redux/slices/accountSlice";
+import useReduxData from "./useReduxData";
 
-const useFormAccount = (reset, onCloseModal, isModal) => {
+const useFormAccount = (reset, onCloseModal, open) => {
   const [typeMoney, setTypeMoney] = useState([]);
-
-  const {
-    user: { idUser },
-    token
-  } = useSelector((state) => state.auth);
-  const { errors, notification } = useSelector((state) => state.accounts);
+  const { token, idUser, notification } = useReduxData();
 
   const dispatch = useDispatch();
 
@@ -21,21 +17,15 @@ const useFormAccount = (reset, onCloseModal, isModal) => {
       const money = await getTyMoney(token);
       setTypeMoney(money);
     } catch (error) {
-      toast.error(error)
+      toast.error(error);
     }
   }, [token]);
 
   useEffect(() => {
-    if (isModal) {
+    if (open) {
       fetchData();
     }
-  }, [fetchData, isModal]);
-
-  useEffect(() => {
-    if (errors) {
-      toast.error(errors);
-    }
-  }, [errors]);
+  }, [fetchData, open]);
 
   useEffect(() => {
     if (notification) {

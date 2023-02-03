@@ -6,6 +6,7 @@ const initialState = {
   errors: null,
   accounts: [],
   notification: null,
+  request: false,
 };
 
 export const accountSlice = createSlice({
@@ -16,14 +17,18 @@ export const accountSlice = createSlice({
       return initialState;
     },
     clearNotification: (state) => {
-      return { ...state, notification: null, errors: false }
-    }
+      return { ...state, notification: null, errors: false };
+    },
+    consultAccounts: (state) => {
+      return { ...state, request: true };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAccountsByeIdUser.pending, (state) => ({
         ...state,
         loading: true,
+        request: false,
       }))
       .addCase(getAccountsByeIdUser.fulfilled, (state, action) => {
         const accounts = action.payload ? action.payload : [];
@@ -64,7 +69,7 @@ export const accountSlice = createSlice({
           loading: false,
           accounts: [...accountFilter],
           notification: message,
-        }
+        };
       })
       .addCase(updateStateAccount.rejected, (state, action) => {
         return { ...state, loading: false, errors: action.payload };
@@ -72,5 +77,5 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { signOutAccount, clearNotification } = accountSlice.actions;
+export const { signOutAccount, clearNotification, consultAccounts } = accountSlice.actions;
 export default accountSlice.reducer;

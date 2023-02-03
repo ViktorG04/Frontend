@@ -1,11 +1,9 @@
-.account-detail {
-  display: flex;
-  justify-content: space-around;
-  border: 2px solid white;
-  margin: 5px 20px;
-  padding: 10px 30px;
-}
-
-.account-detail > .detail-body {
-  margin: 10px auto;
+.account-detail > input {
+  font-size: 18px;
+  text-align: center;
+  width: auto;
+  color: black;
+  margin: 2px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }

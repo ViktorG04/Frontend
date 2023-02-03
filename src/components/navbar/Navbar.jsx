@@ -1,39 +1,9 @@
-import { useSelector } from "react-redux";
+import useNavbar from "../../hooks/useNavbar";
 import LinkConfig from "./LinkConfig";
 import "./css/navbar.css";
-const links = [
-  {
-    id: 1,
-    to: "/dashboard",
-    linkName: "Dashboard",
-  },
-  {
-    id: 2,
-    to: "/profile",
-    linkName: "Profile",
-  },
-  {
-    id: 3,
-    to: "/transfers",
-    linkName: "Transfers",
-  },
-  {
-    id: 4,
-    to: "/history",
-    linkName: "Reports",
-  },
-  {
-    id: 5,
-    to: "/",
-    linkName: "Sing out",
-  },
-];
 
 const Navbar = () => {
-  const {
-    user: { name },
-  } = useSelector((state) => state.auth);
-
+  const { name, links } = useNavbar();
   return (
     <nav>
       <input type="checkbox" id="check" />

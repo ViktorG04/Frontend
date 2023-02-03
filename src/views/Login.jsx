@@ -44,8 +44,7 @@ const Login = () => {
         />
         <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Log In" />
       </form>
-      <a>Lost your Password?</a>
-      <br />
+
       <a href="/register">Don't have An account?</a>
     </div>
   );

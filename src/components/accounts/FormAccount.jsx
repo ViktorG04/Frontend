@@ -14,7 +14,7 @@ const defaultValues = {
   idTypeMoney: "1",
 };
 
-const FormAccount = ({ isModal, onCloseModel }) => {
+const FormAccount = ({ onCloseModal, open }) => {
   const {
     register,
     handleSubmit,
@@ -22,14 +22,11 @@ const FormAccount = ({ isModal, onCloseModel }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const { accountName, accountNumber, accountDate, accountCredit } =
-    useRegisterAccount({ register });
+  const { accountName, accountNumber, accountDate, accountCredit } = useRegisterAccount({
+    register,
+  });
 
-  const { typeMoney, onHandleSubmit, onHandleClick } = useFormAccount(
-    reset,
-    onCloseModel,
-    isModal
-  );
+  const { typeMoney, onHandleSubmit, onHandleClick } = useFormAccount(reset, onCloseModal, open);
 
   return (
     <div className="container-form">

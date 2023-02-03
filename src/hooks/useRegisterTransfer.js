@@ -1,7 +1,6 @@
-import { REQUIRED } from "../config/config"
+import { REQUIRED } from "../config/config";
 
 const useRegisterTransfer = ({ register }) => {
-
   const amountRegister = () => {
     return register("amount", {
       required: REQUIRED,
@@ -15,7 +14,6 @@ const useRegisterTransfer = ({ register }) => {
   const dateRegister = () => {
     return register("date", { required: REQUIRED });
   };
-
 
   const accountOriginRegister = () => {
     return (
@@ -45,7 +43,13 @@ const useRegisterTransfer = ({ register }) => {
     });
   };
 
-  return { amountRegister, dateRegister, accountOriginRegister, accountDestinyRegister, descriptionRegister };
-}
+  return {
+    amountRegister,
+    dateRegister,
+    accountOriginRegister,
+    accountDestinyRegister,
+    descriptionRegister,
+  };
+};
 
-export default useRegisterTransfer
+export default useRegisterTransfer;

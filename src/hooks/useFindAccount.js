@@ -1,23 +1,14 @@
-import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useState, useEffect } from "react";
 
-const useFindAccount = ({ idAccount }) => {
-
-  const { accounts, errors, notification } = useSelector(state => state.accounts);
+const useFindAccount = ({ idAccount, objectFind }) => {
   const [accountFound, setAccountFound] = useState({});
 
   useEffect(() => {
-    if (idAccount) {
-      const result = accounts.find(
-        (account) => account.idAccount === idAccount
-      );
-      setAccountFound({ ...result });
-    }
+    const result = objectFind.find((item) => item.idAccount === idAccount);
+    setAccountFound({ ...result });
+  }, [objectFind, idAccount]);
 
-  }, [idAccount, accounts]);
-
-  return { accountFound, errors, notification };
-
-}
+  return { accountFound };
+};
 
 export default useFindAccount;

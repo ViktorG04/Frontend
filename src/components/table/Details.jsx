@@ -2,7 +2,7 @@ import React from "react";
 
 const Details = ({ details, amount, symbol }) => {
   return (
-    <div>
+    <>
       {!details.length ? <p>Loading...</p> : null}
       <table className="table">
         <thead>
@@ -32,7 +32,7 @@ const Details = ({ details, amount, symbol }) => {
           </tr>
         </tfoot>
       </table>
-    </div>
+    </>
   );
 };
 

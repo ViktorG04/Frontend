@@ -1,26 +1,20 @@
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { getAccountsByeIdUser } from '../redux';
-import toast from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAccountsByeIdUser } from "../redux";
+import useReduxData from "./useReduxData";
 
 const useListAccount = () => {
-
-  const [open, setOpen] = useState(false);
   const [balance, setBalance] = useState(0);
 
-  const { loading, errors, accounts } = useSelector((state) => state.accounts);
-  const {
-    user: { idUser },
-    token,
-  } = useSelector((state) => state.auth);
+  const { token, idUser, accounts, loading, request } = useReduxData();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!accounts.length) {
+    if (request) {
       dispatch(getAccountsByeIdUser({ idUser, token }));
     }
-  }, [accounts, dispatch, idUser, token]);
+  }, [dispatch, idUser, token, request]);
 
   useEffect(() => {
     if (accounts.length) {
@@ -31,20 +25,7 @@ const useListAccount = () => {
     }
   }, [accounts]);
 
-  useEffect(() => {
-    if (errors) {
-      toast.error(errors);
-    }
-  }, [errors]);
-
-  const openModal = () => {
-    setOpen(true);
-  };
-
-  const closeModal = () => {
-    setOpen(false);
-  };
-  return { open, loading, balance, accounts, openModal, closeModal }
-}
+  return { loading, balance, accounts };
+};
 
 export default useListAccount;

@@ -1,52 +1,91 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getExchanges } from '../services/exchange';
-import toast from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getExchanges } from "../services/exchange";
+import toast from "react-hot-toast";
 import useFindAccount from "../hooks/useFindAccount";
+import useModal from "./useModal";
+import useReduxData from "./useReduxData";
+import useGetAccounts from "./useGetAccounts";
 
-const useFormTransfer = (watch, reset) => {
+const defaultValueMoney = {
+  from: "",
+  to: "",
+  default: true,
+};
 
-  const { token } = useSelector((state) => state.auth);
-
-  const [open, setOpen] = useState(false);
+const useFormTransfer = ({ reset, watch, check }) => {
   const [conversion, setConversion] = useState({});
+  const [change, setChange] = useState(defaultValueMoney);
+
+  const { token, accounts } = useReduxData();
+  const { open, onCloseModal, onOpenModal } = useModal(false);
 
   const navigate = useNavigate();
 
   const accountOrigin = watch("accountOrigin", false);
   const accountDestiny = watch("accountDestiny", false);
 
-  const { accountFound } = useFindAccount({ idAccount: accountOrigin.value })
+  const { personalAccounts, anotherAccounts } = check;
+
+  const { accountFound: accountOriginSelected } = useFindAccount({
+    idAccount: accountOrigin["value"],
+    objectFind: accounts,
+  });
+
+  const { destinyAccounts } = useGetAccounts({
+    anotherAccounts,
+    personalAccounts,
+    idAccount: accountOrigin["value"],
+  });
+
+  const { accountFound: accountDestinySelected } = useFindAccount({
+    idAccount: accountDestiny["value"],
+    objectFind: destinyAccounts,
+  });
+
+  const { money, available } = accountOriginSelected;
+  const { money: moneyDestiny, bankName: bankDestiny } = accountDestinySelected;
+
+  useEffect(() => {
+    if (money && moneyDestiny) {
+      setChange({ from: money, to: moneyDestiny });
+    }
+  }, [money, moneyDestiny]);
 
   const onHandleSubmit = async (data) => {
-    let { accountOrigin, accountDestiny, amount } = data;
-
-    let { available } = accountFound;
-
-    available = parseFloat(available);
-    amount = parseFloat(amount);
-
-    if (amount > available) {
-      return toast.error(
-        `insufficient credit to transfer, available: ${available}`
-      );
-    };
-
-    const idAccountOrigin = accountOrigin.value;
-    const idAccountDestiny = accountDestiny.value;
+    const { accountOrigin, accountDestiny, amount, ...res } = data;
+    const { from, to } = change;
+    const cost = parseFloat(amount);
 
     try {
-      const response = await getExchanges({
-        idAccountOrigin,
-        idAccountDestiny,
-        amount,
-        token,
-      });
+      const response = await getExchanges({ to, from, amount, token });
+      const { currency, exchange, taxes } = response;
 
-      setConversion({ ...response, ...data, token });
-      setOpen(true);
+      const amountOrigin = from === money ? cost : exchange;
+
+      if (available < amountOrigin) {
+        return toast.error(
+          `insufficient credit to transfer, available: ${available}, value transfer${amountOrigin}`
+        );
+      }
+
+      const exactData =
+        from === money
+          ? { amountOrigin, amountDestiny: exchange, from, to }
+          : { amountOrigin, amountDestiny: cost, from: to, to: from };
+
+      const sendTransfer = {
+        accountOrigin,
+        accountDestiny,
+        token,
+        currency,
+        taxes,
+      };
+
+      setConversion({ ...sendTransfer, ...res, ...exactData });
+      onOpenModal();
     } catch (error) {
+      console.log(error);
       toast.error(error);
     }
   };
@@ -54,27 +93,35 @@ const useFormTransfer = (watch, reset) => {
   const onHandleClick = () => {
     reset();
     setConversion({});
+    setChange(defaultValueMoney);
     navigate("/dashboard");
   };
 
   const onHandleClosed = () => {
-    setOpen(false);
+    onCloseModal();
     reset();
     setConversion({});
+    setChange(defaultValueMoney);
+  };
+
+  const changeTransfer = () => {
+    !change.default
+      ? setChange({ from: moneyDestiny, to: money, default: false })
+      : setChange({ from: money, to: moneyDestiny, default: true });
   };
 
   return {
-    accountOrigin,
-    accountDestiny,
-    accountFound,
-    conversion,
+    accountOriginSelected,
+    destinyAccounts,
+    bankDestiny,
     open,
+    conversion,
+    change,
     onHandleSubmit,
-    onHandleClosed,
     onHandleClick,
+    onHandleClosed,
+    changeTransfer,
   };
-
 };
-
 
 export default useFormTransfer;

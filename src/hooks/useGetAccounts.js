@@ -1,31 +1,36 @@
 import { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { getExternalAccounts } from "../services/accounts";
+import useReduxData from "./useReduxData";
 
-const useGetAccounts = ({ anotherAccounts }) => {
+const useGetAccounts = ({ anotherAccounts, personalAccounts, idAccount }) => {
+  const [destinyAccounts, setDestinyAccounts] = useState([]);
 
-  const [externalAccounts, setExternalAccounts] = useState([]);
-  const {
-    user: { idUser },
-    token,
-  } = useSelector((state) => state.auth);
+  const { token, idUser, accounts } = useReduxData();
 
-  const findAccounts = useCallback(async () => {
+  const getAccounts = useCallback(async () => {
     try {
       const data = await getExternalAccounts(idUser, token);
-      setExternalAccounts(data);
+      setDestinyAccounts(data);
     } catch (error) {
       toast.error(error);
     }
   }, [idUser, token]);
 
   useEffect(() => {
-    if (anotherAccounts) {
-      findAccounts();
+    if (personalAccounts) {
+      const filtered = accounts.filter((account) => account.idAccount !== idAccount);
+      setDestinyAccounts(filtered);
     }
-  }, [findAccounts, anotherAccounts]);
-  return { externalAccounts }
-}
+  }, [accounts, personalAccounts, idAccount]);
+
+  useEffect(() => {
+    if (anotherAccounts) {
+      getAccounts();
+    }
+  }, [getAccounts, anotherAccounts]);
+
+  return { destinyAccounts };
+};
 
 export default useGetAccounts;
