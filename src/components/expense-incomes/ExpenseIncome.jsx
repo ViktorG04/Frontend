@@ -4,11 +4,11 @@ import { SYMBOL_MONEY } from "../../config/config";
 import InputTextContainer from "../formComponents/InputTextContainer";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import TextareaContainer from "../formComponents/TextareaContainer";
-import GridButtonForm from "../formComponents/button/GridButtonForm";
+import Button from "../formComponents/button/Button";
 import useFormReport from "../../hooks/useFormReport";
 import useRegisterTransfer from "../../hooks/useRegisterTransfer";
 
-import "./css/config.css";
+import "./css/expenseIncome.css";
 
 const defaultValues = {
   date: "",
@@ -19,59 +19,66 @@ const defaultValues = {
 };
 
 const ExpensiveIncome = () => {
+  const { select, numberAccount, money, onHandleSubmit, onHandleClick } = useFormReport();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({ defaultValues });
 
   const { dateRegister, descriptionRegister, amountRegister } = useRegisterTransfer({ register });
 
-  const { select, numberAccount, money, onHandleSubmit, onHandleClick } = useFormReport(reset);
-
-  const symbol = SYMBOL_MONEY[money];
-
   return (
     <div className="container-expensiveIncome">
-      <h1>Report Expense/Income</h1>
-      <h3>Number Account: {numberAccount}</h3>
-      <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <InputTextContainer
-          label="Date"
-          type="date"
-          register={dateRegister()}
-          error={errors.date?.message}
-        />
-        {select.transfers ? (
-          <SelectTextContainer
-            label="Type of Transfer"
-            listSelect={select.transfers}
-            register={register("idTypeTransfer")}
+      <div className="container-expensiveIncome-body">
+        <h1>Report Expense/Income</h1>
+        <h3>Number Account: {numberAccount}</h3>
+        <form onSubmit={handleSubmit(onHandleSubmit)}>
+          <InputTextContainer
+            label="Date"
+            type="date"
+            register={dateRegister()}
+            error={errors.date?.message}
           />
-        ) : null}
-        {select.categories ? (
-          <SelectTextContainer
-            label="Category"
-            listSelect={select.categories}
-            register={register("idCategory")}
+          <div className="container-select">
+            {select.transfers ? (
+              <SelectTextContainer
+                className="select-expenseIncome"
+                label="Report"
+                listSelect={select.transfers}
+                register={register("idTypeTransfer")}
+              />
+            ) : null}
+            {select.categories ? (
+              <SelectTextContainer
+                className="select-expenseIncome"
+                label="Category"
+                listSelect={select.categories}
+                register={register("idCategory")}
+              />
+            ) : null}
+          </div>
+          <InputTextContainer
+            label="Amount"
+            type="text"
+            register={amountRegister()}
+            error={errors.amount?.message}
+            placeholder={SYMBOL_MONEY[money] + " 0.00"}
           />
-        ) : null}
+          <TextareaContainer
+            label="Description"
+            register={descriptionRegister()}
+            error={errors.description?.message}
+            className="container-textarea-expenseIncome"
+          />
 
-        <InputTextContainer
-          label="Amount"
-          type="text"
-          register={amountRegister()}
-          error={errors.amount?.message}
-          placeholder={`${symbol} 0.00`}
-        />
-        <TextareaContainer
-          label="Description"
-          register={descriptionRegister()}
-          error={errors.description?.message}
-        />
-        <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Process" />
-      </form>
+          <div className="container-button">
+            <Button type="reset" name="Cancel" onClick={onHandleClick} />
+            <Button type="submit" name="Process" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

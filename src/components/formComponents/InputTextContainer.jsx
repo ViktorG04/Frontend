@@ -1,24 +1,15 @@
 import Notification from "../alerts/Notification";
 import "./css/form.css";
-const InputTextContainer = ({
-  label,
-  type,
-  register,
-  error,
-  placeholder,
-  disable,
-}) => {
+const InputTextContainer = ({ label, type, register, error, placeholder, disable }) => {
   return (
     <div className="container-InputLabel">
-      <div className="container-body">
-        <label>{label}:</label>
-        <input
-          type={type}
-          {...register}
-          placeholder={placeholder}
-          disabled={disable ? disable : false}
-        />
-      </div>
+      <input
+        type={type}
+        {...register}
+        placeholder={placeholder ? placeholder : " "}
+        disabled={disable ? disable : false}
+      />
+      <label>{label}:</label>
       {error && <Notification message={error} />}
     </div>
   );

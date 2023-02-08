@@ -14,7 +14,7 @@ const LinkConfig = ({ link }) => {
     dispatch(signOutAccount());
   };
 
-  if (linkName !== "Sing out") {
+  if (linkName !== "Sign out") {
     return (
       <NavLink className="navLink" to={to}>
         {linkName}

@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../formComponents/button/Button";
 import FormAccount from "./FormAccount";
 import Modal from "../modal/Modal";
 import TableAccounts from "./TableAccounts";
@@ -14,7 +13,12 @@ const ListsAccounts = () => {
   return (
     <div className="container-accountList">
       <h1>Personal Accounts</h1>
-      <Button type="button" onClick={() => onOpenModal()} name="Create new Account" />
+      <div className="container-accountList-button">
+        <button type="button" onClick={() => onOpenModal()}>
+          New Account
+        </button>
+      </div>
+
       <Modal isOpen={open}>
         <FormAccount onCloseModal={() => onCloseModal()} open={open} />
       </Modal>

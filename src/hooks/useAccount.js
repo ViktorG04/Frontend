@@ -44,7 +44,18 @@ const useAccount = () => {
     dispatch(updateStateAccount({ token, idAccount }));
   };
 
-  return { accountInfo, accountFound, openState, setOpenState, onHandleDeleteAccount };
+  const onHandleClick = () => {
+    navigate("/dashboard");
+  };
+
+  return {
+    accountInfo,
+    accountFound,
+    openState,
+    setOpenState,
+    onHandleDeleteAccount,
+    onHandleClick,
+  };
 };
 
 export default useAccount;

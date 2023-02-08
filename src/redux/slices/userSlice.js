@@ -18,8 +18,8 @@ export const userSlice = createSlice({
       return initialState;
     },
     clearNotification: (state) => {
-      return { ...state, notification: null }
-    }
+      return { ...state, notification: null, error: null };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,7 +48,7 @@ export const userSlice = createSlice({
           loading: false,
           notification: message,
           user: { ...state.user, password: newPassword },
-          error: null
+          error: null,
         };
       })
       .addCase(updateUser.rejected, (state, action) => {

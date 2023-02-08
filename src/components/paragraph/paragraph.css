@@ -1,10 +1,11 @@
 .paragraph-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
-  font-family: "Open Sans", sans-serif;
+  padding: 5px;
+  font-size: 20px;
 }
 
-strong {
-  margin: 0 5px;
+.paragraph-container strong {
+  margin-right: 10px;
 }

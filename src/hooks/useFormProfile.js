@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { updateUser } from "../redux";
 import { clearNotification } from "../redux/slices/userSlice";
 
-const useFormProfile = (setOpen, reset, defaultValues) => {
+const useFormProfile = (setOpen, reset) => {
   const {
     user: { idUser: id, password },
     token,
@@ -17,11 +17,11 @@ const useFormProfile = (setOpen, reset, defaultValues) => {
   useEffect(() => {
     if (notification) {
       toast.success(notification);
-      reset(defaultValues);
+      reset();
       setOpen(false);
       dispatch(clearNotification());
     }
-  }, [notification, reset, defaultValues, setOpen, dispatch]);
+  }, [notification, reset, setOpen, dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -41,7 +41,7 @@ const useFormProfile = (setOpen, reset, defaultValues) => {
 
   const handleClick = () => {
     setOpen(false);
-    reset(defaultValues);
+    reset();
   };
 
   return { password, onHandleSubmit, handleClick };

@@ -1,99 +1,181 @@
 /* -------------------------INPUT------------------------------- */
 .container-InputLabel {
+  position: relative;
+  margin: 45px;
+}
+
+.container-InputLabel input {
+  background: none;
+  color: #c6c6c6;
+  font-size: 18px;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--textColor);
+}
+
+.container-InputLabel label {
+  color: var(--textColor);
+  font-size: 16px;
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  transition: 0.5s ease-in-out all;
+  pointer-events: none;
+}
+
+input:focus {
+  outline: none;
+  color: #5e5d5d;
+}
+
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  top: -14px;
+  font-size: 14px;
+  color: #2196f3;
+}
+
+/* -------------------------SIMPLE INPUT----------------------------- */
+
+.container-input .error {
+  margin-left: 38px;
+}
+
+.container-date {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-date input {
+  font-size: 16px;
+  text-align: center;
+  font-family: "Roboto";
+}
+.container-amount {
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 85%;
-  border-radius: 5px;
-  border: 2px solid white;
-  padding: 10px 30px;
-  margin-bottom: 10px;
 }
 
-.container-InputLabel > .container-body {
-  width: 100%;
-  margin-left: 30px;
-  display: flex;
-  justify-content: space-between;
+.container-amount label {
+  font-size: 14px;
+  color: #2196f3;
+  margin-right: 93px;
 }
 
-.container-InputLabel > .container-body > input {
-  width: 46%;
-  margin-left: 25px;
-  font-size: 18px;
+.container-amount input {
+  width: 80%;
   text-align: left;
-}
-
-.container-InputLabel > .container-body > input[type="date"] {
-  text-align: center;
-}
-
-.container-InputLabel > .container-body > input[type="text"]::placeholder {
-  color: black;
-  font-size: 18px;
-  text-align: left;
+  font-size: 16px;
+  font-family: "Roboto";
+  padding: 5px 0;
 }
 
 /* -------------------------TEXTAREA------------------------------- */
-.container-textarea {
+
+.container-textarea-expenseIncome {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  width: 85%;
-  border-radius: 5px;
-  border: 2px solid white;
-  padding: 10px 30px;
-  margin-bottom: 10px;
+  margin-left: 45px;
+  margin-right: 45px;
 }
 
-.container-textarea .container-body {
-  width: 100%;
-  margin-left: 30px;
-  display: flex;
-  justify-content: space-between;
+.container-textarea-expenseIncome label {
+  font-size: 14px;
+  color: #2196f3;
+  width: auto;
 }
-.container-textarea .container-body > textarea {
-  min-width: 60%;
-  max-width: 60px;
-  max-height: 40px;
-  min-height: 40px;
+
+.container-textarea-expenseIncome textarea {
+  resize: none;
+}
+
+.container-textarea-transfer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.container-textarea-transfer label {
+  font-size: 14px;
+  color: #2196f3;
+  width: auto;
+}
+
+.container-textarea-transfer textarea {
+  resize: none;
 }
 
 /* -------------------------SELECT------------------------------- */
-.select-container {
+
+.container-selectAccount {
   display: flex;
-  justify-content: space-between;
-  border-radius: 5px;
-  border: 2px solid white;
-  width: 85%;
-  padding: 10px 30px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  width: 73%;
+  margin-left: 45px;
+  padding-top: 20px;
 }
 
-.select-container > select {
-  width: 48%;
-  margin-left: 35px;
-  font-size: 16px;
+.container-selectAccount label {
+  font-size: 14px;
+  color: #2196f3;
+  padding-bottom: 2px;
+}
+
+.container-selectAccount select {
+  width: auto;
+  font-size: 18px;
+  font-family: "Roboto";
+  padding: 10px 10px 5px 5px;
+  color: var(--textColor);
+}
+
+.select-expenseIncome {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-expenseIncome label {
+  font-size: 14px;
+  color: #2196f3;
+  padding-bottom: 2px;
+}
+
+.select-expenseIncome select {
+  width: 100%;
+  font-size: 18px;
+  padding: 3px;
+  font-family: "Roboto";
 }
 
 /* -------------------------DYNAMIC SELECT------------------------------- */
 
-/* .container-dynamicSelect {
+.container-dynamicSelect {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  width: 85%;
-  border-radius: 5px;
-  border: 2px solid white;
-  padding: 10px 30px;
-  margin-bottom: 10px;
 }
 
-.container-dynamicSelect > .container-body {
-  width: 100%;
-  margin-left: 30px;
+.container-dynamicSelect label {
+  font-size: 14px;
+  color: #2196f3;
+}
+
+/* -------------------------CHECKBOX---------------------------------------- */
+
+.container-checkbox {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
- */
+
+.container-checkbox label {
+  padding-right: 10px;
+}
+.container-checkbox input:not(:checked) {
+  cursor: pointer;
+}

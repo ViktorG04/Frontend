@@ -7,6 +7,7 @@ import NameEmailForm from "../components/user/NameEmailForm";
 import GridButton from "../components/formComponents/button/GridButton";
 import Button from "../components/formComponents/button/Button";
 import ProfileForm from "../components/user/ProfileForm";
+import "./css/profile.css";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -26,17 +27,13 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <h2>Profile</h2>
-      <div>
+    <div className="container-profile">
+      <div className="body">
+        <h1>Profile</h1>
         <NameEmailForm register={register} errors={errors} disable={true} />
         <GridButton>
           <Button type="reset" name="Cancel" onClick={onHandleClick} />
-          <Button
-            type="button"
-            name="Update Password"
-            onClick={() => setOpen(true)}
-          />
+          <Button type="button" name="Update Password" onClick={() => setOpen(true)} />
         </GridButton>
       </div>
       <Modal isOpen={open}>

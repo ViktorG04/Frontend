@@ -8,7 +8,7 @@ const customStyles = {
     ...provided,
   }),
   control: () => ({
-    width: 200,
+    width: 180,
     height: 30,
     border: "1px solid #000",
     display: "flex",
@@ -18,7 +18,7 @@ const customStyles = {
   }),
   valueContainer: (provided) => ({
     ...provided,
-    textAlign: "right",
+    textAlign: "left",
   }),
 };
 
@@ -29,16 +29,14 @@ const SelectDynamic = ({ label, name, control, rules, accounts, error }) => {
 
   return (
     <div className="container-dynamicSelect">
-      <div className="container-body">
-        <label>{label}:</label>
-        <Controller
-          name={name}
-          control={control}
-          defaultValue=""
-          rules={rules}
-          render={({ field }) => <Select styles={customStyles} options={list} {...field} />}
-        />
-      </div>
+      <label>{label}:</label>
+      <Controller
+        name={name}
+        control={control}
+        defaultValue=""
+        rules={rules}
+        render={({ field }) => <Select styles={customStyles} options={list} {...field} />}
+      />
       {error && <Notification message={error} />}
     </div>
   );

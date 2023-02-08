@@ -3,6 +3,7 @@ import useFormLogin from "../hooks/useFormLogin";
 import InputTextContainer from "../components/formComponents/InputTextContainer";
 import GridButtonForm from "../components/formComponents/button/GridButtonForm";
 import useRegisterUser from "../hooks/useRegisterUser";
+import { Link } from "react-router-dom";
 import "./css/login.css";
 
 const defaultValues = {
@@ -28,24 +29,25 @@ const Login = () => {
 
   return (
     <div className="container-login">
-      <h1>LOGIN</h1>
-      <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <InputTextContainer
-          label="Email"
-          type="text"
-          register={emailRegister()}
-          error={errors.email?.message}
-        />
-        <InputTextContainer
-          label="Password"
-          type="password"
-          register={passwordRegister()}
-          error={errors.password?.message}
-        />
-        <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Log In" />
-      </form>
-
-      <a href="/register">Don't have An account?</a>
+      <div className="container-form-login">
+        <h1>Sign In</h1>
+        <Link to="/register">Don't have An account?</Link>
+        <form onSubmit={handleSubmit(onHandleSubmit)}>
+          <InputTextContainer
+            label="Email"
+            type="text"
+            register={emailRegister()}
+            error={errors.email?.message}
+          />
+          <InputTextContainer
+            label="Password"
+            type="password"
+            register={passwordRegister()}
+            error={errors.password?.message}
+          />
+          <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Log In" />
+        </form>
+      </div>
     </div>
   );
 };

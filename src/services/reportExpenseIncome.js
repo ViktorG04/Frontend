@@ -1,4 +1,4 @@
-import { methodPOST } from "../api/methodAPI"
+import { methodPOST } from "../api/methodAPI";
 
 export const reportExpenseIncome = async (reportInfo) => {
   const { token, ...data } = reportInfo;

@@ -1,9 +1,10 @@
 import React from "react";
-import GridButton from "../formComponents/button/GridButton";
 import Button from "../formComponents/button/Button";
 import Paragraph from "../paragraph/Paragraph";
 import useProcessTransfer from "../../hooks/useProcessTransfer";
 import { SYMBOL_MONEY } from "../../config/config";
+import { formatAmount } from "../../utils/formatAmount";
+import "./css/process.css";
 
 const values = { value: "", label: "" };
 
@@ -24,19 +25,25 @@ const Process = ({ cancelModal, conversion, onHandleProcess }) => {
 
   const data = { ...send, idAccountDestiny, idAccountOrigin, amountOrigin, amountDestiny };
   const { onHandleSubmit } = useProcessTransfer(data, onHandleProcess);
-
   return (
-    <div>
+    <div className="container-process">
       <Paragraph description="Account Select" text={numberAccountOrigin} />
-      <Paragraph description="Account Beneficiary" text={numberAccountDestiny} />
-      <Paragraph description="Transfer From" text={from + " To " + to} />
+      <Paragraph description="Account Destiny" text={numberAccountDestiny} />
+      <Paragraph description="Transfer" text={from} />
+      <Paragraph description="Convert to" text={to} />
       <Paragraph description="Exchange" text={currency} />
-      <Paragraph description="Money to transfer" text={SYMBOL_MONEY[from] + " " + amountOrigin} />
-      <Paragraph description="Money to receive" text={SYMBOL_MONEY[to] + " " + amountDestiny} />
-      <GridButton>
+      <Paragraph
+        description="Money to transfer"
+        text={formatAmount(SYMBOL_MONEY[from], amountOrigin)}
+      />
+      <Paragraph
+        description="Money to receive"
+        text={formatAmount(SYMBOL_MONEY[to], amountDestiny)}
+      />
+      <div className="container-button">
         <Button type="reset" name="Cancel" onClick={() => cancelModal()} />
         <Button type="submit" name="Confirm" onClick={() => onHandleSubmit()} />
-      </GridButton>
+      </div>
     </div>
   );
 };

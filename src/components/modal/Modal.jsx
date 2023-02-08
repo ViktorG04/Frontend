@@ -3,7 +3,7 @@ import "./css/modal.css";
 const Modal = ({ isOpen, children }) => {
   return (
     <div className="modal-container" style={{ display: isOpen ? "grid" : "none" }}>
-      <div className="modal-body">{children}</div>
+      <>{children}</>
     </div>
   );
 };

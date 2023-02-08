@@ -1,12 +1,10 @@
 import Notification from "../alerts/Notification";
 import "./css/form.css";
-const TextareaContainer = ({ label, register, error }) => {
+const TextareaContainer = ({ label, register, error, className }) => {
   return (
-    <div className="container-textarea">
-      <div className="container-body">
-        <label>{label}:</label>
-        <textarea type="text" {...register} />
-      </div>
+    <div className={className}>
+      <label>{label}:</label>
+      <textarea type="text" {...register} placeholder=" " cols={4} rows={4} maxLength={100} />
       {error && <Notification message={error} />}
     </div>
   );

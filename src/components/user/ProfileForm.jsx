@@ -24,15 +24,11 @@ const ProfileForm = ({ setOpen }) => {
 
   const { passwordValidate } = useRegisterUser({ register });
 
-  const { password, onHandleSubmit, handleClick } = useFormProfile(
-    setOpen,
-    reset,
-    defaultValues
-  );
+  const { password, onHandleSubmit, handleClick } = useFormProfile(setOpen, reset);
 
   return (
     <div className="container-form-profile">
-      <h2>Update Password</h2>
+      <h1>Change Password</h1>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <InputTextContainer
           label="Current Password"
@@ -44,6 +40,7 @@ const ProfileForm = ({ setOpen }) => {
           register={register}
           errors={errors}
           getValues={getValues}
+          labelPassword="New Password"
         />
         <GridButtonForm onClick={handleClick} nameButtonSubmit="Update" />
       </form>

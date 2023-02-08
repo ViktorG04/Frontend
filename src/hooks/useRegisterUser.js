@@ -1,7 +1,6 @@
-import { REQUIRED } from "../config/config"
+import { REQUIRED } from "../config/config";
 
 const useRegisterUser = ({ register }) => {
-
   const passwordRegister = () => {
     return register("password", {
       required: REQUIRED,
@@ -15,7 +14,6 @@ const useRegisterUser = ({ register }) => {
       },
     });
   };
-
 
   const confirmPasswordRegister = (getValues) => {
     return register("confirmPassword", {
@@ -32,7 +30,6 @@ const useRegisterUser = ({ register }) => {
     });
   };
 
-
   const nameRegister = () => {
     return register("name", {
       required: REQUIRED,
@@ -47,18 +44,15 @@ const useRegisterUser = ({ register }) => {
     });
   };
 
-
   const emailRegister = () => {
     return register("email", {
       required: REQUIRED,
       pattern: {
         value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-        message:
-          "email can only contain letters, numbers, periods, hyphens, underscores, and at sing",
+        message: "email format is not allowed",
       },
     });
   };
-
 
   const passwordValidate = (currentPassword) => {
     return register("currentPassword", {
@@ -75,8 +69,13 @@ const useRegisterUser = ({ register }) => {
     });
   };
 
-  return { passwordRegister, confirmPasswordRegister, nameRegister, emailRegister, passwordValidate };
+  return {
+    passwordRegister,
+    confirmPasswordRegister,
+    nameRegister,
+    emailRegister,
+    passwordValidate,
+  };
+};
 
-}
-
-export default useRegisterUser
+export default useRegisterUser;

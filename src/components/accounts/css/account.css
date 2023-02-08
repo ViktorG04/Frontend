@@ -1,9 +1,19 @@
-.account-detail > input {
-  font-size: 18px;
+.account-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.account-detail p {
+  font-size: 14px;
+  color: #2196f3;
+}
+
+.account-detail input {
+  width: 80%;
   text-align: center;
-  width: auto;
-  color: black;
-  margin: 2px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  text-align-last: left;
+  font-size: 16px;
+  font-family: "Roboto";
+  padding: 5px 0 6px 0;
 }

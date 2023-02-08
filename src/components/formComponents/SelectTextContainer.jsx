@@ -1,12 +1,12 @@
 import React from "react";
 import "./css/form.css";
-const SelectTextContainer = ({ label, listSelect, register }) => {
+const SelectTextContainer = ({ label, listSelect, register, className }) => {
   return (
-    <div className="select-container">
+    <div className={className}>
       <label>{label}:</label>
       <select {...register}>
-        {listSelect.map((option) => (
-          <option value={option.id} key={`select-${option.id}`}>
+        {listSelect.map((option, index) => (
+          <option value={option.id} key={`select-${index}`}>
             {option.name}
           </option>
         ))}

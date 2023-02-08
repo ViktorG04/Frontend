@@ -1,7 +1,7 @@
 import InputTextContainer from "../formComponents/InputTextContainer";
 import useRegisterUser from "../../hooks/useRegisterUser";
 
-const PasswordForm = ({ register, errors, getValues }) => {
+const PasswordForm = ({ register, errors, getValues, labelPassword }) => {
   const { passwordRegister, confirmPasswordRegister } = useRegisterUser({
     register,
   });
@@ -9,7 +9,7 @@ const PasswordForm = ({ register, errors, getValues }) => {
   return (
     <>
       <InputTextContainer
-        label="New Password"
+        label={labelPassword}
         type="password"
         register={passwordRegister()}
         error={errors.password?.message}

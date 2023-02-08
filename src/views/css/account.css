@@ -1,2 +1,46 @@
 .container-account {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-account .container-account-details {
+  margin: 20px 250px 10px;
+  background: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+.container-account .container-account-details h1 {
+  font-weight: 700;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.container-account .container-account-details .container-account-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 20px;
+}
+
+.container-account .container-button {
+  margin: 20px 250px 10px;
+  background: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.container-account .container-delete {
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px 50px;
+}
+
+.container-account .container-delete h3 {
+  color: red;
 }

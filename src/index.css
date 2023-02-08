@@ -1,24 +1,30 @@
-* {
+:root {
+  --textColor: #302e2e67;
+}
+
+*,
+::before,
+::after {
   margin: 0;
   padding: 0;
-  text-decoration: none;
+  box-sizing: border-box;
 }
 
 body {
-  display: block;
-  box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
-  color: black;
-  font-size: 18px;
+  font-family: "Roboto";
+  background: #757f9a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #d7dde8, #757f9a); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #d7dde8,
+    #c3cdea
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.table {
-  border: 2px solid #10558d;
-  margin: 5px 20px;
-  text-align: center;
+.th-right {
+  border-top-right-radius: 10px;
 }
 
-.table > thead > tr > th,
-.table > tbody > tr > td {
-  border: none;
+.th-left {
+  border-top-left-radius: 10px;
 }

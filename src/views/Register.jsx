@@ -22,13 +22,20 @@ const Register = () => {
   const { onHandleSubmit, handleClick } = useFormRegister();
 
   return (
-    <div className="container">
-      <h2>Registration Form</h2>
-      <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <NameEmailForm register={register} errors={errors} disable={false} />
-        <PasswordForm register={register} errors={errors} getValues={getValues} />
-        <GridButtonForm onClick={handleClick} nameButtonSubmit="Register" />
-      </form>
+    <div className="container-register">
+      <div className="container-body">
+        <h1>Register</h1>
+        <form onSubmit={handleSubmit(onHandleSubmit)}>
+          <NameEmailForm register={register} errors={errors} disable={false} />
+          <PasswordForm
+            register={register}
+            errors={errors}
+            getValues={getValues}
+            labelPassword="Password"
+          />
+          <GridButtonForm onClick={handleClick} nameButtonSubmit="Register" />
+        </form>
+      </div>
     </div>
   );
 };

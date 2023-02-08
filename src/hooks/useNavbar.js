@@ -25,7 +25,7 @@ const PATHS = [
   {
     id: 5,
     to: "/",
-    linkName: "Sing out",
+    linkName: "Sign out",
   },
 ];
 

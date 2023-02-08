@@ -1,8 +1,10 @@
 .container-form-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-  background-color: #4791d0;
-  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.container-form-profile h1 {
+  text-align: center;
 }

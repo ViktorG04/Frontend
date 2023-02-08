@@ -1,35 +1,32 @@
 .container-gridButton {
   display: flex;
   justify-content: space-evenly;
-  width: 100%;
+  padding-bottom: 10px;
 }
 
 .button-component {
   display: block;
-  background: #437223;
   border: none;
   outline: none;
   cursor: pointer;
-  width: 40%;
-  padding: 10px;
-  border-radius: 15px;
+  width: auto;
+  padding: 10px 20px;
+  border-radius: 10px;
   color: #fff;
   font-size: 18px;
   transition: 0.3s ease all;
   margin-bottom: 10px;
+  background: linear-gradient(
+    to right,
+    #757f9a,
+    #2c3e50
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .button-component[type="submit"]:hover {
-  background: #620b69;
-}
-.button-component[type="button"]:hover {
-  background: #620b69;
-}
-
-.button-component[type="reset"] {
-  background: #b8250b;
+  background: linear-gradient(to right, #2c3e50, #4568dc);
 }
 
 .button-component[type="reset"]:hover {
-  background: #0743c5;
+  background: linear-gradient(to right, #d7d7d7, #2d282d);
 }

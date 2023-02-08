@@ -3,9 +3,7 @@ import { useForm } from "react-hook-form";
 import { SYMBOL_MONEY } from "../../config/config";
 import SimpleInput from "../formComponents/SimpleInput";
 import InputCheckBox from "../formComponents/InputCheckBox";
-import SelectDynamic from "../formComponents/SelectDynamic";
 import TextareaContainer from "../formComponents/TextareaContainer";
-import GridButton from "../formComponents/button/GridButton";
 import GridButtonForm from "../formComponents/button/GridButtonForm";
 import Modal from "../modal/Modal";
 import Process from "./Process";
@@ -14,9 +12,9 @@ import useRegisterTransfer from "../../hooks/useRegisterTransfer";
 import useCheckButton from "../../hooks/useCheckButton";
 import useFormTransfer from "../../hooks/useFormTransfer";
 import AccountDetails from "../accounts/AccountDetails";
-
-import "./css/transfer.css";
 import useReduxData from "../../hooks/useReduxData";
+import SelectAccount from "./SelectAccount";
+import "./css/transfer.css";
 
 const defaultValues = {
   date: dateFormat(),
@@ -66,30 +64,26 @@ const FormTransfers = () => {
 
   return (
     <div className="transfer-container">
-      <div className="container-body">
-        <h1>TRANSFER MONEY</h1>
+      <div className="transfer-container-body">
+        <h1>MONEY TRANSFER</h1>
         <form onSubmit={handleSubmit(onHandleSubmit)}>
           <SimpleInput
             type="date"
             register={dateRegister()}
             error={errors.date?.message}
             disable={true}
+            className="container-date"
           />
-
-          <div className="container-selectAccount">
-            <SelectDynamic
-              label="Account Origin"
-              name="accountOrigin"
-              control={control}
-              rules={accountOriginRegister()}
-              accounts={accounts}
-              error={errors.accountOrigin?.message}
-            />
-
-            <AccountDetails description="Bank Name" value={bankName} />
-          </div>
-
-          <GridButton>
+          <SelectAccount
+            label="Account Origin"
+            name="accountOrigin"
+            control={control}
+            register={accountOriginRegister()}
+            accounts={accounts}
+            error={errors.accountOrigin?.message}
+            bankName={bankName}
+          />
+          <div className="checkbox">
             <InputCheckBox
               label="Personal Accounts"
               checked={personalAccounts}
@@ -100,39 +94,44 @@ const FormTransfers = () => {
               checked={anotherAccounts}
               onHandleClick={(event) => onHandleCheckAnother(event)}
             />
-          </GridButton>
-
-          <div className="container-selectAccount">
-            <SelectDynamic
-              label="Account Beneficiary"
-              name="accountDestiny"
-              control={control}
-              rules={accountDestinyRegister()}
-              accounts={destinyAccounts}
-              error={errors.accountDestiny?.message}
-            />
-            <AccountDetails description="Bank Name" value={bankDestiny} />
           </div>
+          <SelectAccount
+            label="Account Beneficiary"
+            name="accountDestiny"
+            control={control}
+            register={accountDestinyRegister()}
+            accounts={destinyAccounts}
+            error={errors.accountOrigin?.message}
+            bankName={bankDestiny}
+          />
 
-          <div>
-            <div>
-              <AccountDetails
-                description="Available"
-                value={available ? `${SYMBOL_MONEY[money]} ${available}` : ""}
-              />
-              <div>
-                <p>
-                  Transfer from<strong>{change.from}</strong> to <strong>{change.to}</strong>
-                </p>
+          <div className="money">
+            {change.to ? (
+              <div className="amount">
                 <button type="button" onClick={() => changeTransfer()}>
                   Change
                 </button>
+                <p>
+                  <strong>{change.from}</strong>to <strong>{change.to}</strong>
+                </p>
               </div>
+            ) : (
+              <p></p>
+            )}
+
+            <div>
+              <AccountDetails
+                description="Available"
+                value={available ? `${SYMBOL_MONEY[money]} ${available}` : "0.00"}
+                margin="86px"
+              />
               <SimpleInput
                 label="Amount"
                 type="text"
                 register={amountRegister()}
                 error={errors.amount?.message}
+                placeholder={change.from ? `${SYMBOL_MONEY[change.from]} 0.00` : "0.00"}
+                className="container-amount"
               />
             </div>
           </div>
@@ -141,12 +140,12 @@ const FormTransfers = () => {
             label="Description"
             register={descriptionRegister()}
             error={errors.description?.message}
+            className="container-textarea-transfer"
           />
 
           <GridButtonForm onClick={() => onHandleClick()} nameButtonSubmit="Continue" />
         </form>
       </div>
-
       <Modal isOpen={open}>
         <Process
           cancelModal={() => onHandleClosed()}

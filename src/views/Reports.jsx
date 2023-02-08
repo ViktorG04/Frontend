@@ -1,26 +1,25 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
-import { consultReports } from "../services/reportExpenseIncome";
+import React from "react";
+import FormReport from "../components/reports/FormReport";
 
-const initialState = { idAccount: "", idCategory: "", date: "" };
+import TableReports from "../components/reports/TableReports";
+import useReport from "../hooks/useReport";
+import "./css/viewReport.css";
 
 const Reports = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { consult, select, onHandleSubmit, onHandleClick } = useReport();
 
-  const [params, setParams] = useState(initialState);
-  const [reports, setReports] = useState({});
-
-  const fetchData = useCallback(async () => {
-    const data = await consultReports({ token, params });
-    setReports(data);
-    console.log(data);
-  }, [token, params]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  return <div>Reports</div>;
+  return (
+    <div className="container-report">
+      <div className="container-form">
+        <h1>REPORTS</h1>
+        <FormReport select={select} onHandleSubmit={onHandleSubmit} onHandleClick={onHandleClick} />
+      </div>
+      <div className="container-table">
+        <TableReports object={consult.reports} />
+        {!consult.success ? <h3>NO DATA</h3> : null}
+      </div>
+    </div>
+  );
 };
 
 export default Reports;

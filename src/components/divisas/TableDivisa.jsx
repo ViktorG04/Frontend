@@ -1,17 +1,17 @@
 import React from "react";
 import useTableDivisa from "../../hooks/useTableDivisa";
-
+import "./css/divisa.css";
 const TableDivisa = () => {
   const { currencies } = useTableDivisa();
   return (
     <div>
       {!currencies.length ? <p>Loading...</p> : null}
-      <table className="table">
+      <table className="table-divisa">
         <thead>
           <tr>
-            <th>CURRENCY</th>
+            <th className="th-left">CURRENCY</th>
             <th>EXCHANGE</th>
-            <th>VALUE</th>
+            <th className="th-right">VALUE</th>
           </tr>
         </thead>
         <tbody>

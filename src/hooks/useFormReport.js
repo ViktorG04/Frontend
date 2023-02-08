@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { getCategories, getTypeTransfer } from "../services/services";
 import { reportExpenseIncome } from "../services/reportExpenseIncome";
@@ -8,7 +9,9 @@ import useFindAccount from "./useFindAccount";
 import useReduxData from "./useReduxData";
 import { consultAccounts } from "../redux/slices/accountSlice";
 import { useDispatch } from "react-redux";
-const useFormReport = (reset) => {
+
+const useFormReport = () => {
+  const { reset } = useForm();
   const [select, setSelect] = useState({ transfers: [], categories: [] });
 
   const { token, accounts } = useReduxData();

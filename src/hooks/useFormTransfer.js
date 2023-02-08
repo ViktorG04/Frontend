@@ -10,7 +10,7 @@ import useGetAccounts from "./useGetAccounts";
 const defaultValueMoney = {
   from: "",
   to: "",
-  default: true,
+  default: null,
 };
 
 const useFormTransfer = ({ reset, watch, check }) => {
@@ -48,7 +48,7 @@ const useFormTransfer = ({ reset, watch, check }) => {
 
   useEffect(() => {
     if (money && moneyDestiny) {
-      setChange({ from: money, to: moneyDestiny });
+      setChange({ from: money, to: moneyDestiny, default: true });
     }
   }, [money, moneyDestiny]);
 
@@ -60,7 +60,7 @@ const useFormTransfer = ({ reset, watch, check }) => {
     try {
       const response = await getExchanges({ to, from, amount, token });
       const { currency, exchange, taxes } = response;
-
+      console.log(from, money);
       const amountOrigin = from === money ? cost : exchange;
 
       if (available < amountOrigin) {
@@ -105,7 +105,7 @@ const useFormTransfer = ({ reset, watch, check }) => {
   };
 
   const changeTransfer = () => {
-    !change.default
+    change.default
       ? setChange({ from: moneyDestiny, to: money, default: false })
       : setChange({ from: money, to: moneyDestiny, default: true });
   };

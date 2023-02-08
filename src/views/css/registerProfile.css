@@ -1,12 +1,30 @@
-.container {
-  width: 500px;
-  background: #4791d0;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box;
+.container-register {
+  height: 650px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+.container-register > .container-body {
+  background: #fff;
+  padding: 20px 10px;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+.container-register > .container-body > h1 {
+  font-weight: 700;
+  padding: 10px;
+  text-align: center;
+}
+
+.container-register > .container-body > form {
+  width: 100%;
+  margin: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .container-body {
+    width: 80%;
+  }
 }

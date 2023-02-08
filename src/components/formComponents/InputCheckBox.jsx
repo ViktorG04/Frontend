@@ -1,9 +1,9 @@
 import React from "react";
-
+import "./css/form.css";
 const InputCheckBox = ({ label, checked, disabled, onHandleClick }) => {
   return (
-    <div>
-      <label>{label}</label>
+    <div className="container-checkbox">
+      <label>{label}:</label>
       <input
         type="checkbox"
         checked={checked}

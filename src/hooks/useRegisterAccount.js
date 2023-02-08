@@ -9,8 +9,8 @@ const useRegisterAccount = ({ register }) => {
         message: "Min length is 6!",
       },
       maxLength: {
-        value: 30,
-        message: "Max length is 30!",
+        value: 20,
+        message: "Max length is 20!",
       },
     });
   };
@@ -19,12 +19,12 @@ const useRegisterAccount = ({ register }) => {
     return register("numberAccount", {
       required: REQUIRED,
       minLength: {
-        value: 8,
-        message: "Min length is 8!",
+        value: 6,
+        message: "Min length is 6!",
       },
       maxLength: {
-        value: 30,
-        message: "Max length is 30!",
+        value: 12,
+        message: "Max length is 12!",
       },
       pattern: {
         value: /^[0-9]+$/,
@@ -44,15 +44,10 @@ const useRegisterAccount = ({ register }) => {
   };
 
   const accountDate = () => {
-    return register("dateExpiration", { required: REQUIRED, });
+    return register("dateExpiration", { required: REQUIRED });
   };
 
-  return { accountName, accountNumber, accountCredit, accountDate }
-}
+  return { accountName, accountNumber, accountCredit, accountDate };
+};
 
-export default useRegisterAccount
-
-
-
-
-
+export default useRegisterAccount;

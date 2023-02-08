@@ -6,7 +6,7 @@ const useRegisterTransfer = ({ register }) => {
       required: REQUIRED,
       pattern: {
         value: /^\d*\.\d+$/,
-        message: "Only numbers and a period are allowed!",
+        message: "Error Only numbers!",
       },
     });
   };
@@ -37,8 +37,8 @@ const useRegisterTransfer = ({ register }) => {
     return register("description", {
       required: REQUIRED,
       maxLength: {
-        value: 58,
-        message: "Max length is 58!",
+        value: 100,
+        message: "Max length is 100",
       },
     });
   };

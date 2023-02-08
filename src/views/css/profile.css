@@ -1,0 +1,30 @@
+.container-profile {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-profile .body {
+  background: #fff;
+  padding: 20px 10px;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+.container-profile .body h1 {
+  text-align: center;
+}
+
+.container-profile .body .data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container-profile .body .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

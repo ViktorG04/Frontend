@@ -21,7 +21,8 @@ const useListAccount = () => {
       const allAvailable = accounts.reduce((acc, account) => {
         return acc + account.available;
       }, 0);
-      setBalance(allAvailable);
+      const formatAvailable = allAvailable.toFixed(2);
+      setBalance(formatAvailable);
     }
   }, [accounts]);
 

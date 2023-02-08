@@ -1,0 +1,38 @@
+.table-report {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-report thead {
+  background: #2c52aa;
+  color: white;
+  font-size: 18px;
+}
+
+.table-report thead tr .th-left {
+  border-top-left-radius: 5px;
+}
+
+.table-report thead tr .th-right {
+  border-top-right-radius: 5px;
+}
+
+.table-report tbody {
+  font-size: 20px;
+}
+
+.table-report tbody tr {
+  border-bottom: 1px solid black;
+}
+
+.table-report tbody tr:hover {
+  background: #8096ca;
+  cursor: pointer;
+}
+
+.table-report tbody tr td,
+.table-report thead tr td {
+  border: none;
+  padding: 10px;
+}

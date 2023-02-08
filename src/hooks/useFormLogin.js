@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { consultAccounts } from "../redux/slices/accountSlice";
+import { clearNotification } from "../redux/slices/userSlice";
 import { signUp } from "../redux";
+import toast from "react-hot-toast";
 
 const useFormLogin = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const useFormLogin = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
+      dispatch(clearNotification());
     }
 
     if (isLogged) {

@@ -30,8 +30,14 @@ const FormAccount = ({ onCloseModal, open }) => {
 
   return (
     <div className="container-form">
-      <h2>Add Account</h2>
+      <h1>Add Account</h1>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <SelectTextContainer
+          className="container-selectAccount"
+          label="kind of Money"
+          listSelect={typeMoney}
+          register={register("idTypeMoney")}
+        />
         <InputTextContainer
           label="Name of the Bank"
           type="text"
@@ -43,11 +49,6 @@ const FormAccount = ({ onCloseModal, open }) => {
           type="number"
           register={accountNumber()}
           error={errors.numberAccount?.message}
-        />
-        <SelectTextContainer
-          label="kind of Money"
-          listSelect={typeMoney}
-          register={register("idTypeMoney")}
         />
         <InputTextContainer
           label="Expiration date"

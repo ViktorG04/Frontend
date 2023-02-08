@@ -8,15 +8,6 @@
   place-items: center;
 }
 
-.modal-body {
-  background-color: white;
-  width: 40%;
-  min-width: 300px;
-  border-radius: 1rem;
-  position: relative;
-  padding: 5px;
-}
-
 .modal-close {
   position: absolute;
   top: 0;

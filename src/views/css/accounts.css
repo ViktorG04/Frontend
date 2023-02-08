@@ -1,12 +1,11 @@
 .container-accounts {
   display: grid;
-  margin: 0%;
 }
 
 .container-accounts > .list {
-  grid-column: span 5;
+  grid-column: span 4;
 }
 
 .container-accounts > .exchange {
-  grid-column: 6/8;
+  grid-column: 5/7;
 }
