@@ -1,5 +1,6 @@
 import React from "react";
 import { formatAmount } from "../../utils/formatAmount";
+import { SYMBOL_MONEY } from "../../config/config";
 import "./css/reportTable.css";
 const TableReports = ({ object }) => {
   return (
@@ -26,7 +27,7 @@ const TableReports = ({ object }) => {
             <td>{detail.category}</td>
             <td>{detail.report}</td>
             <td>{detail.description}</td>
-            <td align="right">{formatAmount("", detail.amount)}</td>
+            <td align="right">{formatAmount(SYMBOL_MONEY[detail.symbol], detail.amount)}</td>
           </tr>
         ))}
       </tbody>

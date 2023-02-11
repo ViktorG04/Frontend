@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import userReducer from "./slices/userSlice";
 import accountReducer from "./slices/accountSlice";
 import { STORE_KEY } from "../config/config";
+import { Navigate } from "react-router-dom";
 
 const allReducers = combineReducers({
   auth: userReducer,
@@ -19,7 +20,8 @@ const persistConfig = {
     encryptTransform({
       secretKey: STORE_KEY,
       onError: (err) => {
-        console.log("err", err);
+        console.log(err);
+        return <Navigate to="/" />;
       },
     }),
   ],

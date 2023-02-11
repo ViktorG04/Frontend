@@ -10,7 +10,10 @@ const useGetAccounts = ({ anotherAccounts, personalAccounts, idAccount }) => {
 
   const getAccounts = useCallback(async () => {
     try {
-      const data = await getExternalAccounts(idUser, token);
+      const data = await toast.promise(getExternalAccounts(idUser, token), {
+        loading: "Loading...",
+        success: <b>Success!</b>,
+      });
       setDestinyAccounts(data);
     } catch (error) {
       toast.error(error);

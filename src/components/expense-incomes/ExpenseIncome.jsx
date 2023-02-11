@@ -1,13 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SYMBOL_MONEY } from "../../config/config";
-import InputTextContainer from "../formComponents/InputTextContainer";
 import SelectTextContainer from "../formComponents/SelectTextContainer";
 import TextareaContainer from "../formComponents/TextareaContainer";
 import Button from "../formComponents/button/Button";
 import useFormReport from "../../hooks/useFormReport";
 import useRegisterTransfer from "../../hooks/useRegisterTransfer";
-
+import SimpleInput from "../formComponents/SimpleInput";
 import "./css/expenseIncome.css";
 
 const defaultValues = {
@@ -35,11 +34,12 @@ const ExpensiveIncome = () => {
         <h1>Report Expense/Income</h1>
         <h3>Number Account: {numberAccount}</h3>
         <form onSubmit={handleSubmit(onHandleSubmit)}>
-          <InputTextContainer
+          <SimpleInput
             label="Date"
             type="date"
             register={dateRegister()}
             error={errors.date?.message}
+            className="reportAmount"
           />
           <div className="container-select">
             {select.transfers ? (
@@ -59,12 +59,13 @@ const ExpensiveIncome = () => {
               />
             ) : null}
           </div>
-          <InputTextContainer
+          <SimpleInput
             label="Amount"
-            type="text"
+            type="number"
             register={amountRegister()}
             error={errors.amount?.message}
             placeholder={SYMBOL_MONEY[money] + " 0.00"}
+            className="reportAmount"
           />
           <TextareaContainer
             label="Description"
@@ -72,7 +73,6 @@ const ExpensiveIncome = () => {
             error={errors.description?.message}
             className="container-textarea-expenseIncome"
           />
-
           <div className="container-button">
             <Button type="reset" name="Cancel" onClick={onHandleClick} />
             <Button type="submit" name="Process" />

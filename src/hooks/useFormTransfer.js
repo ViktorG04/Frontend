@@ -58,9 +58,11 @@ const useFormTransfer = ({ reset, watch, check }) => {
     const cost = parseFloat(amount);
 
     try {
-      const response = await getExchanges({ to, from, amount, token });
+      const response = await toast.promise(getExchanges({ to, from, amount, token }), {
+        loading: "Loading...",
+        success: <b>Success!</b>,
+      });
       const { currency, exchange, taxes } = response;
-      console.log(from, money);
       const amountOrigin = from === money ? cost : exchange;
 
       if (available < amountOrigin) {
@@ -85,7 +87,6 @@ const useFormTransfer = ({ reset, watch, check }) => {
       setConversion({ ...sendTransfer, ...res, ...exactData });
       onOpenModal();
     } catch (error) {
-      console.log(error);
       toast.error(error);
     }
   };

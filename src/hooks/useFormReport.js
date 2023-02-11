@@ -57,7 +57,9 @@ const useFormReport = () => {
 
     const sendData = { ...data, idAccount, token };
     try {
-      const request = await reportExpenseIncome(sendData);
+      const request = await toast.promise(reportExpenseIncome(sendData), {
+        loading: "Loading...",
+      });
       toast.success(request.message);
       navigate("/dashboard");
       dispatch(consultAccounts());

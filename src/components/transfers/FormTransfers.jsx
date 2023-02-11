@@ -119,7 +119,7 @@ const FormTransfers = () => {
               <p></p>
             )}
 
-            <div>
+            <div className="inputAmount">
               <AccountDetails
                 description="Available"
                 value={available ? `${SYMBOL_MONEY[money]} ${available}` : "0.00"}
@@ -127,7 +127,7 @@ const FormTransfers = () => {
               />
               <SimpleInput
                 label="Amount"
-                type="text"
+                type="number"
                 register={amountRegister()}
                 error={errors.amount?.message}
                 placeholder={change.from ? `${SYMBOL_MONEY[change.from]} 0.00` : "0.00"}

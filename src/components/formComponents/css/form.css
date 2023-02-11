@@ -4,15 +4,26 @@
   margin: 45px;
 }
 
+.container-InputLabel i {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: #c6c6c6;
+}
+
 .container-InputLabel input {
   background: none;
-  color: #c6c6c6;
+  color: #000;
   font-size: 18px;
   padding: 10px;
   display: block;
   width: 100%;
   border: none;
   border-bottom: 1px solid var(--textColor);
+}
+
+.container-InputLabel input:disabled {
+  color: #c6c6c6;
 }
 
 .container-InputLabel label {
@@ -27,7 +38,6 @@
 
 input:focus {
   outline: none;
-  color: #5e5d5d;
 }
 
 input:focus ~ label,
@@ -37,10 +47,32 @@ input:not(:placeholder-shown) ~ label {
   color: #2196f3;
 }
 
+input:focus ~ i,
+input:not(:placeholder-shown) ~ i {
+  color: #000;
+}
+
 /* -------------------------SIMPLE INPUT----------------------------- */
 
-.container-input .error {
-  margin-left: 38px;
+.reportAmount {
+  position: relative;
+  padding: 20px 3px;
+}
+
+.reportAmount label {
+  font-size: 14px;
+  color: #2196f3;
+}
+
+.reportAmount input {
+  background: none;
+  color: #000;
+  font-size: 18px;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--textColor);
 }
 
 .container-date {
@@ -69,11 +101,12 @@ input:not(:placeholder-shown) ~ label {
 }
 
 .container-amount input {
-  width: 80%;
-  text-align: left;
   font-size: 16px;
   font-family: "Roboto";
   padding: 5px 0;
+  color: #000;
+  display: block;
+  width: 80%;
 }
 
 /* -------------------------TEXTAREA------------------------------- */
@@ -81,8 +114,6 @@ input:not(:placeholder-shown) ~ label {
 .container-textarea-expenseIncome {
   display: flex;
   flex-direction: column;
-  margin-left: 45px;
-  margin-right: 45px;
 }
 
 .container-textarea-expenseIncome label {
@@ -132,7 +163,9 @@ input:not(:placeholder-shown) ~ label {
   font-size: 18px;
   font-family: "Roboto";
   padding: 10px 10px 5px 5px;
-  color: var(--textColor);
+  color: #000;
+  border: none;
+  border-bottom: 1px solid var(--textColor);
 }
 
 .select-expenseIncome {
@@ -151,6 +184,8 @@ input:not(:placeholder-shown) ~ label {
   font-size: 18px;
   padding: 3px;
   font-family: "Roboto";
+  border: none;
+  border-bottom: 1px solid var(--textColor);
 }
 
 /* -------------------------DYNAMIC SELECT------------------------------- */

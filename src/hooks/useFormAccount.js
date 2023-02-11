@@ -8,7 +8,7 @@ import useReduxData from "./useReduxData";
 
 const useFormAccount = (reset, onCloseModal, open) => {
   const [typeMoney, setTypeMoney] = useState([]);
-  const { token, idUser, notification } = useReduxData();
+  const { token, idUser, notification, errors } = useReduxData();
 
   const dispatch = useDispatch();
 
@@ -35,6 +35,13 @@ const useFormAccount = (reset, onCloseModal, open) => {
       dispatch(clearNotification());
     }
   }, [notification, onCloseModal, dispatch, reset]);
+
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+      dispatch(clearNotification());
+    }
+  }, [errors, dispatch]);
 
   const onHandleSubmit = (data) => {
     dispatch(createAccount({ idUser, ...data, token }));

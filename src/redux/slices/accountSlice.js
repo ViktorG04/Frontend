@@ -6,7 +6,7 @@ const initialState = {
   errors: null,
   accounts: [],
   notification: null,
-  request: false,
+  request: true,
 };
 
 export const accountSlice = createSlice({
@@ -17,7 +17,7 @@ export const accountSlice = createSlice({
       return initialState;
     },
     clearNotification: (state) => {
-      return { ...state, notification: null, errors: false };
+      return { ...state, notification: null, errors: null };
     },
     consultAccounts: (state) => {
       return { ...state, request: true };
@@ -35,6 +35,7 @@ export const accountSlice = createSlice({
         return { ...state, loading: false, accounts };
       })
       .addCase(getAccountsByeIdUser.rejected, (state, action) => {
+        console.log(state.request);
         return { ...state, loading: false, errors: action.payload };
       });
 

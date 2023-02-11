@@ -5,6 +5,7 @@ import GridButtonForm from "../components/formComponents/button/GridButtonForm";
 import useRegisterUser from "../hooks/useRegisterUser";
 import { Link } from "react-router-dom";
 import "./css/login.css";
+import InputPassword from "../components/formComponents/InputPassword";
 
 const defaultValues = {
   email: "",
@@ -39,9 +40,8 @@ const Login = () => {
             register={emailRegister()}
             error={errors.email?.message}
           />
-          <InputTextContainer
+          <InputPassword
             label="Password"
-            type="password"
             register={passwordRegister()}
             error={errors.password?.message}
           />

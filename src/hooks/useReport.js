@@ -2,19 +2,17 @@ import { useState, useEffect, useCallback } from "react";
 import { getCategories } from "../services/services";
 import { consultReports } from "../services/reportExpenseIncome";
 import { toast } from "react-hot-toast";
-import { useForm } from "react-hook-form";
 import useReduxData from "./useReduxData";
 
 const initialState = { reports: [], success: false };
+const defaultSelect = { selectAccounts: [], categories: [] };
 
-const useReport = () => {
+const useReport = (reset) => {
   const { token, accounts } = useReduxData();
-
-  const { reset } = useForm();
 
   const [consult, setConsult] = useState(initialState);
 
-  const [select, setSelect] = useState({ selectAccounts: [], categories: [] });
+  const [select, setSelect] = useState(defaultSelect);
 
   const fetchDataSelect = useCallback(async () => {
     const data = await getCategories(token);

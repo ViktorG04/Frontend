@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getInfoAccountById } from "../services/accounts";
 import { updateStateAccount } from "../redux/index";
+import { clearNotification } from "../redux/slices/accountSlice";
+import { toast } from "react-hot-toast";
 import useFindAccount from "./useFindAccount";
 import useReduxData from "./useReduxData";
 
@@ -19,7 +21,7 @@ const useAccount = () => {
 
   const { idAccount } = useParams();
 
-  const { token, accounts, notification } = useReduxData();
+  const { token, accounts, notification, errors } = useReduxData();
   const { accountFound } = useFindAccount({ idAccount, objectFind: accounts });
 
   const dispatch = useDispatch();
@@ -36,9 +38,18 @@ const useAccount = () => {
 
   useEffect(() => {
     if (notification) {
+      toast.success(notification);
       navigate("/dashboard");
+      dispatch(clearNotification());
     }
-  }, [notification, navigate]);
+  }, [notification, navigate, dispatch]);
+
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+      dispatch(clearNotification());
+    }
+  }, [errors, dispatch]);
 
   const onHandleDeleteAccount = async () => {
     dispatch(updateStateAccount({ token, idAccount }));

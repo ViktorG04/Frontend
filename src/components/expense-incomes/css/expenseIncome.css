@@ -23,12 +23,12 @@ h3 {
 
 .container-expensiveIncome .container-expensiveIncome-body form .container-select {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .container-expensiveIncome .container-expensiveIncome-body form .container-button {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   padding-top: 25px;
   padding-bottom: 10px;
 }

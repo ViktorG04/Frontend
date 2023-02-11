@@ -9,6 +9,7 @@ const LinkConfig = ({ link }) => {
   const { to, linkName } = link;
 
   const dispatch = useDispatch();
+
   const onHandleClick = () => {
     dispatch(signOut());
     dispatch(signOutAccount());
@@ -22,7 +23,7 @@ const LinkConfig = ({ link }) => {
     );
   }
   return (
-    <NavLink className="navLink" to={to} onClick={onHandleClick}>
+    <NavLink className="navLink" to={to} onClick={() => onHandleClick()}>
       {linkName}
     </NavLink>
   );

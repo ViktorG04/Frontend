@@ -39,7 +39,7 @@ const FormAccount = ({ onCloseModal, open }) => {
           register={register("idTypeMoney")}
         />
         <InputTextContainer
-          label="Name of the Bank"
+          label="Bank's name"
           type="text"
           register={accountName()}
           error={errors.bankName?.message}
@@ -58,7 +58,7 @@ const FormAccount = ({ onCloseModal, open }) => {
         />
         <InputTextContainer
           label="Account credit"
-          type="text"
+          type="number"
           register={accountCredit()}
           error={errors.credit?.message}
         />

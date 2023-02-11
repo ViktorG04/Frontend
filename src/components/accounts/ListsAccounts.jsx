@@ -24,6 +24,7 @@ const ListsAccounts = () => {
       </Modal>
       {loading ? <p>Loading...</p> : null}
       <TableAccounts accounts={accounts} />
+
       <div className="balance-container">
         <strong>Balance</strong>
         <p>{balance}</p>
