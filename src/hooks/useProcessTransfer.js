@@ -14,7 +14,6 @@ const useProcessTransfer = (values, onClick) => {
       dispatch(consultAccounts());
       onClick();
     } catch (error) {
-      console.log(error);
       toast.error(error);
     }
   };

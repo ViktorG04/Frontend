@@ -28,7 +28,7 @@ nav > ul {
 }
 
 .navLink:hover {
-  color: green;
+  color: blue;
 }
 
 .checkBtn {
@@ -55,7 +55,7 @@ nav > ul {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .checkBtn {
     display: block;
   }

@@ -1,11 +1,12 @@
 .container-accounts {
   display: grid;
+  width: 100%;
 }
 
-.container-accounts > .list {
+.container-accounts .list {
   grid-column: span 4;
 }
 
-.container-accounts > .exchange {
+.container-accounts .exchange {
   grid-column: 5/7;
 }

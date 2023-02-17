@@ -32,12 +32,6 @@ const FormAccount = ({ onCloseModal, open }) => {
     <div className="container-form">
       <h1>Add Account</h1>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <SelectTextContainer
-          className="container-selectAccount"
-          label="kind of Money"
-          listSelect={typeMoney}
-          register={register("idTypeMoney")}
-        />
         <InputTextContainer
           label="Bank's name"
           type="text"
@@ -51,17 +45,24 @@ const FormAccount = ({ onCloseModal, open }) => {
           error={errors.numberAccount?.message}
         />
         <InputTextContainer
-          label="Expiration date"
-          type="date"
-          register={accountDate()}
-          error={errors.dateExpiration?.message}
-        />
-        <InputTextContainer
           label="Account credit"
           type="number"
           register={accountCredit()}
           error={errors.credit?.message}
         />
+        <SelectTextContainer
+          className="container-selectAccount"
+          label="kind of Money"
+          listSelect={typeMoney}
+          register={register("idTypeMoney")}
+        />
+        <InputTextContainer
+          label="Expiration date"
+          type="date"
+          register={accountDate()}
+          error={errors.dateExpiration?.message}
+        />
+
         <GridButtonForm onClick={onHandleClick} nameButtonSubmit="Create" />
       </form>
     </div>

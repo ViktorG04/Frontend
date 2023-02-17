@@ -35,7 +35,6 @@ export const accountSlice = createSlice({
         return { ...state, loading: false, accounts };
       })
       .addCase(getAccountsByeIdUser.rejected, (state, action) => {
-        console.log(state.request);
         return { ...state, loading: false, errors: action.payload };
       });
 

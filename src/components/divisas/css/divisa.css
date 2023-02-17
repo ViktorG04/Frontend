@@ -38,3 +38,56 @@
   border: none;
   padding: 10px;
 }
+
+.container-conversion {
+  border: 4px solid #10558d;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-conversion .select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.select-conversion {
+  padding: 0 10px;
+}
+
+.select-conversion label {
+  padding-right: 5px;
+}
+.select-conversion select {
+  font-size: 16px;
+}
+
+.container-conversion .input-exchange {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  margin: 0 20px;
+}
+
+.container-conversion .input-exchange input {
+  font-size: 16px;
+  font-family: "Roboto";
+}
+
+.container-conversion form button {
+  display: block;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: auto;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transition: 0.3s ease all;
+  background: #2c3e50;
+}
