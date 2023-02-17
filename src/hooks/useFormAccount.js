@@ -8,7 +8,7 @@ import useReduxData from "./useReduxData";
 
 const useFormAccount = (reset, onCloseModal, open) => {
   const [typeMoney, setTypeMoney] = useState([]);
-  const { token, idUser, notification, errors } = useReduxData();
+  const { token, notification, errors } = useReduxData();
 
   const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ const useFormAccount = (reset, onCloseModal, open) => {
   }, [errors, dispatch]);
 
   const onHandleSubmit = (data) => {
-    dispatch(createAccount({ idUser, ...data, token }));
+    dispatch(createAccount({ ...data, token }));
   };
 
   const onHandleClick = () => {

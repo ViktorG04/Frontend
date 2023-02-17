@@ -10,12 +10,15 @@ export const signUp = createAsyncThunk("auth/signUp", async (userInfo, { rejectW
   }
 });
 
-export const updateUser = createAsyncThunk("user/updated", async (userInfo, { rejectWithValue }) => {
-  const { id, newPassword, token } = userInfo;
-  try {
-    const response = await methodPUT({ url: `user/${id}`, data: { newPassword }, token });
-    return response;
-  } catch (error) {
-    return rejectWithValue(error);
+export const updateUser = createAsyncThunk(
+  "user/updated",
+  async (userInfo, { rejectWithValue }) => {
+    const { newPassword, token } = userInfo;
+    try {
+      const response = await methodPUT({ url: `user`, data: { newPassword }, token });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   }
-});
+);

@@ -6,7 +6,7 @@ import { clearNotification } from "../redux/slices/userSlice";
 
 const useFormProfile = (setOpen, reset) => {
   const {
-    user: { idUser: id, password },
+    user: { password },
     token,
     error,
     notification,
@@ -36,7 +36,7 @@ const useFormProfile = (setOpen, reset) => {
       return toast.error("the new password cannot be the same as the current password");
     }
 
-    dispatch(updateUser({ id, newPassword, token }));
+    dispatch(updateUser({ newPassword, token }));
   };
 
   const handleClick = () => {
